@@ -1,0 +1,89 @@
+.circle-puzzle {
+  height: 600px;
+  width: 600px;
+  background-color: #999999;
+  border: 1px black solid;
+  border-radius: 50%;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  margin: 0 0 0 -400px;
+}
+.layer-one {
+  height: 700px;
+  width: 700px;
+  margin: 0 auto;
+  background-color: #666666;
+  border: 1px black solid;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -350px 0 0 -350px;
+}
+
+/* Div Rotation Styling*/
+/* Div Rotation Layer-Zero*/
+.rSpecial{
+  position: absolute;
+}
+
+.layer-zero .r0 {
+  transform: rotate(-0.19turn);
+  position: absolute; 
+  top: 29%;
+  left: 4%;
+}
+.layer-zero .r1 {
+  transform: rotate(-0.09turn);
+  position: absolute; 
+  top: 8%;
+  left: 22%;
+}
+.layer-zero .r2 {
+  position: absolute; 
+  top: 0%;
+  left: 47%;
+}
+.layer-zero .r3 {
+  transform: rotate(0.095turn);
+  position: absolute; 
+  top: 8.5%;
+  right: 21%;
+}
+.layer-zero .r4 {
+  transform: rotate(0.19turn);
+  position: absolute; 
+  top: 29%;
+  right: 4%;
+}
+.layer-zero .r5 {
+  transform: rotate(-0.69turn);
+  position: absolute; 
+  bottom: 29%;
+  right: 4%;
+}
+.layer-zero .r6 {
+  transform: rotate(-0.596turn);
+  position: absolute; 
+  bottom: 9%;
+  right: 20%;
+}
+.layer-zero .r7 {
+  transform: rotate(.5turn);
+  position: absolute; 
+  bottom: 0%;
+  left: 48%;
+}
+.layer-zero .r8 {
+  transform: rotate(.596turn);
+  position: absolute; 
+  bottom: 9%;
+  left: 20%;
+}
+.layer-zero .r9 {
+  transform: rotate(.69turn);
+  position: absolute; 
+  bottom: 29%;
+  left: 4%;
+}
