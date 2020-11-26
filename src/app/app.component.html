@@ -1,23 +1,16 @@
 <section class="circle-puzzle" id="circle-puzzle">
   <div class="layer-zero">
+    
     <div 
-      class="rSpecial" 
-      name="18" 
-      id="rSpecial" 
-      #rSpecial
-      positionByDegree="5">
-      <span class="G">G</span>
-    </div>
-
-    <div 
-      class="r1" 
+      class="r0" 
       id="rSpecial" 
       [positionByDegree]="'r' + i"
-      [circleHeight]="33"
+      [circleHeight]="600"
       *ngFor="let piece of pieces; let i = index"
-      ><span class="G">G</span>
+      ><span class="G">{{i}}</span>
     </div>
 
+    <!--
     <div class="r2"><span class="G">G</span></div>
     <div class="r3"><span class="P">P</span></div>
     <div class="r4"><span class="P">P</span></div>
@@ -26,5 +19,6 @@
     <div class="r7"><span class="G">G</span></div>
     <div class="r8"><span class="P">P</span></div>
     <div class="r9"><span class="P">P</span></div>
+    -->
   </div>
 </section>

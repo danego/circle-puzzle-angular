@@ -6,6 +6,7 @@ import { Directive, ElementRef, HostBinding, Input, OnInit } from "@angular/core
 
 
 export class PositionDirective implements OnInit {
+  circleRadius: number;
 
   //input name must be same as selector ...
   @Input('positionByDegree') circleSize: string; //replace this with own input, don;t piggyback on selector!
@@ -21,31 +22,18 @@ export class PositionDirective implements OnInit {
   constructor(private element: ElementRef) {}
 
   ngOnInit() {
-    this.top = '90px';
-    this.left = '90px';
-
-    console.log(this.circleSize);
+    //console.log(this.circleSize);
     const fullID = this.circleSize;
     const fullIDArray = fullID.split("");
     const layer = fullIDArray[0];
     const piece = +fullIDArray[1];
-    console.log(layer);
-    console.log(piece);
+    //console.log(layer);
+    console.log('------------ ' + piece);
 
-    console.log(this.circleHeight);
+    //console.log(this.circleHeight);
+    this.circleRadius = +this.circleHeight / 2;
     
-    const triangleDegrees = this.convertToAngleDegrees(piece);
-    this.convertToAngleCssCartesian(triangleDegrees);
-
-    /*
-    console.log(this.element.nativeElement.id);
-    const fullID = this.element.nativeElement.id;
-    const fullIDArray = fullID.split("");
-    const layer = fullIDArray[0];
-    const piece = fullIDArray[1];
-    console.log(layer);
-    console.log(piece);
-    */
+    this.convertToAngleCssCartesian(this.convertToAngleDegrees(piece), piece);
   }
 
   convertToAngleDegrees(piece: number) {
@@ -68,15 +56,51 @@ export class PositionDirective implements OnInit {
       triangleDegrees = 360 - degrees;
     }
 
+    console.log(triangleDegrees);
     return triangleDegrees;
   }
 
-  convertToAngleCssCartesian(triangleDegrees: number) {
+  //takes the degree of triangle to X axis and the piece # to determine quadrant
+  convertToAngleCssCartesian(triangleDegrees: number, piece: number) {
+    //use cos,sin to find leg lengths
+    const xLeg = this.circleRadius * this.getCosFromDegrees(triangleDegrees);
+    const yLeg = this.circleRadius * this.getSinFromDegrees(triangleDegrees);
+
+    const xLegTemp = this.getCosFromDegrees(triangleDegrees);
+    const yLegTemp = this.getSinFromDegrees(triangleDegrees);
+
     //should recieve quadrant number. just use same if/else as above
+    const pushXAxis = Math.floor(xLeg + this.circleRadius);
+    const pushYAxis = Math.floor(yLeg + this.circleRadius);  //NOTE these should not be radius, but should take into account box heights ...
+    
+    
+    if (piece <= 2) {
+      this.right = pushXAxis.toString() + 'px';
+      this.bottom = pushYAxis.toString() + 'px';
+    }
+    else if (piece > 2 && piece <= 4) {
+      this.left = pushXAxis.toString() + 'px';
+      this.bottom = pushYAxis.toString() + 'px';
+    }
+    else if (piece > 4 && piece <= 7) {
+      this.left = pushXAxis.toString() + 'px';
+      this.top = pushYAxis.toString() + 'px';
+    }
+    else { //pieces 8, 9
+      this.right = pushXAxis.toString() + 'px';
+      this.top = pushYAxis.toString() + 'px';
+    }
 
-    //then use cos,sin to find leg lengths
-
+    //debugger;
     //then use CircleHeight (service?, second input?) to set bottom/top & left/right values
+  }
+
+  //Math.cos works in radians by default
+  getCosFromDegrees(degrees) {
+    return Math.cos(degrees * Math.PI / 180);
+  }
+  getSinFromDegrees(degrees) {
+    return Math.sin(degrees * Math.PI / 180);
   }
 }
 
