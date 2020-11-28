@@ -11,6 +11,8 @@ export class PositionDirective implements OnInit {
   //input name must be same as selector ...
   @Input('positionByDegree') circleSize: string; //replace this with own input, don;t piggyback on selector!
   @Input('circleHeight') circleHeight: string;
+  @Input('pieceWidth') pieceWidth: string;
+  @Input('pieceHeight') pieceHeight: string;
 
   
   //@HostBinding('id') name: string;
@@ -26,24 +28,27 @@ export class PositionDirective implements OnInit {
   ngOnInit() {
     //console.log(this.circleSize);
     const fullID = this.circleSize;
-    const fullIDArray = fullID.split("");
+    const fullIDArray = fullID.split(" ");
     const layer = fullIDArray[0];
     const piece = +fullIDArray[1];
-    //console.log(layer);
-    //console.log('------------ ' + piece);
 
-    //console.log(this.circleHeight);
     this.circleRadius = +this.circleHeight / 2;
     
-    this.convertToAngleCssCartesian(this.convertToAngleDegrees(piece), piece);
+    this.convertToAngleCssCartesian(this.convertToAngleDegrees(layer, piece), piece);
 
     this.generateRotateDegrees(piece);
   }
 
-  convertToAngleDegrees(piece: number) {
+  convertToAngleDegrees(layer: string, piece: number) {
     //36deg between each piece bc 10 pieces in layer1
     //first piece is at 18deg, not 0deg
-    const degrees = ((piece + 1) * 36) - 18;
+    let degrees;
+    if (layer === 'top') {
+      degrees = ((piece + 1) * 36) - 18;
+    }
+    else if (layer === 'left') {
+      degrees = ((piece) * 36);
+    }
 
     //triangle degrees is the angle between hypotenuse and X-axis
     let triangleDegrees;
@@ -68,15 +73,26 @@ export class PositionDirective implements OnInit {
 // ACCOUNT FOR SIZE OF PIECE AND DIRECCTION IT'S COMING FROM, LEFTvsRIGHT
   convertToAngleCssCartesian(triangleDegrees: number, piece: number) {
     //use cos,sin to find leg lengths
-    const xLeg = this.circleRadius * this.getCosFromDegrees(triangleDegrees);
-    const yLeg = this.circleRadius * this.getSinFromDegrees(triangleDegrees);
+    const xLeg = +this.getCosFromDegrees(triangleDegrees).toFixed(3);
+    const yLeg = +this.getSinFromDegrees(triangleDegrees).toFixed(3);
+    
+    let accountForPieceX: number, accountForPieceY: number;
+    accountForPieceX = +this.pieceWidth / 2;
+    accountForPieceY = +this.pieceHeight / 2;
+  
+
+
+    const xLegPlusCircle = this.circleRadius * this.getCosFromDegrees(triangleDegrees);
+    const yLegPlusCircle = this.circleRadius * this.getSinFromDegrees(triangleDegrees);
+
+    //debugger;
 
     const xLegTemp = this.getCosFromDegrees(triangleDegrees);
     const yLegTemp = this.getSinFromDegrees(triangleDegrees);
 
     //should recieve quadrant number. just use same if/else as above
-    const pushXAxis = Math.floor(xLeg + this.circleRadius - 80);
-    const pushYAxis = Math.floor(yLeg + this.circleRadius - 80);  //NOTE these should not be radius, but should take into account box heights ...
+    const pushXAxis = Math.floor(xLegPlusCircle + this.circleRadius - accountForPieceX); //DO AS A PERCENTAGE OF X,Y UGH
+    const pushYAxis = Math.floor(yLegPlusCircle + this.circleRadius - accountForPieceY);  //NOTE these should not be radius, but should take into account box heights ...
     
     
     if (piece <= 2) {
@@ -107,6 +123,8 @@ export class PositionDirective implements OnInit {
   getSinFromDegrees(degrees) {
     return Math.sin(degrees * Math.PI / 180);
   }
+
+
 
   generateRotateDegrees(piece: number) {
     //start w/ 0deg for 90/piece #2

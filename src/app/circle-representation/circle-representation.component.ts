@@ -25,6 +25,25 @@ export class CircleRepresentationComponent implements OnInit {
       {top:'P', left:'O', right:'G'},
       {top:'P', left:'G', right:'G'}
     ];
+    this.pieces[2] = [
+      {left:'G', right:'P', bottom:'O'},
+      {left:'O', right:'G', bottom:'P'},
+      {left:'P', right:'O', bottom:'P'},
+      {left:'O', right:'P', bottom:'G'},
+      {left:'G', right:'O', bottom:'O'},
+      {left:'P', right:'G', bottom:'G'},
+      {left:'P', right:'O', bottom:'G'},
+      {left:'O', right:'O', bottom:'P'},
+      {left:'P', right:'P', bottom:'G'},
+      {left:'G', right:'G', bottom:'O'}
+    ];
+    this.pieces[3] = [
+      {left:'P', right:'G'}, 
+      {left:'O', right:'G'}, 
+      {left:'G', right:'P'}, 
+      {left:'G', right:'O'}, 
+      {left:'O', right:'P'}
+    ];
   }
 
 }

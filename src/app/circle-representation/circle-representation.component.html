@@ -1,29 +1,69 @@
 <section class="circle-puzzle" id="circle-puzzle">
   <div class="layer-zero">
-    <div 
-      class="piece-zero" 
-      [positionByDegree]="'r' + i"
-      [circleHeight]="800"
-      *ngFor="let piece of pieces[0]; let i = index"
-      [ngClass]="{ 'green': piece === 'G', 'orange': piece === 'O', 'purple': piece === 'P' }"> 
-      <span>{{ piece }}</span>
+    <div class="layer-zero-middle"> 
+      <div 
+        class="piece-zero" 
+        [positionByDegree]="'top ' + i"
+        [circleHeight]="750"
+        [pieceWidth]="42"
+        [pieceHeight]="42"
+        *ngFor="let piece of pieces[0]; let i = index"
+        [ngClass]="{ 'green': piece === 'G', 'orange': piece === 'O', 'purple': piece === 'P' }"
+        > 
+        <span>{{ piece }}</span>
+      </div>
     </div>
   </div>
 
   <div class="layer-one">
-    <div 
-    class="piece-one" 
-    [positionByDegree]="'r' + i"
-    [circleHeight]="700"
-    *ngFor="let piece of pieces[1]; let i = index"
-    > 
-    <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">{{ piece.top }}</span>
-    <br>
-    <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
-    <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+    <div class="layer-one-middle">
+      <div 
+        class="piece-one" 
+        [positionByDegree]="'top ' + i"
+        [circleHeight]="600"
+        [pieceWidth]="166"
+        [pieceHeight]="72"
+        *ngFor="let piece of pieces[1]; let i = index"
+        > 
+        <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">{{ piece.top }}</span>
+        <br>
+        <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
+        <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+      </div>
+    </div>
   </div>
 
-  <div class="layer-two"></div>
-  <div class="layer-three"></div>
-</div>
+  <div class="layer-two">
+    <div class="layer-two-middle">
+      <div 
+        class="piece-two" 
+        [positionByDegree]="'left ' + i"
+        [circleHeight]="400"
+        [pieceWidth]="70"
+        [pieceHeight]="76"
+        *ngFor="let piece of pieces[2]; let i = index"
+        > 
+        <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
+        <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+        <br>
+        <span [ngClass]="{ 'green': piece.bottom === 'G', 'orange': piece.bottom === 'O', 'purple': piece.bottom === 'P' }">{{ piece.bottom }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="layer-three">
+    <div class="layer-three-middle"> 
+      <div 
+        class="piece-three" 
+        [positionByDegree]="'left ' + i"
+        [circleHeight]="200"
+        [pieceWidth]="105"
+        [pieceHeight]="40"
+        *ngFor="let piece of pieces[3]; let i = index"
+        > 
+        <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
+        <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+      </div>
+    </div>
+  </div>
 </section>
