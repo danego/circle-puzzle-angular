@@ -1,0 +1,29 @@
+<section class="circle-puzzle" id="circle-puzzle">
+  <div class="layer-zero">
+    <div 
+      class="piece-zero" 
+      [positionByDegree]="'r' + i"
+      [circleHeight]="800"
+      *ngFor="let piece of pieces[0]; let i = index"
+      [ngClass]="{ 'green': piece === 'G', 'orange': piece === 'O', 'purple': piece === 'P' }"> 
+      <span>{{ piece }}</span>
+    </div>
+  </div>
+
+  <div class="layer-one">
+    <div 
+    class="piece-one" 
+    [positionByDegree]="'r' + i"
+    [circleHeight]="700"
+    *ngFor="let piece of pieces[1]; let i = index"
+    > 
+    <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">{{ piece.top }}</span>
+    <br>
+    <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
+    <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+  </div>
+
+  <div class="layer-two"></div>
+  <div class="layer-three"></div>
+</div>
+</section>

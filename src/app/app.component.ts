@@ -7,13 +7,11 @@ import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/co
 })
 export class AppComponent implements OnInit {
   title = 'puzzle-circle-angular';
-  pieces: number[];
 
   @ViewChild('rSpecial') leftone: ElementRef;
 
   constructor(private renderer: Renderer2) {}
 
   ngOnInit() {
-    this.pieces = new Array(10);
   }
 }

@@ -18,6 +18,8 @@ export class PositionDirective implements OnInit {
   @HostBinding('style.bottom') bottom: string;
   @HostBinding('style.left') left: string;
   @HostBinding('style.right') right: string;
+  //add to this
+  @HostBinding('style.transform') rotate: string;
 
   constructor(private element: ElementRef) {}
 
@@ -28,12 +30,14 @@ export class PositionDirective implements OnInit {
     const layer = fullIDArray[0];
     const piece = +fullIDArray[1];
     //console.log(layer);
-    console.log('------------ ' + piece);
+    //console.log('------------ ' + piece);
 
     //console.log(this.circleHeight);
     this.circleRadius = +this.circleHeight / 2;
     
     this.convertToAngleCssCartesian(this.convertToAngleDegrees(piece), piece);
+
+    this.generateRotateDegrees(piece);
   }
 
   convertToAngleDegrees(piece: number) {
@@ -56,11 +60,12 @@ export class PositionDirective implements OnInit {
       triangleDegrees = 360 - degrees;
     }
 
-    console.log(triangleDegrees);
+    //console.log(triangleDegrees);
     return triangleDegrees;
   }
 
   //takes the degree of triangle to X axis and the piece # to determine quadrant
+// ACCOUNT FOR SIZE OF PIECE AND DIRECCTION IT'S COMING FROM, LEFTvsRIGHT
   convertToAngleCssCartesian(triangleDegrees: number, piece: number) {
     //use cos,sin to find leg lengths
     const xLeg = this.circleRadius * this.getCosFromDegrees(triangleDegrees);
@@ -70,8 +75,8 @@ export class PositionDirective implements OnInit {
     const yLegTemp = this.getSinFromDegrees(triangleDegrees);
 
     //should recieve quadrant number. just use same if/else as above
-    const pushXAxis = Math.floor(xLeg + this.circleRadius);
-    const pushYAxis = Math.floor(yLeg + this.circleRadius);  //NOTE these should not be radius, but should take into account box heights ...
+    const pushXAxis = Math.floor(xLeg + this.circleRadius - 80);
+    const pushYAxis = Math.floor(yLeg + this.circleRadius - 80);  //NOTE these should not be radius, but should take into account box heights ...
     
     
     if (piece <= 2) {
@@ -101,6 +106,37 @@ export class PositionDirective implements OnInit {
   }
   getSinFromDegrees(degrees) {
     return Math.sin(degrees * Math.PI / 180);
+  }
+
+  generateRotateDegrees(piece: number) {
+    //start w/ 0deg for 90/piece #2
+    let rotationDegrees = 0;
+
+    //backwards swithch statement w/ no breaks
+    switch(piece) {
+      case 1:
+        rotationDegrees += 36;
+      case 0: 
+        rotationDegrees += 36;
+      case 9: 
+        rotationDegrees += 36;
+      case 8: 
+        rotationDegrees += 36;
+      case 7: 
+        rotationDegrees += 36;
+      case 6: 
+        rotationDegrees += 36;
+      case 5: 
+        rotationDegrees += 36;
+      case 4: 
+        rotationDegrees += 36;
+      case 3: 
+        rotationDegrees += 36;
+      case 2: 
+        break;
+    }
+
+    this.rotate = `rotate(${rotationDegrees}deg)`;  //or .5turn syntax
   }
 }
 

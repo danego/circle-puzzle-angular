@@ -1,0 +1,108 @@
+.circle-puzzle {
+  height: 800px;
+  width: 800px;
+  background-color: #999999;
+  border: 1px black solid;
+  /* border-radius: 50%; */
+  position: relative;
+  top: 50%;
+  left: 50%;
+  margin: 50px 0 0 -400px;
+}
+
+/* Div Rotation Styling*/
+/* Div Rotation Layer-Zero*/
+.layer-zero {
+
+}
+.piece-zero {
+  /*transform: rotate(-0.19turn);*/
+  width: 20px;
+  height: 20px;
+  position: absolute; 
+  padding: 5px;
+  background-color: #bdbaba;
+  border: solid 2px black;
+  transform-origin: center;
+}
+.piece-zero span {
+  margin: auto;
+  text-align: center;
+  display: block;
+}
+
+.layer-one {
+  width: 700px;
+  height: 700px;
+  border: 1px solid black;
+  border-radius: 50%;
+  background-color: #666666;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -350px 0 0 -350px;
+}
+/* CHECK FOR CLASS DUPLICATION, PARE DOWN */
+.piece-one {
+  width: 170px;
+  padding: 5px;
+  border: solid 2px black;
+  border-top-left-radius: 30%;
+  border-top-right-radius: 30%;
+  border-bottom-left-radius: 20%;
+  border-bottom-right-radius: 20%;
+  background-color: #bdbaba;
+  display: block;
+  position: absolute; 
+  transform-origin: center;
+}
+.piece-one span {
+  margin: auto;
+  padding: .5em 2.15em;
+  text-align: center;
+  border: 1px solid #222222;
+  border-radius: 50%;
+  display: inline-block;
+}
+.piece-one span:nth-of-type(1) {
+  border-radius: 0%;
+  margin-left: 25%;
+}
+
+
+
+.layer-two {
+  height: 500px;
+  width: 500px;
+  background-color: #444444;
+  border: 1px black dashed;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -250px 0 0 -250px;
+}
+.layer-three {
+  height: 300px;
+  width: 300px;
+  background-color: #222;
+  border: 1px black dashed;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -150px 0 0 -150px;
+}
+
+.green {
+  background-color: forestgreen;
+  background-image: url("../../assets/noise.png");
+}
+.orange {
+  background-color: orange;
+  background-image: url("../../assets/noise.png");
+}
+.purple {
+  background-color: rebeccapurple;
+  background-image: url("../../assets/noise.png");
+}
