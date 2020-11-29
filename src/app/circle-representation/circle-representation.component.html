@@ -1,4 +1,4 @@
-<section class="circle-puzzle" id="circle-puzzle">
+<section cdkDropListGroup class="circle-puzzle" id="circle-puzzle">
   <div class="layer-zero">
     <div class="layer-zero-middle"> 
       <div 
@@ -15,23 +15,46 @@
     </div>
   </div>
 
+
+
+
+
   <div class="layer-one">
     <div class="layer-one-middle">
+
       <div 
-        class="piece-one" 
-        [positionTopStart]="i"
-        [circleHeight]="600"
-        [pieceWidth]="170"
-        [pieceHeight]="76"
-        *ngFor="let piece of pieces[1]; let i = index"
-        > 
-        <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">{{ piece.top }}</span>
-        <br>
-        <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
-        <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+      *ngFor="let array of pieces[1]; let i = index"
+      class="drag-list"
+      cdkDropList
+      [cdkDropListData]="pieces[1][i]"
+      (cdkDropListDropped)="dropped($event)"
+      [positionTopStart]="i"
+      [circleHeight]="600"
+      [pieceWidth]="170"
+      [pieceHeight]="76"
+      >
+
+        <div 
+          class="piece-one" 
+          
+          *ngFor="let piece of pieces[1][i]"
+          cdkDrag> 
+          <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">{{ piece.top }}</span>
+          <br>
+          <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
+          <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+          
+          <div 
+            *cdkDragPlaceholder 
+            class="drag-placeholder" 
+          ></div>
+        </div>
       </div>
     </div>
   </div>
+
+
+
 
   <div class="layer-two" >
     <div class="layer-two-middle">
