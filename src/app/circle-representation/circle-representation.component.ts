@@ -37,12 +37,12 @@ export class CircleRepresentationComponent implements OnInit {
       {left:'P', right:'P', bottom:'G'},
       {left:'G', right:'G', bottom:'O'}
     ];
-    this.pieces[3] = [
+    this.pieces[3] = [  //note: this is updated
       {left:'P', right:'G'}, 
       {left:'O', right:'G'}, 
       {left:'G', right:'P'}, 
       {left:'G', right:'O'}, 
-      {left:'O', right:'P'}
+      {left:'O', right:'P'},
     ];
   }
 

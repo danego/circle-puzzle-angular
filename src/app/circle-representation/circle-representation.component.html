@@ -3,7 +3,7 @@
     <div class="layer-zero-middle"> 
       <div 
         class="piece-zero" 
-        [positionByDegree]="'top ' + i"
+        [positionTopStart]="i"
         [circleHeight]="750"
         [pieceWidth]="42"
         [pieceHeight]="42"
@@ -19,10 +19,10 @@
     <div class="layer-one-middle">
       <div 
         class="piece-one" 
-        [positionByDegree]="'top ' + i"
+        [positionTopStart]="i"
         [circleHeight]="600"
-        [pieceWidth]="166"
-        [pieceHeight]="72"
+        [pieceWidth]="170"
+        [pieceHeight]="76"
         *ngFor="let piece of pieces[1]; let i = index"
         > 
         <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">{{ piece.top }}</span>
@@ -33,11 +33,11 @@
     </div>
   </div>
 
-  <div class="layer-two">
+  <div class="layer-two" >
     <div class="layer-two-middle">
       <div 
         class="piece-two" 
-        [positionByDegree]="'left ' + i"
+        [positionLeftStart]="i"
         [circleHeight]="400"
         [pieceWidth]="70"
         [pieceHeight]="76"
@@ -55,8 +55,8 @@
     <div class="layer-three-middle"> 
       <div 
         class="piece-three" 
-        [positionByDegree]="'left ' + i"
-        [circleHeight]="200"
+        [positionBottomStart]="i"
+        [circleHeight]="240"
         [pieceWidth]="105"
         [pieceHeight]="40"
         *ngFor="let piece of pieces[3]; let i = index"

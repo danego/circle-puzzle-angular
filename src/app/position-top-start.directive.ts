@@ -1,56 +1,40 @@
-import { Directive, ElementRef, HostBinding, Input, OnInit } from "@angular/core";
+import { Directive, HostBinding, Input, OnInit } from "@angular/core";
 
 @Directive({
-  selector: '[positionByDegree]'
+  selector: '[positionTopStart]'
 })
 
-
-export class PositionDirective implements OnInit {
+export class PositionTopStartDirective implements OnInit {
   circleRadius: number;
 
-  //input name must be same as selector ...
-  @Input('positionByDegree') circleSize: string; //replace this with own input, don;t piggyback on selector!
+  //selector tag is also used to input piece number
+  @Input('positionTopStart') pieceNumber: string;
   @Input('circleHeight') circleHeight: string;
   @Input('pieceWidth') pieceWidth: string;
   @Input('pieceHeight') pieceHeight: string;
 
-  
-  //@HostBinding('id') name: string;
   @HostBinding('style.top') top: string;
   @HostBinding('style.bottom') bottom: string;
   @HostBinding('style.left') left: string;
   @HostBinding('style.right') right: string;
-  //add to this
   @HostBinding('style.transform') rotate: string;
 
-  constructor(private element: ElementRef) {}
+  constructor() {}
 
   ngOnInit() {
-    //console.log(this.circleSize);
-    const fullID = this.circleSize;
-    const fullIDArray = fullID.split(" ");
-    const layer = fullIDArray[0];
-    const piece = +fullIDArray[1];
-
+    const piece = +this.pieceNumber;
     this.circleRadius = +this.circleHeight / 2;
     
-    this.convertToAngleCssCartesian(this.convertToAngleDegrees(layer, piece), piece);
-
+    this.convertToAngleCssCartesian(this.convertToAngleDegrees(piece), piece);
     this.generateRotateDegrees(piece);
   }
 
-  convertToAngleDegrees(layer: string, piece: number) {
-    //36deg between each piece bc 10 pieces in layer1
-    //first piece is at 18deg, not 0deg
-    let degrees;
-    if (layer === 'top') {
-      degrees = ((piece + 1) * 36) - 18;
-    }
-    else if (layer === 'left') {
-      degrees = ((piece) * 36);
-    }
+  convertToAngleDegrees(piece: number) {
+    //piece 0 starts at 18deg. Each next piece is 36deg away
+    const degrees = ((piece + 1) * 36) - 18;
 
     //triangle degrees is the angle between hypotenuse and X-axis
+    //correspond piece number to quadrant to correctly calculate triangle degrees
     let triangleDegrees;
     if (piece <= 2) {
       triangleDegrees = degrees;
@@ -65,36 +49,23 @@ export class PositionDirective implements OnInit {
       triangleDegrees = 360 - degrees;
     }
 
-    //console.log(triangleDegrees);
     return triangleDegrees;
   }
 
   //takes the degree of triangle to X axis and the piece # to determine quadrant
-// ACCOUNT FOR SIZE OF PIECE AND DIRECCTION IT'S COMING FROM, LEFTvsRIGHT
-  convertToAngleCssCartesian(triangleDegrees: number, piece: number) {
-    //use cos,sin to find leg lengths
-    const xLeg = +this.getCosFromDegrees(triangleDegrees).toFixed(3);
-    const yLeg = +this.getSinFromDegrees(triangleDegrees).toFixed(3);
-    
-    let accountForPieceX: number, accountForPieceY: number;
-    accountForPieceX = +this.pieceWidth / 2;
-    accountForPieceY = +this.pieceHeight / 2;
+  convertToAngleCssCartesian(triangleDegrees: number, piece: number) {  
+    //halve inputted dimensions for puzzle piece  
+    const accountForPieceX = +this.pieceWidth / 2;
+    const accountForPieceY = +this.pieceHeight / 2;
   
-
-
+    //we must push from opposite direction and thus must add in radius
     const xLegPlusCircle = this.circleRadius * this.getCosFromDegrees(triangleDegrees);
     const yLegPlusCircle = this.circleRadius * this.getSinFromDegrees(triangleDegrees);
 
-    //debugger;
-
-    const xLegTemp = this.getCosFromDegrees(triangleDegrees);
-    const yLegTemp = this.getSinFromDegrees(triangleDegrees);
-
-    //should recieve quadrant number. just use same if/else as above
-    const pushXAxis = Math.floor(xLegPlusCircle + this.circleRadius - accountForPieceX); //DO AS A PERCENTAGE OF X,Y UGH
-    const pushYAxis = Math.floor(yLegPlusCircle + this.circleRadius - accountForPieceY);  //NOTE these should not be radius, but should take into account box heights ...
+    const pushXAxis = Math.floor(xLegPlusCircle + this.circleRadius - accountForPieceX);
+    const pushYAxis = Math.floor(yLegPlusCircle + this.circleRadius - accountForPieceY);
     
-    
+    //correspond piece number to quadrant to correctly apply positioning
     if (piece <= 2) {
       this.right = pushXAxis.toString() + 'px';
       this.bottom = pushYAxis.toString() + 'px';
@@ -111,9 +82,6 @@ export class PositionDirective implements OnInit {
       this.right = pushXAxis.toString() + 'px';
       this.top = pushYAxis.toString() + 'px';
     }
-
-    //debugger;
-    //then use CircleHeight (service?, second input?) to set bottom/top & left/right values
   }
 
   //Math.cos works in radians by default
@@ -124,13 +92,11 @@ export class PositionDirective implements OnInit {
     return Math.sin(degrees * Math.PI / 180);
   }
 
-
-
   generateRotateDegrees(piece: number) {
-    //start w/ 0deg for 90/piece #2
+    //backwards switch statement w/ no breaks
+    //piece (1) with largest degree value runs through all cases
     let rotationDegrees = 0;
 
-    //backwards swithch statement w/ no breaks
     switch(piece) {
       case 1:
         rotationDegrees += 36;
@@ -157,16 +123,4 @@ export class PositionDirective implements OnInit {
     this.rotate = `rotate(${rotationDegrees}deg)`;  //or .5turn syntax
   }
 }
-
-
-
-
-  //might need to be [ngStyle]
-  //OR percentages  
-  //BC problem of circle radius/width 
-  //inputs to directive or ... do it all in the component with renderer2 & local elements
-
-  //separate directives for the diff layers? 
-  //or include more logic in this single directive?
-  // ^ in which case, no need to split input, just use index
   

@@ -3,8 +3,9 @@
   width: 800px;
   background-color: #999999;
   border: 1px black solid;
-  /* border-radius: 50%; */
+  border-radius: 50%;
   position: relative;
+  box-sizing: border-box;
   top: 50%;
   left: 50%;
   margin: 50px 0 0 -400px;
@@ -16,16 +17,17 @@
   height: 800px;
   width: 800px;
   background-color: #888888;
-  border: 1px black solid;
   border-radius: 50%;
+  box-sizing: border-box;
 }
 .layer-zero-middle {
   height: 750px;
   width: 750px;
   background-color: #888888;
   border-radius: 50%;
-  border: 1px red solid;
+  /* border: 1px red solid; */
   position: absolute;
+  box-sizing: border-box;
   top: 50%;
   left: 50%;
   margin: -375px 0 0 -375px;  
@@ -42,7 +44,6 @@
   box-sizing: border-box;
 }
 .piece-zero span {
-  margin: auto;
   text-align: center;
   display: block;
 }
@@ -54,6 +55,7 @@
   border-radius: 50%;
   background-color: #666666;
   position: absolute;
+  box-sizing: border-box;
   top: 50%;
   left: 50%;
   margin: -350px 0 0 -350px;
@@ -63,16 +65,17 @@
   width: 600px;
   background-color: #666666;
   border-radius: 50%;
-  border: 1px red solid;
+  /* border: 1px red solid; */
   position: absolute;
+  box-sizing: border-box;
   top: 50%;
   left: 50%;
   margin: -300px 0 0 -300px;  
 }
 /* CHECK FOR CLASS DUPLICATION, PARE DOWN */
 .piece-one {
-  width: 166px;
-  height: 72px;
+  width: 170px;
+  height: 76px;
   border: solid 2px black;
   border-top-left-radius: 30%;
   border-top-right-radius: 30%;
@@ -81,13 +84,13 @@
   background-color: #bdbaba;
   text-align: center;
   display: block;
+  box-sizing: border-box;
   position: absolute; 
   transform-origin: center;
 }
 .piece-one span {
-  width: 83px;
-  margin: auto;
-  padding: 8px 34.5px;
+  width: 82px;
+  padding: 8px 34px;
   text-align: center;
   border: 1px solid #222222;
   border-radius: 50%;
@@ -96,9 +99,6 @@
 }
 .piece-one span:nth-of-type(1) {
   border-radius: 0%;
-  /*
-  margin-left: 25%;
-  */
 }
 
 
@@ -110,6 +110,7 @@
   border: 1px black dashed;
   border-radius: 50%;
   position: absolute;
+  box-sizing: border-box;
   top: 50%;
   left: 50%;
   margin: -250px 0 0 -250px;
@@ -119,8 +120,9 @@
   width: 400px;
   background-color: #444444;
   border-radius: 50%;
-  border: 1px red solid;
+  /* border: 1px red solid; */
   position: absolute;
+  box-sizing: border-box;
   top: 50%;
   left: 50%;
   margin: -200px 0 0 -200px;  
@@ -137,25 +139,19 @@
   background-color: #bdbaba;
   text-align: center;
   display: block;
+  box-sizing: border-box;
   position: absolute; 
   transform-origin: center;
 }
 .piece-two span {
   width: 30px;
   height: 36px;
-  margin: auto;
   padding: 8px 8px;
   text-align: center;
   border: 1px solid #222222;
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;
-}
-.piece-two span:nth-of-type(3) {
-  /*
-  border-radius: 0%;
-  margin-left: 25%;
-  */
 }
 
 
@@ -168,20 +164,22 @@
   border: 1px black dashed;
   border-radius: 50%;
   position: absolute;
+  box-sizing: border-box;
   top: 50%;
   left: 50%;
   margin: -150px 0 0 -150px;
 }
 .layer-three-middle {
-  height: 250px;
-  width: 250px;
+  height: 240px;
+  width: 240px;
   background-color: #222;
   border-radius: 50%;
-  border: 1px red solid;
+  /* border: 1px red solid; */
   position: absolute;
+  box-sizing: border-box;
   top: 50%;
   left: 50%;
-  margin: -125px 0 0 -125px;  
+  margin: -120px 0 0 -120px;  
 }
 .piece-three {
   width: 105px;
@@ -194,15 +192,17 @@
   background-color: #bdbaba;
   text-align: center;
   display: block;
+  box-sizing: border-box;
   position: absolute; 
   transform-origin: center;
+  display: flex;
+  justify-content: space-between;
 }
 .piece-three span {
   width: 30px;
   height: 36px;
-  margin: auto;
   padding: 8px 8px;
-  text-align: center;
+  text-align: justify;
   border: 1px solid #222222;
   border-radius: 50%;
   display: inline-block;
