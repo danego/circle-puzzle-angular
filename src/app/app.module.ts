@@ -9,6 +9,7 @@ import { PositionLeftStartDirective } from './position-left-start.directive';
 import { PositionBottomStartDirective } from './position-bottom-start.directive';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { RotatePieceDirective } from './rotate-piece.directive';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     LineRepresentationComponent,
     PositionTopStartDirective,
     PositionLeftStartDirective,
-    PositionBottomStartDirective
+    PositionBottomStartDirective,
+    RotatePieceDirective
   ],
   imports: [
     BrowserModule,

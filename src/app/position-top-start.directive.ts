@@ -27,6 +27,7 @@ export class PositionTopStartDirective implements OnInit {
     
     this.convertToAngleCssCartesian(this.convertToAngleDegrees(piece), piece);
     this.generateRotateDegrees(piece);
+    //this.rotate = 'rotate(200deg)';
   }
 
   convertToAngleDegrees(piece: number) {

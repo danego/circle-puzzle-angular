@@ -27,11 +27,11 @@ export class CircleRepresentationComponent implements OnInit {
     this.pieces[1][2][0] = {top:'G', left:'O', right:'G'};
     this.pieces[1][3][0] = {top:'G', left:'P', right:'P'};
     this.pieces[1][4][0] = {top:'G', left:'O', right:'O'};
-    this.pieces[1][5][0] = {top:'P', left:'P', right:'O'};
-    this.pieces[1][6][0] = {top:'P', left:'O', right:'P'};
-    this.pieces[1][7][0] = {top:'P', left:'G', right:'P'};
-    this.pieces[1][8][0] = {top:'P', left:'O', right:'G'};
-    this.pieces[1][9][0] = {top:'P', left:'G', right:'G'};  
+    //this.pieces[1][5][0] = {top:'P', left:'P', right:'O'};
+    //this.pieces[1][6][0] = {top:'P', left:'O', right:'P'};
+    //this.pieces[1][7][0] = {top:'P', left:'G', right:'P'};
+    //this.pieces[1][8][0] = {top:'P', left:'O', right:'G'};
+    //this.pieces[1][9][0] = {top:'P', left:'G', right:'G'};  
 
 
     this.pieces[2] = [
@@ -56,12 +56,14 @@ export class CircleRepresentationComponent implements OnInit {
   }
 
   dropped(event: CdkDragDrop<string[]>) {
-    //move to new, dropped list
-    transferArrayItem(
-      event.previousContainer.data,
-      event.container.data,
-      event.previousIndex,
-      event.currentIndex
-    );
+    //move to new, dropped list, only if empty
+    if (event.container.data.length === 0) {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+        );
+      }
   }
 }

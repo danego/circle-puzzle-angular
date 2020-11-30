@@ -46,6 +46,7 @@
 .piece-zero span {
   text-align: center;
   display: block;
+  cursor: default;
 }
 
 .layer-one {
@@ -87,6 +88,7 @@
   box-sizing: border-box;
   position: absolute; 
   transform-origin: center;
+  cursor: grab;
 }
 .piece-one span {
   width: 82px;
@@ -239,16 +241,22 @@
   border: 3px dotted brown;
 }
 
-.drag-list {
+.drag-list-one {
   width: 170px;
   height: 76px;
-  border: 1px dotted transparent;
   border-top-left-radius: 30%;
   border-top-right-radius: 30%;
   border-bottom-left-radius: 20%;
   border-bottom-right-radius: 20%;
-  background-color: navajowhite;
+  background-color: white;
   display: block;
   box-sizing: border-box;
   position: absolute;
+}
+
+.cdk-drag-preview {
+}
+
+
+.cdk-drag-placeholder {
 }
