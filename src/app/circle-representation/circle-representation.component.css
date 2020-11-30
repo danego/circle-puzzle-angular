@@ -88,7 +88,6 @@
   box-sizing: border-box;
   position: absolute; 
   transform-origin: center;
-  cursor: grab;
 }
 .piece-one span {
   width: 82px;
@@ -244,10 +243,10 @@
 .drag-list-one {
   width: 170px;
   height: 76px;
-  border-top-left-radius: 30%;
-  border-top-right-radius: 30%;
-  border-bottom-left-radius: 20%;
-  border-bottom-right-radius: 20%;
+  border-top-left-radius: 31%;
+  border-top-right-radius: 31%;
+  border-bottom-left-radius: 21%;
+  border-bottom-right-radius: 21%;
   background-color: white;
   display: block;
   box-sizing: border-box;

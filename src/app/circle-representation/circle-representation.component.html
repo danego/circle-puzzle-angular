@@ -30,8 +30,12 @@
 
         <div 
           class="piece-one" 
+          [ngStyle]="{'cursor': !isDragging1 ? 'grab' : 'not-allowed'}"
           *ngFor="let piece of pieces[1][i]"
-          cdkDrag> 
+          cdkDrag
+          (cdkDragStarted)="dragStarted(1)"
+          (cdkDragEnded)="dragEnded(1)"> 
+          
           <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">{{ piece.top }}</span>
           <br>
           <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>

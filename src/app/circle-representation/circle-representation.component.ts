@@ -9,6 +9,8 @@ import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 })
 export class CircleRepresentationComponent implements OnInit {
   pieces: any[][];
+  isDragging1: boolean = false;
+  isDragging2: boolean = false;
 
   constructor() { }
 
@@ -64,6 +66,23 @@ export class CircleRepresentationComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
         );
-      }
+    }
+  }
+
+  dragStarted(layer: number) {
+    if (layer === 1) {
+      this.isDragging1 = true;
+    }
+    else {
+      this.isDragging2 = true;
+    }
+  }
+  dragEnded(layer: number) {
+    if (layer === 1) {
+      this.isDragging1 = false;
+    }
+    else {
+      this.isDragging2 = false;
+    }  
   }
 }
