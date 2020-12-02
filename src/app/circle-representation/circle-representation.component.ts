@@ -9,7 +9,7 @@ import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 })
 export class CircleRepresentationComponent implements OnInit {
   pieces: any[][];
-  piecesBank1: any[];
+  piecesBank1;
 
   isDragging1: boolean = false;
   isDragging2: boolean = false;
@@ -22,6 +22,7 @@ export class CircleRepresentationComponent implements OnInit {
     this.pieces[0] = ['G', 'G', 'G', 'P', 'P', 'P', 'G', 'G', 'P', 'P'];
 
 
+    //LAYER ONE
     //each piece should be in its own array for drag-&-drop
     this.pieces[1] = new Array(10);
     for (let i = 0; i < 10; i++) {
@@ -33,15 +34,15 @@ export class CircleRepresentationComponent implements OnInit {
     this.pieces[1][2][0] = {top:'G', left:'O', right:'G'};
     this.pieces[1][3][0] = {top:'G', left:'P', right:'P'};
     this.pieces[1][4][0] = {top:'G', left:'O', right:'O'};
-    //this.pieces[1][5][0] = {top:'P', left:'P', right:'O'};
-    //this.pieces[1][6][0] = {top:'P', left:'O', right:'P'};
-    //this.pieces[1][7][0] = {top:'P', left:'G', right:'P'};
+    this.pieces[1][5][0] = {top:'P', left:'P', right:'O'};
+    this.pieces[1][6][0] = {top:'P', left:'O', right:'P'};
+    this.pieces[1][7][0] = {top:'P', left:'G', right:'P'};
     //this.pieces[1][8][0] = {top:'P', left:'O', right:'G'};
     //this.pieces[1][9][0] = {top:'P', left:'G', right:'G'};  
 
-    this.piecesBank1 = [
-      {top:'P', left:'G', right:'G'}
-    ];
+    this.piecesBank1 = new Array(2);
+    this.piecesBank1[0] = {top:'P', left:'G', right:'G'};
+    this.piecesBank1[1] = {top:'P', left:'O', right:'G'};
 
 
     //LAYER TWO
@@ -77,7 +78,8 @@ export class CircleRepresentationComponent implements OnInit {
 
   dropped(event: CdkDragDrop<string[]>) {
     //move to new, dropped list, only if empty
-    if (event.container.data.length === 0) {
+    debugger;
+    if (event.container.data.length === 0 || event.container.id === 'piece-bank-one') {
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,

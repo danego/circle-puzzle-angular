@@ -2,7 +2,6 @@
   height: 800px;
   width: 800px;
   background-color: #999999;
-  border: 1px black solid;
   border-radius: 50%;
   position: relative;
   box-sizing: border-box;
@@ -14,10 +13,11 @@
 /* Div Rotation Styling*/
 /* Div Rotation Layer-Zero*/
 .layer-zero {
+  border: 1px black solid;
   height: 800px;
   width: 800px;
-  background-color: #999999;
   border-radius: 50%;
+  background-color: #999999;
   box-sizing: border-box;
 }
 .layer-zero-middle {
@@ -104,13 +104,24 @@
   border-radius: 0%;
 }
 /* Piece Bank to side */
-.piece-bank-one {
-  width: 400px;
-  height: 100px;
+.bank-one {
+  width: 170px;
+  height: auto;
+  min-height: 125px;
+  padding: 30px;
   border: 1px black solid;
-  position: fixed;
-  top: 50%;
-  left: 0px;
+  background-color: white;
+  position: absolute;
+  top: 70px;
+  left: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  z-index: 10;
+}
+.piece-bank {
+  display: block;
+  position: relative;
 }
 
 
