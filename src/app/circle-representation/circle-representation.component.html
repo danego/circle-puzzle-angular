@@ -1,4 +1,34 @@
-<section cdkDropListGroup class="circle-puzzle" id="circle-puzzle">
+<!--
+  <piece-bank></piece-bank>
+-->
+<div 
+  class="piece-bank-one"
+  id="piece-bank-one"
+  cdkDropList
+  [cdkDropListConnectedTo]="['dl-one-0', 'dl-one-1', 'dl-one-2', 'dl-one-3', 'dl-one-4', 'dl-one-5', 'dl-one-6', 'dl-one-7', 'dl-one-8', 'dl-one-9']"
+  [cdkDropListData]="piecesBank1"
+  (cdkDropListDropped)="dropped($event)"
+  >
+  <div 
+    class="piece-one" 
+    *ngFor="let piece of piecesBank1"
+    [ngStyle]="{'cursor': !isDragging1 && !isDragging2 && !isDragging3 ? 'grab' : 'not-allowed'}"
+    cdkDrag
+    (cdkDragStarted)="dragStarted(1)"
+    (cdkDragEnded)="dragEnded(1)"> 
+
+    <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">{{ piece.top }}</span>
+    <br>
+    <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
+    <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+  
+  </div>
+</div>
+<!-- END OF BANK -->
+
+
+<!-- LAYER ZERO -->
+<section class="circle-puzzle" id="circle-puzzle">
   <div class="layer-zero">
     <div class="layer-zero-middle"> 
       <div 
@@ -15,12 +45,17 @@
     </div>
   </div>
 
+
+  <!-- LAYER ONE -->
   <div class="layer-one">
-    <div class="layer-one-middle">
+    <div cdkDropListGroup class="layer-one-middle">
       <div 
+        id="{{'dl-one-' + i}}"
         *ngFor="let array of pieces[1]; let i = index"
         class="drag-list-one"
+        [ngStyle]="{'cursor': isDragging2 || isDragging3 ? 'not-allowed' : 'default'}"
         cdkDropList
+      cdkDropListConnectedTo="piece-bank-one"
         [cdkDropListData]="pieces[1][i]"
         (cdkDropListDropped)="dropped($event)"
         [positionTopStart]="i"
@@ -30,12 +65,12 @@
 
         <div 
           class="piece-one" 
-          [ngStyle]="{'cursor': !isDragging1 ? 'grab' : 'not-allowed'}"
+          [ngStyle]="{'cursor': !isDragging1 && !isDragging2 && !isDragging3 ? 'grab' : 'not-allowed'}"
           *ngFor="let piece of pieces[1][i]"
           cdkDrag
           (cdkDragStarted)="dragStarted(1)"
           (cdkDragEnded)="dragEnded(1)"> 
-          
+
           <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">{{ piece.top }}</span>
           <br>
           <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
@@ -62,36 +97,79 @@
     </div>
   </div>
 
-  <div class="layer-two" >
+
+
+
+  <div cdkDropListGroup class="layer-two" >
     <div class="layer-two-middle">
-      <div 
-        class="piece-two" 
+      <div
+        id="drop-list-two"
+        *ngFor="let array of pieces[2]; let i = index"
+        class="drag-list-two"
+        [ngStyle]="{'cursor': isDragging1 || isDragging3 ? 'not-allowed' : 'default'}"
+        cdkDropList
+        [cdkDropListData]="pieces[2][i]"
+        (cdkDropListDropped)="dropped($event)"
         [positionLeftStart]="i"
         [circleHeight]="400"
         [pieceWidth]="70"
-        [pieceHeight]="76"
-        *ngFor="let piece of pieces[2]; let i = index"
-        > 
-        <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
-        <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
-        <br>
-        <span [ngClass]="{ 'green': piece.bottom === 'G', 'orange': piece.bottom === 'O', 'purple': piece.bottom === 'P' }">{{ piece.bottom }}</span>
+        [pieceHeight]="76">
+
+        <div 
+          class="piece-two" 
+          [ngStyle]="{'cursor': !isDragging1 && !isDragging2 && !isDragging3 ? 'grab' : 'not-allowed'}"
+          *ngFor="let piece of pieces[2][i]"
+          cdkDrag
+          (cdkDragStarted)="dragStarted(2)"
+          (cdkDragEnded)="dragEnded(2)">
+
+          <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
+          <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+          <br>
+          <span [ngClass]="{ 'green': piece.bottom === 'G', 'orange': piece.bottom === 'O', 'purple': piece.bottom === 'P' }">{{ piece.bottom }}</span>
+
+          <div *cdkDragPreview>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="hotpink" width="50px" height="50px"><path d="M0 0h24v24H0z" fill="none"/><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/></svg>
+          </div>
+        
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="layer-three">
+
+  <div cdkDropListGroup class="layer-three">
     <div class="layer-three-middle"> 
-      <div 
-        class="piece-three" 
+      <div
+        id="drop-list-three"
+        *ngFor="let array of pieces[3]; let i = index"
+        class="drag-list-three"
+        [ngStyle]="{'cursor': isDragging1 || isDragging2 ? 'not-allowed' : 'default'}"
+        cdkDropList
+        [cdkDropListData]="pieces[3][i]"
+        (cdkDropListDropped)="dropped($event)"
         [positionBottomStart]="i"
         [circleHeight]="240"
         [pieceWidth]="105"
-        [pieceHeight]="40"
-        *ngFor="let piece of pieces[3]; let i = index"
-        > 
-        <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
-        <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+        [pieceHeight]="40">
+
+        <div 
+          class="piece-three" 
+          [ngStyle]="{'cursor': !isDragging1 && !isDragging2 && !isDragging3 ? 'grab' : 'not-allowed'}"
+          *ngFor="let piece of pieces[3][i]"
+          cdkDrag
+          (cdkDragStarted)="dragStarted(3)"
+          (cdkDragEnded)="dragEnded(3)"> 
+
+          <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
+          <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+
+          <div *cdkDragPreview class="cdk-drag-preview">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="hotpink" width="50px" height="50px"><path d="M0 0h24v24H0z" fill="none"/><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/></svg>
+          </div>
+      
+        </div>
+
       </div>
     </div>
   </div>

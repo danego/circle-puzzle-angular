@@ -1,0 +1,23 @@
+<div 
+      class="piece-bank-one"
+      id="piece-bank-one"
+      cdkDropList
+      [cdkDropListConnectedTo]="['dl-one-0', 'dl-one-1', 'dl-one-2' ]"
+      [cdkDropListData]="piecesBank1"
+      (cdkDropListDropped)="dropped($event)"
+      >
+      <div 
+        class="piece-one" 
+        *ngFor="let piece of piecesBank1"
+        [ngStyle]="{'cursor': !isDragging1 && !isDragging2 && !isDragging3 ? 'grab' : 'not-allowed'}"
+        cdkDrag
+        (cdkDragStarted)="dragStarted(1)"
+        (cdkDragEnded)="dragEnded(1)"> 
+
+        <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">{{ piece.top }}</span>
+        <br>
+        <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
+        <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+      
+      </div>
+</div>

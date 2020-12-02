@@ -7,7 +7,7 @@
   position: relative;
   box-sizing: border-box;
   top: 50%;
-  left: 50%;
+  left: 75%;
   margin: 50px 0 0 -400px;
 }
 
@@ -87,6 +87,8 @@
   display: block;
   box-sizing: border-box;
   position: absolute; 
+  top: -1px;
+  left: -1px;
   transform-origin: center;
 }
 .piece-one span {
@@ -100,6 +102,15 @@
 }
 .piece-one span:nth-of-type(1) {
   border-radius: 0%;
+}
+/* Piece Bank to side */
+.piece-bank-one {
+  width: 400px;
+  height: 100px;
+  border: 1px black solid;
+  position: fixed;
+  top: 50%;
+  left: 0px;
 }
 
 
@@ -243,6 +254,7 @@
 .drag-list-one {
   width: 170px;
   height: 76px;
+  border: 1px dotted black;
   border-top-left-radius: 31%;
   border-top-right-radius: 31%;
   border-bottom-left-radius: 21%;
@@ -253,7 +265,35 @@
   position: absolute;
 }
 
+.drag-list-two {
+  width: 70px;
+  height: 76px;
+  border-top-left-radius: 31%;
+  border-top-right-radius: 31%;
+  border-bottom-left-radius: 21%;
+  border-bottom-right-radius: 21%;
+  background-color: white;
+  display: block;
+  box-sizing: border-box;
+  position: absolute; 
+}
+
+.drag-list-three {
+  width: 105px;
+  height: 40px;
+  /* border: dotted 2px black; */
+  border-top-left-radius: 31%;
+  border-top-right-radius: 31%;
+  border-bottom-left-radius: 21%;
+  border-bottom-right-radius: 21%;
+  background-color: white;
+  display: block;
+  box-sizing: border-box;
+  position: absolute; 
+}
+
 .cdk-drag-preview {
+  opacity: .8;
 }
 
 

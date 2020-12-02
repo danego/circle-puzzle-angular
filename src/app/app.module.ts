@@ -10,6 +10,7 @@ import { PositionBottomStartDirective } from './position-bottom-start.directive'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { RotatePieceDirective } from './rotate-piece.directive';
+import { PieceBankComponent } from './piece-bank/piece-bank.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { RotatePieceDirective } from './rotate-piece.directive';
     PositionTopStartDirective,
     PositionLeftStartDirective,
     PositionBottomStartDirective,
-    RotatePieceDirective
+    RotatePieceDirective,
+    PieceBankComponent
   ],
   imports: [
     BrowserModule,
