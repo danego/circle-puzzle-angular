@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { RotatePieceDirective } from './rotate-piece.directive';
 import { PieceBankComponent } from './piece-bank/piece-bank.component';
+import { ControlPanelComponent } from './control-panel/control-panel.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PieceBankComponent } from './piece-bank/piece-bank.component';
     PositionLeftStartDirective,
     PositionBottomStartDirective,
     RotatePieceDirective,
-    PieceBankComponent
+    PieceBankComponent,
+    ControlPanelComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 
+import { SolutionsGrabberService } from '../solutions-grabber.service';
+import { BankCircleConnectorService } from '../bank-circle-connector.service';
+
 
 @Component({
   selector: 'piece-bank',
@@ -17,20 +20,27 @@ export class PieceBankComponent implements OnInit {
   displayBankThree: boolean = false;
 
 
-  constructor() { }
+  constructor(
+    private solutionsGrabberService: SolutionsGrabberService,
+    private bankCircleConnectorService: BankCircleConnectorService
+  ) { }
 
-  ngOnInit(): void {
-    this.piecesBank1 = new Array(2);
-    this.piecesBank1[0] = {top:'P', left:'G', right:'G'};
-    this.piecesBank1[1] = {top:'P', left:'O', right:'G'};
 
-    this.piecesBank2 = new Array(2);
-    this.piecesBank2[0] = {left:'P', right:'P', bottom:'G'};
-    this.piecesBank2[1] = {left:'G', right:'G', bottom:'O'};
+  ngOnInit() {
+    this.bankCircleConnectorService.moveAllPieces.subscribe((destination: string) => {
+      if (destination === 'toBank') {
+        //empty all piece arrays in this component
+        this.loadAllPieces();
+      }
+      else if (destination === 'toCircle') {
+        //fill all piece arrays
+        this.removeAllPieces();
+      }
+    });
 
-    this.piecesBank3 = new Array(1);
-    this.piecesBank3[0] = {left:'O', right:'P'};
-
+    this.piecesBank1 = [];
+    this.piecesBank2 = [];
+    this.piecesBank3 = [];
   }
 
   dropped(event: CdkDragDrop<string[]>) {
@@ -60,5 +70,29 @@ export class PieceBankComponent implements OnInit {
     if (layer === 1) {
       this.isDragging = false;
     }
+  }
+
+  loadAllPieces() {
+    //BANK ONE
+    for (let i = 0; i < 10; i++) {
+      this.piecesBank1[i] = this.solutionsGrabberService.allPuzzlePieces[1][i];
+    }
+
+    //BANK TWO
+    for (let i = 0; i < 10; i++) {
+      this.piecesBank2[i] = this.solutionsGrabberService.allPuzzlePieces[2][i];
+    }
+
+    //BANK THREE
+    for (let i = 0; i < 5; i++) {
+      this.piecesBank3[i] = this.solutionsGrabberService.allPuzzlePieces[3][i];
+    }
+
+  }
+
+  removeAllPieces() {
+    this.piecesBank1 = [];
+    this.piecesBank2 = [];
+    this.piecesBank3 = [];
   }
 }

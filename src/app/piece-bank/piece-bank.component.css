@@ -70,7 +70,7 @@
   margin-top: 5px;
 }
 .bank-two {
-  width: 170px;
+  width: 140px;
   height: auto;
   min-height: 125px;
   padding: 30px 30px 10px 30px;
@@ -78,7 +78,7 @@
   background-color: #444444;
   display: flex;
   position: relative;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
   z-index: 10;

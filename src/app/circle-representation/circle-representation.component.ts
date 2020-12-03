@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 
+import { SolutionsGrabberService } from '../solutions-grabber.service';
+import { BankCircleConnectorService } from '../bank-circle-connector.service';
+
 
 @Component({
   selector: 'circle-representation',
@@ -15,65 +18,31 @@ export class CircleRepresentationComponent implements OnInit {
   isDragging2: boolean = false;
   isDragging3: boolean = false;
 
-  constructor() { }
+  constructor(
+    private solutionsGrabberService: SolutionsGrabberService,
+    private bankCircleConnectorService: BankCircleConnectorService
+  ) { }
 
   ngOnInit() {
+    this.bankCircleConnectorService.moveAllPieces.subscribe((destination: string) => {
+      if (destination === 'toBank') {
+        //empty all piece arrays in this component
+        this.removeAllPieces();
+      }
+      else if (destination === 'toCircle') {
+        //fill all piece arrays
+        this.loadAllPieces();
+      }
+    });
+
     this.pieces = new Array(4);
-    this.pieces[0] = ['G', 'G', 'G', 'P', 'P', 'P', 'G', 'G', 'P', 'P'];
+    this.pieces[0] = this.solutionsGrabberService.allPuzzlePieces[0].slice();
 
+    //call to set up empty arrays for each puzzle piece location ... NAME METHOD BETTER
+    this.removeAllPieces();
 
-    //LAYER ONE
     //each piece should be in its own array for drag-&-drop
-    this.pieces[1] = new Array(10);
-    for (let i = 0; i < 10; i++) {
-      this.pieces[1][i] = [];
-    }
-    //array[layer][d&d/piece][actual piece]
-    this.pieces[1][0][0] = {top:'G', left:'P', right:'O'};
-    this.pieces[1][1][0] = {top:'G', left:'G', right:'P'};
-    this.pieces[1][2][0] = {top:'G', left:'O', right:'G'};
-    this.pieces[1][3][0] = {top:'G', left:'P', right:'P'};
-    this.pieces[1][4][0] = {top:'G', left:'O', right:'O'};
-    this.pieces[1][5][0] = {top:'P', left:'P', right:'O'};
-    this.pieces[1][6][0] = {top:'P', left:'O', right:'P'};
-    this.pieces[1][7][0] = {top:'P', left:'G', right:'P'};
-    //this.pieces[1][8][0] = {top:'P', left:'O', right:'G'};
-    //this.pieces[1][9][0] = {top:'P', left:'G', right:'G'};  
-
-    this.piecesBank1 = new Array(2);
-    this.piecesBank1[0] = {top:'P', left:'G', right:'G'};
-    this.piecesBank1[1] = {top:'P', left:'O', right:'G'};
-
-
-    //LAYER TWO
-    this.pieces[2] = new Array(10);
-    for (let i = 0; i < 10; i++) {
-      this.pieces[2][i] = [];
-    }
-    //array[layer][d&d/piece][actual piece]
-    this.pieces[2][0][0] = {left:'G', right:'P', bottom:'O'};
-    this.pieces[2][1][0] = {left:'O', right:'G', bottom:'P'};
-    this.pieces[2][2][0] = {left:'P', right:'O', bottom:'P'};
-    this.pieces[2][3][0] = {left:'O', right:'P', bottom:'G'};
-    this.pieces[2][4][0] = {left:'G', right:'O', bottom:'O'};
-    this.pieces[2][5][0] = {left:'P', right:'G', bottom:'G'};
-    this.pieces[2][6][0] = {left:'P', right:'O', bottom:'G'};
-    this.pieces[2][7][0] = {left:'O', right:'O', bottom:'P'};
-    //this.pieces[2][8][0] = {left:'P', right:'P', bottom:'G'};
-    //this.pieces[2][9][0] = {left:'G', right:'G', bottom:'O'};
-
-
-    //LAYER THREE
-    this.pieces[3] = new Array(5);
-    for (let i = 0; i < 5; i++) {
-      this.pieces[3][i] = [];
-    }
-    this.pieces[3][0][0] = {left:'P', right:'G'}; 
-    this.pieces[3][1][0] = {left:'O', right:'G'}; 
-    this.pieces[3][2][0] = {left:'G', right:'P'}; 
-    this.pieces[3][3][0] = {left:'G', right:'O'}; 
-    //this.pieces[3][4][0] = {left:'O', right:'P'};
-    
+    //Array Nesting Order: array[layer][d&d/piece][actual piece]   
   }
 
   dropped(event: CdkDragDrop<string[]>) {
@@ -108,6 +77,50 @@ export class CircleRepresentationComponent implements OnInit {
     }  
     else {
       this.isDragging3 = false;
+    }
+  }
+
+  loadAllPieces() {
+    //Array Nesting Order: array[layer][d&d/piece][actual piece]
+
+    //LAYER ZERO 
+    //no need to do because it never changes after initial setup
+
+    //LAYER ONE
+    for (let i = 0; i < 10; i++) {
+      this.pieces[1][i] = [];
+      this.pieces[1][i][0] = {...this.solutionsGrabberService.allPuzzlePieces[1][i]};
+    }
+
+    //LAYER TWO
+    this.pieces[2] = new Array(10);
+    for (let i = 0; i < 10; i++) {
+      this.pieces[2][i] = [];
+      this.pieces[2][i][0] = {...this.solutionsGrabberService.allPuzzlePieces[2][i]};
+    }
+
+    //LAYER THREE
+    this.pieces[3] = new Array(5);
+    for (let i = 0; i < 5; i++) {
+      this.pieces[3][i] = [];
+      this.pieces[3][i][0] = {...this.solutionsGrabberService.allPuzzlePieces[3][i]};
+    }
+  }
+
+  removeAllPieces() {
+    this.pieces[1] = new Array(10);
+    for (let i = 0; i < 10; i++) {
+      this.pieces[1][i] = [];
+    }
+
+    this.pieces[2] = new Array(10);
+    for (let i = 0; i < 10; i++) {
+      this.pieces[2][i] = [];
+    }
+
+    this.pieces[3] = new Array(5);
+    for (let i = 0; i < 5; i++) {
+      this.pieces[3][i] = [];
     }
   }
 }
