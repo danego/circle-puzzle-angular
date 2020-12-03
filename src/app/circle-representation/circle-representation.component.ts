@@ -3,7 +3,7 @@ import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 
 
 @Component({
-  selector: 'app-circle-representation',
+  selector: 'circle-representation',
   templateUrl: './circle-representation.component.html',
   styleUrls: ['./circle-representation.component.css']
 })
@@ -58,7 +58,7 @@ export class CircleRepresentationComponent implements OnInit {
     this.pieces[2][4][0] = {left:'G', right:'O', bottom:'O'};
     this.pieces[2][5][0] = {left:'P', right:'G', bottom:'G'};
     this.pieces[2][6][0] = {left:'P', right:'O', bottom:'G'};
-    //this.pieces[2][7][0] = {left:'O', right:'O', bottom:'P'};
+    this.pieces[2][7][0] = {left:'O', right:'O', bottom:'P'};
     //this.pieces[2][8][0] = {left:'P', right:'P', bottom:'G'};
     //this.pieces[2][9][0] = {left:'G', right:'G', bottom:'O'};
 
@@ -78,8 +78,7 @@ export class CircleRepresentationComponent implements OnInit {
 
   dropped(event: CdkDragDrop<string[]>) {
     //move to new, dropped list, only if empty
-    debugger;
-    if (event.container.data.length === 0 || event.container.id === 'piece-bank-one') {
+    if (event.container.data.length === 0) {
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,

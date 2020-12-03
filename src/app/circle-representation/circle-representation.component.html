@@ -1,50 +1,3 @@
-<!--
-  <piece-bank></piece-bank>
-  *ngFor="let array of piecesBank1; let i = index"
-  cdkDropListOrientation="horizontal"
--->
-<div cdkDropListGroup>
-  
-  <div 
-  class="bank-one"
-  id="piece-bank-one"
-  cdkDropList
-  cdkDropListSortingDisabled
-    [cdkDropListConnectedTo]="['dl-one-0', 'dl-one-1', 'dl-one-2', 'dl-one-3', 'dl-one-4', 'dl-one-5', 'dl-one-6', 'dl-one-7', 'dl-one-8', 'dl-one-9']"
-    [cdkDropListData]="piecesBank1"
-    (cdkDropListDropped)="dropped($event)">
-
-    <div 
-      class="piece-one piece-bank" 
-      *ngFor="let piece of piecesBank1; let i = index"
-      [ngStyle]="{'cursor': !isDragging1 && !isDragging2 && !isDragging3 ? 'grab' : 'not-allowed'}"
-      cdkDrag
-      (cdkDragStarted)="dragStarted(1)"
-      (cdkDragEnded)="dragEnded(1)"> 
-
-      <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">{{ piece.top }}</span>
-      <br>
-      <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
-      <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
-
-      <div *cdkDragPreview class="piece-one piece-bank">
-        <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">{{ piece.top }}</span>
-        <br>
-        <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
-        <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
-      </div>
-      <!--
-      <div 
-        *cdkDragPlaceholder 
-        class="drag-placeholder">
-      </div> 
-        <div class="drag-list-one"></div>-->
-
-    </div>
-  </div>
-</div>
-<!-- END OF BANK -->
-
 
 <!-- LAYER ZERO -->
 <section class="circle-puzzle" id="circle-puzzle">
@@ -74,8 +27,8 @@
         class="drag-list-one"
         [ngStyle]="{'cursor': isDragging2 || isDragging3 ? 'not-allowed' : 'default'}"
         cdkDropList
-        cdkDropListConnectedTo="piece-bank-one"
         [cdkDropListData]="pieces[1][i]"
+        cdkDropListConnectedTo="piece-bank-one"
         (cdkDropListDropped)="dropped($event)"
         [positionTopStart]="i"
         [circleHeight]="600"
@@ -122,12 +75,13 @@
   <div cdkDropListGroup class="layer-two" >
     <div class="layer-two-middle">
       <div
-        id="drop-list-two"
+        id="{{'dl-two-' + i}}"        
         *ngFor="let array of pieces[2]; let i = index"
         class="drag-list-two"
         [ngStyle]="{'cursor': isDragging1 || isDragging3 ? 'not-allowed' : 'default'}"
         cdkDropList
         [cdkDropListData]="pieces[2][i]"
+        cdkDropListConnectedTo="piece-bank-two"
         (cdkDropListDropped)="dropped($event)"
         [positionLeftStart]="i"
         [circleHeight]="400"
@@ -160,12 +114,13 @@
   <div cdkDropListGroup class="layer-three">
     <div class="layer-three-middle"> 
       <div
-        id="drop-list-three"
+        id="{{'dl-three-' + i}}" 
         *ngFor="let array of pieces[3]; let i = index"
         class="drag-list-three"
         [ngStyle]="{'cursor': isDragging1 || isDragging2 ? 'not-allowed' : 'default'}"
         cdkDropList
         [cdkDropListData]="pieces[3][i]"
+        cdkDropListConnectedTo="piece-bank-three"
         (cdkDropListDropped)="dropped($event)"
         [positionBottomStart]="i"
         [circleHeight]="240"
