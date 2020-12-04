@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { BankCircleConnectorService } from '../bank-circle-connector.service';
+import { SolutionsGrabberService } from '../solutions-grabber.service';
 
 @Component({
   selector: 'control-panel',
@@ -9,7 +10,10 @@ import { BankCircleConnectorService } from '../bank-circle-connector.service';
 })
 export class ControlPanelComponent implements OnInit {
 
-  constructor(private bankCircleConnectorService: BankCircleConnectorService) { }
+  constructor(
+    private bankCircleConnectorService: BankCircleConnectorService,
+    private solutionsGrabberService: SolutionsGrabberService
+  ) { }
 
   ngOnInit() {
     
@@ -21,6 +25,10 @@ export class ControlPanelComponent implements OnInit {
   }
   moveAllToCircle() {
     this.bankCircleConnectorService.transferAllToCircle();
+  }
+
+  onGenerateSolutions() {
+    this.solutionsGrabberService.startGeneratingSolutions();
   }
 
 }

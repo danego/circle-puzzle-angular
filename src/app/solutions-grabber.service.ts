@@ -1,15 +1,30 @@
 import { Injectable, OnInit } from '@angular/core';
 
+import { SolutionsGeneratorService } from './solutions-generator.service';
+
 @Injectable({
   providedIn: 'root'
 })
 
 export class SolutionsGrabberService {
   allPuzzlePieces = new Array(4);
+  currentlyLoadedSolutionPieces = new Array(4);
 
+  //Will be connected to ControlPanel Component
+  /*
+   * should generate all solns at input
+   *
+   * at switchSolns input, should send new order to circle 
+   * - which will then load ALL pieces in, but in new order
+   * 
+   * SHOULD this service also manage solutionsAvailableCounter? probably ...
+   *
+   * ControlPanel => solnsGrabberService => solnsGenerator => listener on circleComponent & load pieces in new order
+  */
 
-  constructor() {
-    console.log('service cctor');
+  constructor(
+    private solutionsGeneratorService: SolutionsGeneratorService
+  ) {
     //Keep for clarity elsewhere ... consistent layer numbering
     this.allPuzzlePieces[0] = ['G', 'G', 'G', 'P', 'P', 'P', 'G', 'G', 'P', 'P'];
     this.allPuzzlePieces[1] = [
@@ -43,5 +58,29 @@ export class SolutionsGrabberService {
       {left:'G', right:'O', id: 3},
       {left:'O', right:'P', id: 4}
     ];
+  }
+
+  startGeneratingSolutions() {
+    //will return array of allSolutions
+    //that array will be made up of Array(4) 
+    //where each element corresponds to layer and is array of IDs
+
+    //should return from here to enable the solnSubset radio buttons
+    //which will then need its own thing/logic when picking a new soln#
+    /* 
+     * user clicks new soln#
+     * controlPanel => here
+     * here => circlePanel listener and loads new soln (does it perform the switiching here or there?)
+     * Maybe have default pieces in ID order and one temporary piece order ... which is where we switch
+     * see "displayNewSolutionHtml"
+     * 
+    */
+    console.log(
+      this.solutionsGeneratorService.generateSolutions(this.allPuzzlePieces.slice())
+    );
+  }
+
+  switchPieceOrderToNewSolution() {
+
   }
 }

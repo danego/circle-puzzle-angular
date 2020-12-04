@@ -15,7 +15,7 @@
   width: 170px;
   height: auto;
   min-height: 125px;
-  padding: 30px 30px 10px 30px;
+  padding: 10px 30px 10px 30px;
   border: 1px black solid;
   background-color: #666666;
   display: flex;
@@ -73,7 +73,7 @@
   width: 140px;
   height: auto;
   min-height: 125px;
-  padding: 30px 30px 10px 30px;
+  padding: 10px 30px 10px 30px;
   border: 1px black solid;
   background-color: #444444;
   display: flex;
@@ -125,10 +125,10 @@
   margin-top: 5px;
 }
 .bank-three {
-  width: 170px;
+  width: 105px;
   height: auto;
   min-height: 125px;
-  padding: 30px 30px 10px 30px;
+  padding: 10px 30px 10px 30px;
   border: 1px black solid;
   background-color: #222;
   display: flex;
@@ -148,10 +148,9 @@
   border-bottom-right-radius: 20%;
   background-color: #bdbaba;
   text-align: center;
-  display: block;
+  transform-origin: center;
   box-sizing: border-box;
   position: relative; 
-  transform-origin: center;
   display: flex;
   justify-content: space-between;
 }
@@ -178,4 +177,8 @@
 .purple {
   background-color: rebeccapurple;
   background-image: url("../../assets/noise.png");
+}
+
+.cdk-drag-preview {
+  opacity: .8;
 }

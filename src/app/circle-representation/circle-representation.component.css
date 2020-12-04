@@ -100,26 +100,6 @@
 .piece-one span:nth-of-type(1) {
   border-radius: 0%;
 }
-/* Piece Bank to side */
-.bank-one {
-  width: 170px;
-  height: auto;
-  min-height: 125px;
-  padding: 30px;
-  border: 1px black solid;
-  background-color: white;
-  position: absolute;
-  top: 70px;
-  left: 50px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  z-index: 10;
-}
-.piece-bank {
-  display: block;
-  position: relative;
-}
 
 
 
@@ -161,6 +141,8 @@
   display: block;
   box-sizing: border-box;
   position: absolute; 
+  top: 0px;
+  left: 0px;
   transform-origin: center;
 }
 .piece-two span {
@@ -214,6 +196,8 @@
   display: block;
   box-sizing: border-box;
   position: absolute; 
+  top: 0px;
+  left: 0px;
   transform-origin: center;
   display: flex;
   justify-content: space-between;

@@ -128,6 +128,12 @@ export class PieceBankComponent implements OnInit {
     }
   }
 
+  checkToDisplay(layer: number) {
+    if (layer === 1 && this.isDragging1) {
+      this.displayBankOne = true;
+    }
+  }
+
   loadAllPieces() {
     //BANK ONE
     for (let i = 0; i < 10; i++) {

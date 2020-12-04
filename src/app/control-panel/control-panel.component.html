@@ -1,4 +1,24 @@
-<div>
+<section>
   <button (click)="moveAllToBank()">Move All to Bank</button>
   <button (click)="moveAllToCircle()">Move all to Circle</button>
-</div>
+  <div class="spacer"></div>
+
+  <button (click)="onGenerateSolutions()">Generate Solutions</button>
+
+  <fieldset>
+    <legend>Subset Size</legend>
+    <ul>
+      <li>
+        <label for="small-soln">Display small subset</label>
+        <input type="radio" id="small-soln" name="subset" value="S" disabled>
+      </li>
+      <li>
+        <label for="large-soln">Display large subset</label>
+        <input type="radio" id="large-soln" name="subset" value="L" disabled>
+      </li>
+    </ul>
+  </fieldset>
+
+  <label for="soln-number">Select solution #: </label>
+  <select id="soln-number"></select>
+</section>
