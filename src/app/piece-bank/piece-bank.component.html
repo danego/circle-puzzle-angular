@@ -13,8 +13,9 @@
 
 <div *ngIf="displayBankOne">
   <div 
-    class="bank-one"
     id="piece-bank-one"
+    class="bank-one"
+    [ngStyle]="{'cursor': checkIsDraggingForBank(1)}"
     cdkDropList
     cdkDropListSortingDisabled
     [cdkDropListConnectedTo]="['dl-one-0', 'dl-one-1', 'dl-one-2', 'dl-one-3', 'dl-one-4', 'dl-one-5', 'dl-one-6', 'dl-one-7', 'dl-one-8', 'dl-one-9']"
@@ -24,7 +25,7 @@
     <div 
       class="piece-one" 
       *ngFor="let piece of piecesBank1; let i = index"
-      [ngStyle]="{'cursor': !isDragging1 && !isDragging2 && !isDragging3 ? 'grab' : 'not-allowed'}"
+      [ngStyle]="{'cursor': !isDragging2 && !isDragging3 ? 'grab' : 'not-allowed'}"
       cdkDrag
       (cdkDragStarted)="dragStarted(1)"
       (cdkDragEnded)="dragEnded(1)"> 
@@ -59,8 +60,9 @@
 </div>
 <div *ngIf="displayBankTwo">
   <div 
-    class="bank-two"
     id="piece-bank-two"
+    class="bank-two"
+    [ngStyle]="{'cursor': checkIsDraggingForBank(2)}"
     cdkDropList
     cdkDropListSortingDisabled
     [cdkDropListConnectedTo]="['dl-two-0', 'dl-two-1', 'dl-two-2', 'dl-two-3', 'dl-two-4', 'dl-two-5', 'dl-two-6', 'dl-two-7', 'dl-two-8', 'dl-two-9']"
@@ -70,10 +72,10 @@
     <div 
       class="piece-two" 
       *ngFor="let piece of piecesBank2; let i = index"
-      [ngStyle]="{'cursor': !isDragging1 && !isDragging2 && !isDragging3 ? 'grab' : 'not-allowed'}"
+      [ngStyle]="{'cursor': !isDragging1 && !isDragging3 ? 'grab' : 'not-allowed'}"
       cdkDrag
-      (cdkDragStarted)="dragStarted(1)"
-      (cdkDragEnded)="dragEnded(1)"> 
+      (cdkDragStarted)="dragStarted(2)"
+      (cdkDragEnded)="dragEnded(2)"> 
 
       <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
       <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
@@ -105,8 +107,9 @@
 </div>
 <div *ngIf="displayBankThree">
   <div 
-    class="bank-three"
     id="piece-bank-three"
+    class="bank-three"
+    [ngStyle]="{'cursor': checkIsDraggingForBank(3)}"
     cdkDropList
     cdkDropListSortingDisabled
     [cdkDropListConnectedTo]="['dl-three-0', 'dl-three-1', 'dl-three-2', 'dl-three-3', 'dl-three-4']"
@@ -116,10 +119,10 @@
     <div 
       class="piece-three" 
       *ngFor="let piece of piecesBank3; let i = index"
-      [ngStyle]="{'cursor': !isDragging1 && !isDragging2 && !isDragging3 ? 'grab' : 'not-allowed'}"
+      [ngStyle]="{'cursor': !isDragging1 && !isDragging2 ? 'grab' : 'not-allowed'}"
       cdkDrag
-      (cdkDragStarted)="dragStarted(1)"
-      (cdkDragEnded)="dragEnded(1)"> 
+      (cdkDragStarted)="dragStarted(3)"
+      (cdkDragEnded)="dragEnded(3)"> 
 
       <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
       <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>

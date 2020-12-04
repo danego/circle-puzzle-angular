@@ -14,7 +14,9 @@ export class PieceBankComponent implements OnInit {
   piecesBank1: any[];
   piecesBank2: any[];
   piecesBank3: any[];
-  isDragging: boolean = false;
+  isDragging1: boolean = false;
+  isDragging2: boolean = false;
+  isDragging3: boolean = false;
   displayBankOne: boolean = false;
   displayBankTwo: boolean = false;
   displayBankThree: boolean = false;
@@ -38,9 +40,20 @@ export class PieceBankComponent implements OnInit {
       }
     });
 
-    this.piecesBank1 = [];
-    this.piecesBank2 = [];
-    this.piecesBank3 = [];
+    this.bankCircleConnectorService.isDragging.subscribe((dragData) => {
+      if (dragData.layer === 1) {
+        this.isDragging1 = dragData.enabled;
+      }
+      else if (dragData.layer === 2) {
+        this.isDragging2 = dragData.enabled;
+      }
+      else {
+        this.isDragging3 = dragData.enabled;
+      }
+    });
+
+    //call to set up empty arrays for each puzzle piece location ... NAME METHOD BETTER
+    this.removeAllPieces();
   }
 
   dropped(event: CdkDragDrop<string[]>) {
@@ -55,20 +68,63 @@ export class PieceBankComponent implements OnInit {
 
   dragStarted(layer: number) {
     if (layer === 1) {
-      this.isDragging = true;
+      this.isDragging1 = true;
     }
-    /*
     else if (layer === 2) {
       this.isDragging2 = true;
     }
     else {
       this.isDragging3 = true;
     }
-    */
+    this.bankCircleConnectorService.dragStarted(layer);  //might not need to listen in BANK bc cursor is always avlbl ...
   }
+
   dragEnded(layer: number) {
     if (layer === 1) {
-      this.isDragging = false;
+      this.isDragging1 = false;
+    }
+    else if (layer === 2) {
+      this.isDragging2 = false;
+    }
+    else {
+      this.isDragging3 = false;
+    }
+    this.bankCircleConnectorService.dragEnded(layer);
+  }
+
+  checkIsDraggingForBank(layer: number) {
+    if (layer === 1) {
+      if (this.isDragging2 || this.isDragging3) {
+        return 'not-allowed';
+      }
+      else if (this.isDragging1) {
+        return 'grab';
+      }
+      else {
+        return 'default';
+      }
+    }
+    else if (layer === 2) {
+      if (this.isDragging1 || this.isDragging3) {
+        return 'not-allowed';
+      }
+      else if (this.isDragging2) {
+        return 'grab';
+      }
+      else {
+        return 'default';
+      }
+    }
+    else { //layer 3
+      if (this.isDragging1 || this.isDragging2) {
+        return 'not-allowed';
+      }
+      else if (this.isDragging3) {
+        return 'grab';
+      }
+      else {
+        return 'default';
+      }
     }
   }
 

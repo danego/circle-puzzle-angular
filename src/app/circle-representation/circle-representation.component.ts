@@ -35,6 +35,18 @@ export class CircleRepresentationComponent implements OnInit {
       }
     });
 
+    this.bankCircleConnectorService.isDragging.subscribe((dragData) => {
+      if (dragData.layer === 1) {
+        this.isDragging1 = dragData.enabled;
+      }
+      else if (dragData.layer === 2) {
+        this.isDragging2 = dragData.enabled;
+      }
+      else {
+        this.isDragging3 = dragData.enabled;
+      }
+    });
+
     this.pieces = new Array(4);
     this.pieces[0] = this.solutionsGrabberService.allPuzzlePieces[0].slice();
 
@@ -67,6 +79,7 @@ export class CircleRepresentationComponent implements OnInit {
     else {
       this.isDragging3 = true;
     }
+    this.bankCircleConnectorService.dragStarted(layer);
   }
   dragEnded(layer: number) {
     if (layer === 1) {
@@ -78,6 +91,7 @@ export class CircleRepresentationComponent implements OnInit {
     else {
       this.isDragging3 = false;
     }
+    this.bankCircleConnectorService.dragEnded(layer);
   }
 
   loadAllPieces() {
