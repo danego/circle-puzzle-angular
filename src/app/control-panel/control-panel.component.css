@@ -11,3 +11,15 @@ section {
 .spacer {
   flex-grow: 1;
 }
+
+.soln-dropdown {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.solutions-remaining {
+  width: 200px;
+  margin: 5px;
+  padding: 2px;
+}

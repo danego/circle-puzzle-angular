@@ -12,7 +12,7 @@ import { BankCircleConnectorService } from '../bank-circle-connector.service';
 })
 export class CircleRepresentationComponent implements OnInit {
   pieces: any[][];
-  piecesBank1;
+  piecesByID: any[] = new Array(3);
 
   isDragging1: boolean = false;
   isDragging2: boolean = false;
@@ -67,6 +67,15 @@ export class CircleRepresentationComponent implements OnInit {
         event.currentIndex
         );
     }
+    
+    //UPDATE REMAINING SOLUTIONS DiSPLAY / CALCULATION
+    //call solutionsGrabber to compare, passing in current pieces array (or just their IDs)
+    //then compare IDs to IDs
+    //should aim to disqualify to move quickly through all 63 SOLNS
+    //  - DQ if NOT EMPTY && NOT MATCHING allSolns
+    //   - keep counter/tally going ... should be quick I think ...
+    
+    // Will also need to activate for dropped() in bankComponent bc you're removing pieces (& thus might gain solns etc)
   }
 
   dragStarted(layer: number) {
@@ -103,21 +112,21 @@ export class CircleRepresentationComponent implements OnInit {
     //LAYER ONE
     for (let i = 0; i < 10; i++) {
       this.pieces[1][i] = [];
-      this.pieces[1][i][0] = {...this.solutionsGrabberService.allPuzzlePieces[1][i]};
+      this.pieces[1][i][0] = {...this.solutionsGrabberService.currentPuzzlePiecesSequence[1][i]};
     }
 
     //LAYER TWO
     this.pieces[2] = new Array(10);
     for (let i = 0; i < 10; i++) {
       this.pieces[2][i] = [];
-      this.pieces[2][i][0] = {...this.solutionsGrabberService.allPuzzlePieces[2][i]};
+      this.pieces[2][i][0] = {...this.solutionsGrabberService.currentPuzzlePiecesSequence[2][i]};
     }
 
     //LAYER THREE
     this.pieces[3] = new Array(5);
     for (let i = 0; i < 5; i++) {
       this.pieces[3][i] = [];
-      this.pieces[3][i][0] = {...this.solutionsGrabberService.allPuzzlePieces[3][i]};
+      this.pieces[3][i][0] = {...this.solutionsGrabberService.currentPuzzlePiecesSequence[3][i]};
     }
   }
 

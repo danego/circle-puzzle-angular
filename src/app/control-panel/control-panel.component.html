@@ -19,6 +19,16 @@
     </ul>
   </fieldset>
 
-  <label for="soln-number">Select solution #: </label>
-  <select id="soln-number"></select>
+  <div class="soln-dropdown">
+    <label for="soln-number">Select solution #: </label>
+    <select id="soln-number" (change)="onLoadNewSolution($event)">
+      <option disabled selected>Solutions:</option>
+      <option *ngFor="let soln of numberOfSolutionsArray; let i = index">{{i}}</option>
+    </select>
+  </div>
+
+  <div class="solutions-remaining">
+    <span>There are X remaining solutions from here.</span>
+  </div>
+
 </section>

@@ -9,6 +9,7 @@ import { SolutionsGrabberService } from '../solutions-grabber.service';
   styleUrls: ['./control-panel.component.css']
 })
 export class ControlPanelComponent implements OnInit {
+  numberOfSolutionsArray: any[] = [];
 
   constructor(
     private bankCircleConnectorService: BankCircleConnectorService,
@@ -28,7 +29,15 @@ export class ControlPanelComponent implements OnInit {
   }
 
   onGenerateSolutions() {
-    this.solutionsGrabberService.startGeneratingSolutions();
+    const numberOfSolutions = this.solutionsGrabberService.startGeneratingSolutions();
+    this.numberOfSolutionsArray = new Array(numberOfSolutions);
   }
+  
+  onLoadNewSolution(event) {
+    console.log(event.target.value);
+    const newSolutionNumber = event.target.value;
 
+    this.solutionsGrabberService.switchPieceOrderToNewSolution(newSolutionNumber);
+    this.bankCircleConnectorService.transferAllToCircle();  //HERE OR ELSESWHERE ... 
+  }
 }
