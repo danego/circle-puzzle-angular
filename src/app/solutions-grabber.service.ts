@@ -1,4 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 
 import { SolutionsGeneratorService } from './solutions-generator.service';
 
@@ -9,19 +10,9 @@ import { SolutionsGeneratorService } from './solutions-generator.service';
 export class SolutionsGrabberService {
   allPuzzlePieces = new Array(4);
   currentPuzzlePiecesSequence = new Array(4);
+  private _currentSolutionById: any[];  
   allGeneratedSolutionsById: any[];
-
-  //Will be connected to ControlPanel Component
-  /*
-   * should generate all solns at input
-   *
-   * at switchSolns input, should send new order to circle 
-   * - which will then load ALL pieces in, but in new order
-   * 
-   * SHOULD this service also manage solutionsAvailableCounter? YES since it will store the allSolutionsByIdOrder ... of ID orders
-   *
-   * ControlPanel => solnsGrabberService => solnsGenerator => listener on circleComponent & load pieces in new order
-  */
+  remainingSolutions = new Subject<number>();
 
   constructor(
     private solutionsGeneratorService: SolutionsGeneratorService
@@ -60,29 +51,15 @@ export class SolutionsGrabberService {
       {left:'O', right:'P', id: 4}
     ];
 
+    //initialize currentPuzzlePiecesSequence to track loaded piece sequence (used to update in CircleComponent)
     this.makeDeepCopy();
+
+    //initialize _currentSolutionById to track only IDs
+    this.setupPieceIds();
   }
 
-
-
   startGeneratingSolutions(): number {
-    //will return array of allSolutions
-    //that array will be made up of Array(4) 
-    //where each element corresponds to layer and is array of IDs
-
-    //should return from here to enable the solnSubset radio buttons
-    //which will then need its own thing/logic when picking a new soln#
-    /* 
-     * user clicks new soln#
-     * controlPanel => here
-     * here => circlePanel listener and loads new soln (does it perform the switiching here or there?)
-     * Maybe have default pieces in ID order and one temporary piece order ... which is where we switch
-     * see "displayNewSolutionHtml"
-     * 
-    */
-   
     this.allGeneratedSolutionsById = this.solutionsGeneratorService.generateSolutions(this.allPuzzlePieces.slice());
-    //this.switchPieceOrderToNewSolution(10);
     return this.allGeneratedSolutionsById.length;
   }
 
@@ -94,9 +71,26 @@ export class SolutionsGrabberService {
     this.currentPuzzlePiecesSequence[3] = [...this.allPuzzlePieces[3]];
   }
 
-  switchPieceOrderToNewSolution(solutionNumber: number) {
-    //separate bc solutions do not include fixed layer 0
+  makeDeepCopyFromSolution(solutionNumber: number) {
+    this._currentSolutionById = new Array(3);
+    this._currentSolutionById[0] = [...this.allGeneratedSolutionsById[solutionNumber][0]];
+    this._currentSolutionById[1] = [...this.allGeneratedSolutionsById[solutionNumber][1]];
+    this._currentSolutionById[2] = [...this.allGeneratedSolutionsById[solutionNumber][2]];
+  }
 
+  setupPieceIds() {
+    //initializes ID tracker to default puzzle piece order
+    this._currentSolutionById = new Array(3);
+    this._currentSolutionById[0] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    this._currentSolutionById[1] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    this._currentSolutionById[2] = [0, 1, 2, 3, 4];
+  }
+
+  switchPieceOrderToNewSolution(solutionNumber: number) {
+    //update ID tracker 
+    this.makeDeepCopyFromSolution(solutionNumber);
+    
+    //separate bc solutions do not include fixed layer 0
     //Layer One
     for (let i = 0; i < 10; i++) {
       //if bankAvlbl piece is already in position, skip to next index
@@ -109,7 +103,6 @@ export class SolutionsGrabberService {
         }
       }
     }
-
     //Layer Two
     for (let i = 0; i < 10; i++) {
       //if bankAvlbl piece is already in position, skip to next index
@@ -122,7 +115,6 @@ export class SolutionsGrabberService {
         }
       }
     }
-
     //Layer Three
     for (let i = 0; i < 5; i++) {
       //if bankAvlbl piece is already in position, skip to next index
@@ -141,5 +133,42 @@ export class SolutionsGrabberService {
     let holdFirstPiece = {...this.currentPuzzlePiecesSequence[layerNumber][switchSpotIndex]};
     this.currentPuzzlePiecesSequence[layerNumber][switchSpotIndex] = {...this.currentPuzzlePiecesSequence[layerNumber][toSwitchInIndex]};
     this.currentPuzzlePiecesSequence[layerNumber][toSwitchInIndex] = holdFirstPiece;
+  }
+
+  //deeply copies ID arrays from current solution
+  get currentSolutionById() {
+    const deepCopiedCurrentSolution = new Array(3);
+
+    for (let layer = 0; layer < 3; layer++) {
+      deepCopiedCurrentSolution[layer] = [...this._currentSolutionById[layer]];
+    }
+    return deepCopiedCurrentSolution;
+  }
+
+  computeRemainingSolutions(currentIdSequence: any[][]) {
+    /* 
+     * compare inputted sequence w/ every soln of 63
+     * quick exit if any position in any layer is not a match 
+     * SO ... must be empty (=== "") or must match 
+     */
+    let remainingSolutions = 0;
+
+    //solutions
+    solnLoop: for (let soln = 0; soln < this.allGeneratedSolutionsById.length; soln++) {
+      //layers
+      for (let layer = 0; layer < 3; layer++) {
+        let currentIdSequenceLayer = currentIdSequence[layer];
+        //pieceIds
+        for (let piece = 0; piece < currentIdSequenceLayer.length; piece++) {
+          if (currentIdSequenceLayer[piece] !== "" && currentIdSequenceLayer[piece] !== this.allGeneratedSolutionsById[soln][layer][piece]) {
+            continue solnLoop;
+          }
+        }
+      }
+      //all layers and pieces are a go
+      remainingSolutions++;
+    }
+
+    this.remainingSolutions.next(remainingSolutions);
   }
 }

@@ -57,13 +57,31 @@ export class PieceBankComponent implements OnInit {
   }
 
   dropped(event: CdkDragDrop<string[]>) {
-    //move to new, dropped list, only if empty
+
+    this.updatePiecesByIdTracker(event);
+
+    //move to new, dropped list even if not empty
     transferArrayItem(
       event.previousContainer.data,
       event.container.data,
       event.previousIndex,
       event.currentIndex
     );
+  }
+
+  updatePiecesByIdTracker(event: CdkDragDrop<string[]>) {
+    //store new position for ID  
+    const stringToNum = {
+      one: 1,
+      two: 2,
+      three: 3
+    };
+    const containerIdArray = event.previousContainer.id.split('-');
+    const layer = stringToNum[containerIdArray[1]] - 1;
+    const pieceId = (event.previousContainer.data[event.previousIndex] as any).id; //ADD MODEL/Interfaces for DIFF Pieces
+    const oldPosition = +containerIdArray[2];
+    //update piecesById in circleComponent
+    this.bankCircleConnectorService.droppedUpdatePiecesById(layer, oldPosition, pieceId);
   }
 
   dragStarted(layer: number) {

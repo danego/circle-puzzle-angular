@@ -28,7 +28,7 @@
   </div>
 
   <div class="solutions-remaining">
-    <span>There are X remaining solutions from here.</span>
+    <span>There {{ remainingSolutions === 1 ? 'is' : 'are' }} {{ remainingSolutions }} remaining {{ remainingSolutions === 1 ? 'solution' : 'solutions' }} from here.</span>
   </div>
 
 </section>

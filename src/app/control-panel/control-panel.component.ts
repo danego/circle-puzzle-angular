@@ -8,8 +8,10 @@ import { SolutionsGrabberService } from '../solutions-grabber.service';
   templateUrl: './control-panel.component.html',
   styleUrls: ['./control-panel.component.css']
 })
+
 export class ControlPanelComponent implements OnInit {
   numberOfSolutionsArray: any[] = [];
+  remainingSolutions: number = 0;
 
   constructor(
     private bankCircleConnectorService: BankCircleConnectorService,
@@ -17,7 +19,9 @@ export class ControlPanelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    
+    this.solutionsGrabberService.remainingSolutions.subscribe((remainingSolutions) => {
+      this.remainingSolutions = remainingSolutions;
+    });
   }
 
   moveAllToBank() {
@@ -26,6 +30,7 @@ export class ControlPanelComponent implements OnInit {
   }
   moveAllToCircle() {
     this.bankCircleConnectorService.transferAllToCircle();
+    //ADD SOLNSGRABBER TO UPDATE PIECESBYID !!!
   }
 
   onGenerateSolutions() {
@@ -34,9 +39,7 @@ export class ControlPanelComponent implements OnInit {
   }
   
   onLoadNewSolution(event) {
-    console.log(event.target.value);
     const newSolutionNumber = event.target.value;
-
     this.solutionsGrabberService.switchPieceOrderToNewSolution(newSolutionNumber);
     this.bankCircleConnectorService.transferAllToCircle();  //HERE OR ELSESWHERE ... 
   }

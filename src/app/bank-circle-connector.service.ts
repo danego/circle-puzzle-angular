@@ -10,12 +10,22 @@ export class BankCircleConnectorService {
   private circlePiecesArray = [];
   isDragging = new Subject<{ layer: number, enabled: boolean }>();
   moveAllPieces = new Subject<string>(); //emits either 'toBank' or 'toCircle'
+  droppedPieceData = new Subject<{ layer: number, position: number, pieceId: number }>();
 
   transferAllToBank() {
     this.moveAllPieces.next('toBank');
   }
   transferAllToCircle() {
     this.moveAllPieces.next('toCircle');
+  }
+
+  droppedUpdatePiecesById(layer: number, position: number, pieceId: number) {
+    // here => bankCircleConnector => CircleComponent (update piecesByID) => solutionsGrabber (run soln comparison)
+    this.droppedPieceData.next({
+      layer: layer,
+      position: position,
+      pieceId: pieceId
+    });
   }
 
   dragStarted(layer: number) {
@@ -31,21 +41,4 @@ export class BankCircleConnectorService {
       enabled: false
     });
   }
-
-  //PSUEDO CODE 
-  /* 
-  - this service needs to be aware of current dropList values, both in Bank & Circle
-
-    - Could update in service each time those change in components
-    - Could ref link the two arrays (prob might occur after first transfer)
-
-    - Can pass in all values of arrays to call of service method()
-      - So we press button in AppControlPanel
-      - emit subjectListener from service to both Bank & Circle Components
-      - then in their listeners, they send current array data
-      - that method call should return new values for array (or order of their simpleNums) 
-
-      - FIRST create solutions service to store all default puzzle pieces with their own index/ID
-      - then when repopulating the arrays/displays (init, allMoved^), reach out to this service to re-setup the values (ie reach out to this service only at beginning)
-  */
 }
