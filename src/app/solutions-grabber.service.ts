@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 import { SolutionsGeneratorService } from './solutions-generator.service';
 
@@ -12,7 +12,11 @@ export class SolutionsGrabberService {
   currentPuzzlePiecesSequence = new Array(4);
   private _currentSolutionById: any[];  
   allGeneratedSolutionsById: any[];
-  remainingSolutions = new Subject<number>();
+  remainingSolutions = new BehaviorSubject<number>(null);
+  allPiecesUsed: boolean = false;
+  allPiecesUsedSubject = new Subject<boolean>();
+  currentSolutionNumber = new Subject<number>();
+
 
   constructor(
     private solutionsGeneratorService: SolutionsGeneratorService
@@ -56,10 +60,19 @@ export class SolutionsGrabberService {
 
     //initialize _currentSolutionById to track only IDs
     this.setupPieceIds();
+
+    //TEMPORARY FIX ... MIGHT MOVE ELSEWHERE
+    this.startGeneratingSolutions();
+    this.setupPieceIdsEmpty();
+    this.computeRemainingSolutions(this._currentSolutionById);
   }
 
   startGeneratingSolutions(): number {
-    this.allGeneratedSolutionsById = this.solutionsGeneratorService.generateSolutions(this.allPuzzlePieces.slice());
+    //only generates solutions if not already done
+    //Later will need similar logic for different patterns (coins, scarabs)
+    if (!this.allGeneratedSolutionsById) {
+      this.allGeneratedSolutionsById = this.solutionsGeneratorService.generateSolutions(this.allPuzzlePieces.slice());
+    }
     return this.allGeneratedSolutionsById.length;
   }
 
@@ -84,6 +97,13 @@ export class SolutionsGrabberService {
     this._currentSolutionById[0] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     this._currentSolutionById[1] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     this._currentSolutionById[2] = [0, 1, 2, 3, 4];
+  }
+
+  setupPieceIdsEmpty() {
+    this._currentSolutionById = new Array(3);
+    this._currentSolutionById[0] = new Array(10).fill('');
+    this._currentSolutionById[1] = new Array(10).fill('');
+    this._currentSolutionById[2] = new Array(10).fill('');
   }
 
   switchPieceOrderToNewSolution(solutionNumber: number) {
@@ -145,7 +165,9 @@ export class SolutionsGrabberService {
     return deepCopiedCurrentSolution;
   }
 
-  computeRemainingSolutions(currentIdSequence: any[][]) {
+  computeRemainingSolutions(currentIdSequence?: any[][]) {
+    //empty argument is used for moving all pieces: empty, default, or new solution
+    currentIdSequence = currentIdSequence || this._currentSolutionById;
     /* 
      * compare inputted sequence w/ every soln of 63
      * quick exit if any position in any layer is not a match 
@@ -169,6 +191,51 @@ export class SolutionsGrabberService {
       remainingSolutions++;
     }
 
+    //emit updated status only if already true
+    if (this.allPiecesUsed) {
+      this.allPiecesUsed = false;
+      this.allPiecesUsedSubject.next(false);
+    }
+    //potentially update display current solution and allPiecesUsed
+    if (remainingSolutions === 1) {
+      this.determineCurrentSolutionNumber(currentIdSequence);
+    }
+
     this.remainingSolutions.next(remainingSolutions);
+  }
+
+  determineCurrentSolutionNumber(currentIdSequence?: any[][]) {
+    //runs through current ID sequence checking all pieces are used (no empty strings)
+    for (let i = 0; i < 3; i++) {
+      let currentIdSequenceLayer = currentIdSequence[i];
+      //pieceIds
+      for (let piece = 0; piece < currentIdSequenceLayer.length; piece++) {
+        if (currentIdSequenceLayer[piece] === '') {
+          //if some spots are empty, then no need to update allPiecesUsed or check for matching solution below
+          return;
+        }
+      }
+    }
+    this.allPiecesUsed = true;
+    this.allPiecesUsedSubject.next(true);
+
+    let currentSolutionNumber;
+    //goes through each soln in allSolutions to find matching one
+    solnLoop: for (let soln = 0; soln < this.allGeneratedSolutionsById.length; soln++) {
+      //layers
+      for (let layer = 0; layer < 3; layer++) {
+        let currentIdSequenceLayer = currentIdSequence[layer];
+        //pieceIds
+        for (let piece = 0; piece < currentIdSequenceLayer.length; piece++) {
+          if (currentIdSequenceLayer[piece] !== this.allGeneratedSolutionsById[soln][layer][piece]) {
+            continue solnLoop;
+          }
+        }
+      }
+      currentSolutionNumber = soln;
+      break solnLoop;
+    }
+
+    this.currentSolutionNumber.next(currentSolutionNumber);
   }
 }

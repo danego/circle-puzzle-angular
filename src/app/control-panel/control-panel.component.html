@@ -29,6 +29,7 @@
 
   <div class="solutions-remaining">
     <span>There {{ remainingSolutions === 1 ? 'is' : 'are' }} {{ remainingSolutions }} remaining {{ remainingSolutions === 1 ? 'solution' : 'solutions' }} from here.</span>
+    <p *ngIf="remainingSolutions === 1 && allPiecesUsed">You found solution #{{ currentSolutionNumber }}</p>
   </div>
 
 </section>

@@ -54,7 +54,7 @@ export class CircleRepresentationComponent implements OnInit {
         this.isDragging3 = dragData.enabled;
       }
     });
-
+    
     //updates piecesById tracker when piece is dropped into bank (ie removed)
     this.bankCircleConnectorService.droppedPieceData.subscribe((droppedPieceData) => {
       this.updatePiecesByIdTrackerRemove(droppedPieceData);
@@ -71,7 +71,7 @@ export class CircleRepresentationComponent implements OnInit {
   dropped(event: CdkDragDrop<string[]>) {
     //move to new, dropped list, only if empty
     if (event.container.data.length === 0) {
-      this.updatePiecesByIdTrackerAdded(event);
+      this.updatePiecesByIdTracker(event);
       this.solutionsGrabberService.computeRemainingSolutions(this.piecesByID);
 
       transferArrayItem(
@@ -82,16 +82,8 @@ export class CircleRepresentationComponent implements OnInit {
       );
     }
   }
-  //UPDATE REMAINING SOLUTIONS DiSPLAY / CALCULATION
-  //call solutionsGrabber to compare, passing in current pieces array (or just their IDs)
-  //then compare IDs to IDs
-  //should aim to disqualify to move quickly through all 63 SOLNS
-  //  - DQ if NOT EMPTY && NOT MATCHING allSolns
-  //   - keep counter/tally going ... should be quick I think ...
-  
-  // Will also need to activate for dropped() in bankComponent bc you're removing pieces (& thus might gain solns etc)
-    
-  updatePiecesByIdTrackerAdded(event: CdkDragDrop<string[]>) {
+   
+  updatePiecesByIdTracker(event: CdkDragDrop<string[]>) {
     //store new position for ID  
     const stringToNum = {
       one: 1,
@@ -102,15 +94,24 @@ export class CircleRepresentationComponent implements OnInit {
     const layer = stringToNum[containerIdArray[1]] - 1;
     const pieceId = (event.previousContainer.data[event.previousIndex] as any).id; //ADD MODEL/Interfaces for DIFF Pieces
     const newPosition = +containerIdArray[2];
-    this.piecesByID[layer][newPosition] = pieceId;
-    
-    console.log(this.piecesByID);
+
+    //only remove if piece coming from circle, not bankComponent
+    if (event.previousContainer.id.split('-')[0] === 'dl') {
+      const oldPosition = +event.previousContainer.id.split('-')[2];
+      this.updatePiecesByIdTrackerRemove({layer: layer, position: oldPosition, pieceId: pieceId});
+    }
+    this.updatePiecesByIdTrackerAdded({layer: layer, position: newPosition, pieceId: pieceId});
+  }
+  
+  updatePiecesByIdTrackerAdded(droppedPieceData: {layer: number, position: number, pieceId: number}) {
+    this.piecesByID[droppedPieceData.layer][droppedPieceData.position] = droppedPieceData.pieceId;
+    //console.log(this.piecesByID);
   }
 
   updatePiecesByIdTrackerRemove(droppedPieceData: {layer: number, position: number, pieceId: number}) {
     //this.piecesByID[droppedPieceData.layer].splice(droppedPieceData.position, 1);
     this.piecesByID[droppedPieceData.layer][droppedPieceData.position] = '';
-    console.log(this.piecesByID);
+    //console.log(this.piecesByID);
   }
 
   dragStarted(layer: number) {
@@ -125,6 +126,7 @@ export class CircleRepresentationComponent implements OnInit {
     }
     this.bankCircleConnectorService.dragStarted(layer);
   }
+  
   dragEnded(layer: number) {
     if (layer === 1) {
       this.isDragging1 = false;

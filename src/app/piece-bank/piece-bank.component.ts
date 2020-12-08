@@ -76,12 +76,16 @@ export class PieceBankComponent implements OnInit {
       two: 2,
       three: 3
     };
+
+    //sends dropped info to Circle Component only if drop comes from there
     const containerIdArray = event.previousContainer.id.split('-');
-    const layer = stringToNum[containerIdArray[1]] - 1;
-    const pieceId = (event.previousContainer.data[event.previousIndex] as any).id; //ADD MODEL/Interfaces for DIFF Pieces
-    const oldPosition = +containerIdArray[2];
-    //update piecesById in circleComponent
-    this.bankCircleConnectorService.droppedUpdatePiecesById(layer, oldPosition, pieceId);
+    if (containerIdArray[0] === 'dl') {
+      const layer = stringToNum[containerIdArray[1]] - 1;
+      const pieceId = (event.previousContainer.data[event.previousIndex] as any).id; //ADD MODEL/Interfaces for DIFF Pieces
+      const oldPosition = +containerIdArray[2];
+      
+      this.bankCircleConnectorService.droppedUpdatePiecesById(layer, oldPosition, pieceId);
+    }
   }
 
   dragStarted(layer: number) {

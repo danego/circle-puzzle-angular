@@ -12,6 +12,8 @@ import { SolutionsGrabberService } from '../solutions-grabber.service';
 export class ControlPanelComponent implements OnInit {
   numberOfSolutionsArray: any[] = [];
   remainingSolutions: number = 0;
+  allPiecesUsed: boolean = false;
+  currentSolutionNumber: number;
 
   constructor(
     private bankCircleConnectorService: BankCircleConnectorService,
@@ -22,15 +24,22 @@ export class ControlPanelComponent implements OnInit {
     this.solutionsGrabberService.remainingSolutions.subscribe((remainingSolutions) => {
       this.remainingSolutions = remainingSolutions;
     });
+
+    this.solutionsGrabberService.allPiecesUsedSubject.subscribe((allPiecesUsed) => {
+      this.allPiecesUsed = allPiecesUsed;
+    });
+
+    this.solutionsGrabberService.currentSolutionNumber.subscribe((solnNumber) => {
+      this.currentSolutionNumber = solnNumber;
+    });
   }
 
   moveAllToBank() {
     this.bankCircleConnectorService.transferAllToBank();
-
   }
+
   moveAllToCircle() {
-    this.bankCircleConnectorService.transferAllToCircle();
-    //ADD SOLNSGRABBER TO UPDATE PIECESBYID !!!
+    this.bankCircleConnectorService.transferAllToCircle('default');
   }
 
   onGenerateSolutions() {
@@ -41,6 +50,6 @@ export class ControlPanelComponent implements OnInit {
   onLoadNewSolution(event) {
     const newSolutionNumber = event.target.value;
     this.solutionsGrabberService.switchPieceOrderToNewSolution(newSolutionNumber);
-    this.bankCircleConnectorService.transferAllToCircle();  //HERE OR ELSESWHERE ... 
+    this.bankCircleConnectorService.transferAllToCircle('newSolution');
   }
 }

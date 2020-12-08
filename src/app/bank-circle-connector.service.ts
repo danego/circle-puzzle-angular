@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
+import { SolutionsGrabberService } from './solutions-grabber.service';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -12,10 +14,18 @@ export class BankCircleConnectorService {
   moveAllPieces = new Subject<string>(); //emits either 'toBank' or 'toCircle'
   droppedPieceData = new Subject<{ layer: number, position: number, pieceId: number }>();
 
+  constructor(private solutionsGrabberService: SolutionsGrabberService) {}
+
   transferAllToBank() {
+    this.solutionsGrabberService.setupPieceIdsEmpty();
+    this.solutionsGrabberService.computeRemainingSolutions();
     this.moveAllPieces.next('toBank');
   }
-  transferAllToCircle() {
+  transferAllToCircle(moveType: string) {
+    if (moveType === 'default') {
+      this.solutionsGrabberService.setupPieceIds();
+    }
+    this.solutionsGrabberService.computeRemainingSolutions();
     this.moveAllPieces.next('toCircle');
   }
 
