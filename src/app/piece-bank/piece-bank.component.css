@@ -6,6 +6,15 @@
   border-radius: 10%;
   background-color: #666666;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.layer-one-drop-toggle {
+  width: 100%;
+  display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
@@ -16,7 +25,7 @@
   height: auto;
   min-height: 125px;
   padding: 10px 30px 10px 30px;
-  border: 1px black solid;
+  border: 1px solid gray;
   background-color: #666666;
   display: flex;
   position: relative;
@@ -117,27 +126,53 @@
   border: 1px solid gray;
   border-radius: 10%;
   background-color: #222;
-  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  margin-top: 5px;
+}
+
+.layer-three-drop-toggle {
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  margin-top: 5px;
 }
+
 .bank-three {
   width: 105px;
   height: auto;
+  box-sizing: border-box;
   min-height: 125px;
-  padding: 10px 30px 10px 30px;
-  border: 1px black solid;
   background-color: #222;
-  display: flex;
   position: relative;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: flex-start;
   z-index: 10;
 }
+/* Matches height of layer 3 pieces */
+.bank-three-variable-pieces {
+  padding-top: 40px;
+}
+
+.bank-three-zone {
+  width: 105px;
+  height: 25px;
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 10;
+  top: 26px;
+  border: 1px dashed white;
+}
+.droplist-open {
+  margin: 10px auto 15px auto;
+  min-height: 150px;
+}
+
 .piece-three {
   width: 105px;
   height: 40px;
@@ -158,7 +193,7 @@
   width: 30px;
   height: 36px;
   padding: 8px 8px;
-  text-align: justify;
+  text-align: center;
   border: 1px solid #222222;
   border-radius: 50%;
   display: inline-block;
@@ -181,4 +216,9 @@
 
 .cdk-drag-preview {
   opacity: .8;
+}
+
+.cdk-drag-placeholder {
+  z-index: 20;
+  background-color: coral;
 }

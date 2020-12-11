@@ -20,6 +20,7 @@ export class PieceBankComponent implements OnInit {
   displayBankOne: boolean = false;
   displayBankTwo: boolean = false;
   displayBankThree: boolean = false;
+  displayBankThreeTemporary: boolean = false;
 
 
   constructor(
@@ -153,6 +154,16 @@ export class PieceBankComponent implements OnInit {
   checkToDisplay(layer: number) {
     if (layer === 1 && this.isDragging1) {
       this.displayBankOne = true;
+    }
+    else if (layer === 3 && this.isDragging3) {
+      this.displayBankThree = true;
+      this.displayBankThreeTemporary = true;
+    }
+  }
+
+  removeTemporaryDisplay(layer: number) {
+    if (layer === 3) {
+      this.displayBankThreeTemporary = false;
     }
   }
 

@@ -126,7 +126,7 @@ export class CircleRepresentationComponent implements OnInit {
     }
     this.bankCircleConnectorService.dragStarted(layer);
   }
-  
+
   dragEnded(layer: number) {
     if (layer === 1) {
       this.isDragging1 = false;

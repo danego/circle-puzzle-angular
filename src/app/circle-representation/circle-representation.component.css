@@ -87,6 +87,7 @@
   top: -1px;
   left: -1px;
   transform-origin: center;
+  z-index: 30;
 }
 .piece-one span {
   width: 82px;
@@ -144,6 +145,7 @@
   top: 0px;
   left: 0px;
   transform-origin: center;
+  z-index: 30;
 }
 .piece-two span {
   width: 30px;
@@ -201,12 +203,13 @@
   transform-origin: center;
   display: flex;
   justify-content: space-between;
+  z-index: 30;
 }
 .piece-three span {
   width: 30px;
   height: 36px;
   padding: 8px 8px;
-  text-align: justify;
+  text-align: center;
   border: 1px solid #222222;
   border-radius: 50%;
   display: inline-block;
@@ -288,6 +291,6 @@
   opacity: .8;
 }
 
-
 .cdk-drag-placeholder {
+  z-index: 20;
 }
