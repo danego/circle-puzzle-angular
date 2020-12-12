@@ -17,9 +17,14 @@ export class PieceBankComponent implements OnInit {
   isDragging1: boolean = false;
   isDragging2: boolean = false;
   isDragging3: boolean = false;
+  isDraggingIncoming1: boolean = false;
+  isDraggingIncoming2: boolean = false;
+  isDraggingIncoming3: boolean = false; //used to add fake space to bank to fit piece
   displayBankOne: boolean = false;
   displayBankTwo: boolean = false;
   displayBankThree: boolean = false;
+  displayBankOneTemporary: boolean = false;
+  displayBankTwoTemporary: boolean = false;
   displayBankThreeTemporary: boolean = false;
 
 
@@ -41,15 +46,21 @@ export class PieceBankComponent implements OnInit {
       }
     });
 
-    this.bankCircleConnectorService.isDragging.subscribe((dragData) => {
+    this.bankCircleConnectorService.isDraggingFromCircle.subscribe((dragData) => {
       if (dragData.layer === 1) {
         this.isDragging1 = dragData.enabled;
+        this.isDraggingIncoming1 = dragData.enabled;
+        this.displayBankOneTemporary = false;
       }
       else if (dragData.layer === 2) {
         this.isDragging2 = dragData.enabled;
+        this.isDraggingIncoming2 = dragData.enabled;
+        this.displayBankTwoTemporary = false;
       }
       else {
         this.isDragging3 = dragData.enabled;
+        this.isDraggingIncoming3 = dragData.enabled;
+        this.displayBankThreeTemporary = false;
       }
     });
 
@@ -99,7 +110,7 @@ export class PieceBankComponent implements OnInit {
     else {
       this.isDragging3 = true;
     }
-    this.bankCircleConnectorService.dragStarted(layer);  //might not need to listen in BANK bc cursor is always avlbl ...
+    this.bankCircleConnectorService.dragStartedFromBank(layer);  //might not need to listen in BANK bc cursor is always avlbl ...
   }
 
   dragEnded(layer: number) {
@@ -112,7 +123,7 @@ export class PieceBankComponent implements OnInit {
     else {
       this.isDragging3 = false;
     }
-    this.bankCircleConnectorService.dragEnded(layer);
+    this.bankCircleConnectorService.dragEndedFromBank(layer);
   }
 
   checkIsDraggingForBank(layer: number) {
@@ -151,19 +162,31 @@ export class PieceBankComponent implements OnInit {
     }
   }
 
-  checkToDisplay(layer: number) {
-    if (layer === 1 && this.isDragging1) {
-      this.displayBankOne = true;
+  checkToDisplayStatic(layer: number) {
+    if (layer === 1) {
+      this.displayBankOne = !this.displayBankOne;
     }
-    else if (layer === 3 && this.isDragging3) {
-      this.displayBankThree = true;
-      this.displayBankThreeTemporary = true;
+    else if (layer === 2) {
+      this.displayBankTwo = !this.displayBankTwo;
+    }
+    else if (layer === 3) {
+      //this.displayBankThreeTemporary = !this.displayBankThreeTemporary;
+      //this.displayBankThree = this.displayBankThreeTemporary;
+      this.displayBankThree = !this.displayBankThree;
     }
   }
 
-  removeTemporaryDisplay(layer: number) {
-    if (layer === 3) {
-      this.displayBankThreeTemporary = false;
+  checkToDisplayDragging(layer: number) {
+    if (layer === 1 && this.isDragging1) {
+      this.displayBankOne = true;
+      //this.displayBankOneTemporary = true;
+    }
+    else if (layer === 2 && this.isDragging2) {
+      this.displayBankTwoTemporary = true;
+    }
+    else if (layer === 3 && this.isDragging3) {
+      //this.displayBankThree = true;
+      this.displayBankThreeTemporary = true;
     }
   }
 

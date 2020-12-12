@@ -68,30 +68,54 @@
 
 .layer-two-dropdown {
   width: 230px;
-  background-color: orangered;
+  height: auto;
   border: 1px solid gray;
   border-radius: 10%;
   background-color: #444444;
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  margin-top: 5px;
+}
+.layer-two-drop-toggle {
+  width: 100%;
+  display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  margin-top: 5px;
 }
-.bank-two {
+
+.bank-two-droplist {
+  width: 140px;
+  height: 25px;
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 10;
+  top: 26px;
+  border: 1px dashed white;
+}
+/* .droplist-open */
+
+.bank-two-pieces {
   width: 140px;
   height: auto;
+  box-sizing: border-box;
   min-height: 125px;
-  padding: 10px 30px 10px 30px;
-  border: 1px black solid;
   background-color: #444444;
-  display: flex;
   position: relative;
+  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
   z-index: 10;
 }
+.bank-two-pieces-open {
+  padding-top: 76px;
+  /* Could try inserting an empty object instead .... ngIf before ngFor statement */
+}
+
 .piece-two {
   width: 70px;
   height: 76px;
@@ -122,7 +146,7 @@
 
 .layer-three-dropdown {
   width: 230px;
-  background-color: orangered;
+  height: auto;
   border: 1px solid gray;
   border-radius: 10%;
   background-color: #222;
@@ -133,7 +157,6 @@
   position: relative;
   margin-top: 5px;
 }
-
 .layer-three-drop-toggle {
   width: 100%;
   display: flex;
@@ -142,24 +165,7 @@
   align-items: center;
 }
 
-.bank-three {
-  width: 105px;
-  height: auto;
-  box-sizing: border-box;
-  min-height: 125px;
-  background-color: #222;
-  position: relative;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  z-index: 10;
-}
-/* Matches height of layer 3 pieces */
-.bank-three-variable-pieces {
-  padding-top: 40px;
-}
-
-.bank-three-zone {
+.bank-three-droplist {
   width: 105px;
   height: 25px;
   box-sizing: border-box;
@@ -170,7 +176,25 @@
 }
 .droplist-open {
   margin: 10px auto 15px auto;
-  min-height: 150px;
+  min-height: 150px;  /* Fix this to match # of pieces (will be a directive & layer-specific) */
+}
+
+.bank-three-pieces {
+  width: 105px;
+  height: auto;
+  box-sizing: border-box;
+  min-height: 125px;
+  background-color: #222;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  z-index: 10;
+}
+/* Matches height of layer 3 pieces */
+.bank-three-pieces-open {
+  padding-top: 40px;
 }
 
 .piece-three {
@@ -220,5 +244,4 @@
 
 .cdk-drag-placeholder {
   z-index: 20;
-  background-color: coral;
 }

@@ -10,7 +10,8 @@ import { SolutionsGrabberService } from './solutions-grabber.service';
 export class BankCircleConnectorService {
   private bankPiecesArray = [];
   private circlePiecesArray = [];
-  isDragging = new Subject<{ layer: number, enabled: boolean }>();
+  isDraggingFromBank = new Subject<{ layer: number, enabled: boolean }>();
+  isDraggingFromCircle = new Subject<{ layer: number, enabled: boolean }>();
   moveAllPieces = new Subject<string>(); //emits either 'toBank' or 'toCircle'
   droppedPieceData = new Subject<{ layer: number, position: number, pieceId: number }>();
 
@@ -38,15 +39,29 @@ export class BankCircleConnectorService {
     });
   }
 
-  dragStarted(layer: number) {
-    this.isDragging.next({
+  dragStartedFromBank(layer: number) {
+    this.isDraggingFromBank.next({
       layer: layer,
       enabled: true
     });
   }
 
-  dragEnded(layer: number) {
-    this.isDragging.next({
+  dragStartedFromCircle(layer: number) {
+    this.isDraggingFromCircle.next({
+      layer: layer,
+      enabled: true
+    });
+  }
+
+  dragEndedFromBank(layer: number) {
+    this.isDraggingFromBank.next({
+      layer: layer,
+      enabled: false
+    });
+  }
+
+  dragEndedFromCircle(layer: number) {
+    this.isDraggingFromCircle.next({
       layer: layer,
       enabled: false
     });

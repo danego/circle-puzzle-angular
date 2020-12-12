@@ -43,7 +43,7 @@ export class CircleRepresentationComponent implements OnInit {
     });
 
     //updates isDragging data for correct cursor display from BankComponent
-    this.bankCircleConnectorService.isDragging.subscribe((dragData) => {
+    this.bankCircleConnectorService.isDraggingFromBank.subscribe((dragData) => {
       if (dragData.layer === 1) {
         this.isDragging1 = dragData.enabled;
       }
@@ -124,7 +124,7 @@ export class CircleRepresentationComponent implements OnInit {
     else {
       this.isDragging3 = true;
     }
-    this.bankCircleConnectorService.dragStarted(layer);
+    this.bankCircleConnectorService.dragStartedFromCircle(layer);
   }
 
   dragEnded(layer: number) {
@@ -137,7 +137,7 @@ export class CircleRepresentationComponent implements OnInit {
     else {
       this.isDragging3 = false;
     }
-    this.bankCircleConnectorService.dragEnded(layer);
+    this.bankCircleConnectorService.dragEndedFromCircle(layer);
   }
 
   loadAllPieces() {
