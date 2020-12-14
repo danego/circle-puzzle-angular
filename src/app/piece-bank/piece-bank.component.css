@@ -1,13 +1,13 @@
 /* Piece Bank to side */
 .layer-one-dropdown {
   width: 230px;
-  background-color: orangered;
+  height: auto;
   border: 1px solid gray;
   border-radius: 10%;
   background-color: #666666;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   position: relative;
 }
@@ -20,19 +20,30 @@
   align-items: center;
 }
 
-.bank-one {
+.bank-one-droplist {
+  width: 170px;
+  height: 25px;
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 10;
+  top: 26px;
+  border: 1px dashed white;
+}
+
+.bank-one-pieces {
   width: 170px;
   height: auto;
-  min-height: 125px;
-  padding: 10px 30px 10px 30px;
-  border: 1px solid gray;
+  box-sizing: border-box;
   background-color: #666666;
-  display: flex;
   position: relative;
-  flex-direction: column;
+  display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
   z-index: 10;
+}
+.bank-one-pieces-open {
+  padding-top: 76px;
 }
 
 .piece-one {
@@ -112,7 +123,7 @@
   z-index: 10;
 }
 .bank-two-pieces-open {
-  padding-top: 76px;
+  /* padding-top: 76px; */
   /* Could try inserting an empty object instead .... ngIf before ngFor statement */
 }
 
@@ -140,6 +151,10 @@
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;
+}
+.piece-two-open {
+  width: 70px;
+  height: 76px;
 }
 
 
@@ -176,7 +191,7 @@
 }
 .droplist-open {
   margin: 10px auto 15px auto;
-  min-height: 150px;  /* Fix this to match # of pieces (will be a directive & layer-specific) */
+  /* min-height: 150px; */ /* Fix this to match # of pieces (will be a directive & layer-specific) */
 }
 
 .bank-three-pieces {

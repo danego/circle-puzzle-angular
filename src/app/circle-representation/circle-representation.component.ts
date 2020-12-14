@@ -101,11 +101,15 @@ export class CircleRepresentationComponent implements OnInit {
       this.updatePiecesByIdTrackerRemove({layer: layer, position: oldPosition, pieceId: pieceId});
     }
     this.updatePiecesByIdTrackerAdded({layer: layer, position: newPosition, pieceId: pieceId});
+
+
   }
   
   updatePiecesByIdTrackerAdded(droppedPieceData: {layer: number, position: number, pieceId: number}) {
     this.piecesByID[droppedPieceData.layer][droppedPieceData.position] = droppedPieceData.pieceId;
-    //console.log(this.piecesByID);
+
+    //call to inform and resize piece bank
+    this.bankCircleConnectorService.droppedInCircle(droppedPieceData.layer + 1);
   }
 
   updatePiecesByIdTrackerRemove(droppedPieceData: {layer: number, position: number, pieceId: number}) {

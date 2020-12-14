@@ -14,6 +14,7 @@ export class BankCircleConnectorService {
   isDraggingFromCircle = new Subject<{ layer: number, enabled: boolean }>();
   moveAllPieces = new Subject<string>(); //emits either 'toBank' or 'toCircle'
   droppedPieceData = new Subject<{ layer: number, position: number, pieceId: number }>();
+  pieceDroppedInCircle = new Subject<number>();
 
   constructor(private solutionsGrabberService: SolutionsGrabberService) {}
 
@@ -37,6 +38,10 @@ export class BankCircleConnectorService {
       position: position,
       pieceId: pieceId
     });
+  }
+
+  droppedInCircle(layer: number) {
+    this.pieceDroppedInCircle.next(layer);
   }
 
   dragStartedFromBank(layer: number) {

@@ -1,159 +1,160 @@
-<!--
-  <piece-bank></piece-bank>
-  *ngFor="let array of piecesBank1; let i = index"
-  cdkDropListOrientation="horizontal"
--->
+<section (mouseover)="onHoverOverBank(true)" (mouseleave)="onHoverOverBank(false)">
 
-<!-- BANK ONE -->
-<div 
-  id="piece-bank-one"
-  class="layer-one-dropdown" 
-  (click)="displayBankOne = !displayBankOne" 
-  (mouseover)="checkToDisplayDragging(1)"
-  [ngStyle]="{'cursor': checkIsDraggingForBank(1)}"
-  cdkDropList
-  cdkDropListSortingDisabled
-  [cdkDropListConnectedTo]="['dl-one-0', 'dl-one-1', 'dl-one-2', 'dl-one-3', 'dl-one-4', 'dl-one-5', 'dl-one-6', 'dl-one-7', 'dl-one-8', 'dl-one-9']"
-  [cdkDropListData]="piecesBank1"
-  (cdkDropListDropped)="dropped($event)"> <!-- (mouseover)="checkToDisplay(1)" -->
+  <!-- BANK ONE -->
+  <div 
+    class="layer-one-dropdown" 
+    [ngStyle]="{'height': piecesDropdownHeight1}"
+    (click)="checkToDisplayStatic(1)">
 
-  <div class="layer-one-drop-toggle">
-    <div>Open Layer One Pieces</div>
-    <svg *ngIf="!displayBankOne" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
-    <svg *ngIf="displayBankOne" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
-  </div>
+    <div class="layer-one-drop-toggle">
+      <div>Open Layer One Pieces</div>
+      <svg *ngIf="!displayBankOne" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+      <svg *ngIf="displayBankOne" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
+    </div>
 
-  <div [hidden]="!displayBankOne"> <!--[hidden]="!displayBankOne"-->
-    <div class="bank-one">
-    
-      <div 
-        class="piece-one" 
-        *ngFor="let piece of piecesBank1; let i = index"
-        [ngStyle]="{'cursor': !isDragging2 && !isDragging3 ? 'grab' : 'not-allowed'}"
-        cdkDrag
-        (cdkDragStarted)="dragStarted(1)"
-        (cdkDragEnded)="dragEnded(1)"> 
+    <div 
+      id="piece-bank-one"
+      class="bank-one-droplist"
+      [ngClass]="{'droplist-open': displayBankOne}"
+      [ngStyle]="{'cursor': checkIsDraggingForBank(1), 'height': piecesDroplistHeight1}"
+      (mouseover)="checkToDisplayDragging(1)"
+      cdkDropList
+      cdkDropListSortingDisabled
+      [cdkDropListConnectedTo]="['dl-one-0', 'dl-one-1', 'dl-one-2', 'dl-one-3', 'dl-one-4', 'dl-one-5', 'dl-one-6', 'dl-one-7', 'dl-one-8', 'dl-one-9']"
+      [cdkDropListData]="piecesBank1"
+      (cdkDropListDropped)="dropped($event)">
+      
+      <div [ngStyle]="{'visibility': displayBankOne || displayBankOneTemporary ? 'visible': 'hidden'}">
+        <div class="bank-one-pieces" [ngClass]="{'bank-one-pieces-open': isDraggingIncoming1 && isHoveringOverBank}"> 
 
-        <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">{{ piece.top }}</span>
-        <br>
-        <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
-        <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
-
-        <div *cdkDragPreview class="piece-one">
-          <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">{{ piece.top }}</span>
-          <br>
-          <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
-          <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
-        </div>
-        <!--
           <div 
-          *cdkDragPlaceholder 
-          class="drag-placeholder">
-        </div> 
-        -->
+            class="piece-one" 
+            *ngFor="let piece of piecesBank1; let i = index"
+            [ngStyle]="{'cursor': !isDragging2 && !isDragging3 ? 'grab' : 'not-allowed'}"
+            cdkDrag
+            (cdkDragStarted)="dragStarted(1)"
+            (cdkDragEnded)="dragEnded(1)"> 
+
+            <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">{{ piece.top }}</span>
+            <br>
+            <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
+            <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+
+            <div *cdkDragPreview class="piece-one">
+              <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">{{ piece.top }}</span>
+              <br>
+              <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
+              <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+            </div>
+    
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 
-<!-- BANK TWO -->
-<div 
-  class="layer-two-dropdown" 
-  [ngStyle]="{'min-height': displayBankTwo || displayBankTwoTemporary ? '425px' : 'auto'}"
-  (click)="checkToDisplayStatic(2)">
-
-  <div class="layer-two-drop-toggle">
-    <div>Open Layer Two Pieces</div>
-    <svg *ngIf="!displayBankTwo" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
-    <svg *ngIf="displayBankTwo" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
-  </div>
-
+  <!-- BANK TWO -->
   <div 
-    id="piece-bank-two"
-    class="bank-two-droplist"
-    [ngClass]="{'droplist-open': displayBankTwo}" 
-    [ngStyle]="{'cursor': checkIsDraggingForBank(2)}"
-    (mouseover)="checkToDisplayDragging(2)"
-    cdkDropList
-    cdkDropListSortingDisabled
-    [cdkDropListConnectedTo]="['dl-two-0', 'dl-two-1', 'dl-two-2', 'dl-two-3', 'dl-two-4', 'dl-two-5', 'dl-two-6', 'dl-two-7', 'dl-two-8', 'dl-two-9']"
-    [cdkDropListData]="piecesBank2"
-    (cdkDropListDropped)="dropped($event)">
+    class="layer-two-dropdown" 
+    [ngStyle]="{'height': piecesDropdownHeight2}"
+    (click)="checkToDisplayStatic(2)">
 
-    <div [ngStyle]="{'visibility': displayBankTwo || displayBankTwoTemporary ? 'visible': 'hidden'}">
-      <div class="bank-two-pieces" [ngClass]="{'bank-two-pieces-open': isDraggingIncoming2}">
-        <div 
-          class="piece-two" 
-          *ngFor="let piece of piecesBank2; let i = index"
-          [ngStyle]="{'cursor': !isDragging1 && !isDragging3 ? 'grab' : 'not-allowed'}"
-          cdkDrag
-          (cdkDragStarted)="dragStarted(2)"
-          (cdkDragEnded)="dragEnded(2)"> 
+    <div class="layer-two-drop-toggle">
+      <div>Open Layer Two Pieces</div>
+      <svg *ngIf="!displayBankTwo" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+      <svg *ngIf="displayBankTwo" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
+    </div>
 
-          <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
-          <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
-          <br>
-          <span [ngClass]="{ 'green': piece.bottom === 'G', 'orange': piece.bottom === 'O', 'purple': piece.bottom === 'P' }">{{ piece.bottom }}</span>
+    <div 
+      id="piece-bank-two"
+      class="bank-two-droplist"
+      [ngClass]="{'droplist-open': displayBankTwo}" 
+      [ngStyle]="{'cursor': checkIsDraggingForBank(2), 'height': piecesDroplistHeight2}"
+      (mouseover)="checkToDisplayDragging(2)"
+      cdkDropList
+      cdkDropListSortingDisabled
+      [cdkDropListConnectedTo]="['dl-two-0', 'dl-two-1', 'dl-two-2', 'dl-two-3', 'dl-two-4', 'dl-two-5', 'dl-two-6', 'dl-two-7', 'dl-two-8', 'dl-two-9']"
+      [cdkDropListData]="piecesBank2"
+      (cdkDropListDropped)="dropped($event)">
 
-          <div *cdkDragPreview class="piece-two">
+      <div [ngStyle]="{'visibility': displayBankTwo || displayBankTwoTemporary ? 'visible': 'hidden'}">
+        <div class="bank-two-pieces"> <!-- [ngClass]="{'bank-two-pieces-open': isDraggingIncoming2}" -->
+          <!-- necessary instead of padding bc this bank is rows AND columns -->
+          <div *ngIf="isDraggingIncoming2 && isHoveringOverBank" class="piece-two-open"></div>
+          
+          <div 
+            class="piece-two" 
+            *ngFor="let piece of piecesBank2; let i = index"
+            [ngStyle]="{'cursor': !isDragging1 && !isDragging3 ? 'grab' : 'not-allowed'}"
+            cdkDrag
+            (cdkDragStarted)="dragStarted(2)"
+            (cdkDragEnded)="dragEnded(2)"> 
+
             <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
             <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
             <br>
             <span [ngClass]="{ 'green': piece.bottom === 'G', 'orange': piece.bottom === 'O', 'purple': piece.bottom === 'P' }">{{ piece.bottom }}</span>
-          </div>
 
+            <div *cdkDragPreview class="piece-two">
+              <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
+              <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+              <br>
+              <span [ngClass]="{ 'green': piece.bottom === 'G', 'orange': piece.bottom === 'O', 'purple': piece.bottom === 'P' }">{{ piece.bottom }}</span>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- BANK THREE -->
-<div 
-  class="layer-three-dropdown"
-  [ngStyle]="{'min-height': displayBankThree || displayBankThreeTemporary ? '250px' : 'auto'}"
-  (click)="checkToDisplayStatic(3)">
-
-  <div class="layer-three-drop-toggle">
-    <div style="color: white">Open Layer Three Pieces</div>
-    <svg *ngIf="!displayBankThree" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" fill="white" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
-    <svg *ngIf="displayBankThree" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" fill="white" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
-  </div>
-
+  <!-- BANK THREE -->
   <div 
-    id="piece-bank-three"
-    class="bank-three-droplist"
-    [ngClass]="{'droplist-open': displayBankThree}" 
-    [ngStyle]="{'cursor': checkIsDraggingForBank(3)}"
-    (mouseover)="checkToDisplayDragging(3)"
-    cdkDropList
-    cdkDropListSortingDisabled
-    [cdkDropListConnectedTo]="['dl-three-0', 'dl-three-1', 'dl-three-2', 'dl-three-3', 'dl-three-4']"
-    [cdkDropListData]="piecesBank3"
-    (cdkDropListDropped)="dropped($event)">
+    class="layer-three-dropdown"
+    [ngStyle]="{'min-height': displayBankThree || displayBankThreeTemporary ? '250px' : 'auto'}"
+    (click)="checkToDisplayStatic(3)">
 
-    <div [ngStyle]="{'visibility': displayBankThree || displayBankThreeTemporary ? 'visible': 'hidden'}">
-      <div class="bank-three-pieces" [ngClass]="{'bank-three-pieces-open': isDraggingIncoming3}">
-        <div 
-          class="piece-three" 
-          *ngFor="let piece of piecesBank3; let i = index"
-          [ngStyle]="{'cursor': !isDragging1 && !isDragging2 ? 'grab' : 'not-allowed'}"
-          cdkDrag
-          (cdkDragStarted)="dragStarted(3)"
-          (cdkDragEnded)="dragEnded(3)"> 
+    <div class="layer-three-drop-toggle">
+      <div style="color: white">Open Layer Three Pieces</div>
+      <svg *ngIf="!displayBankThree" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" fill="white" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+      <svg *ngIf="displayBankThree" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" fill="white" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
+    </div>
 
-          <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
-          <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+    <div 
+      id="piece-bank-three"
+      class="bank-three-droplist"
+      [ngClass]="{'droplist-open': displayBankThree}" 
+      [ngStyle]="{'cursor': checkIsDraggingForBank(3)}"
+      (mouseover)="checkToDisplayDragging(3)"
+      cdkDropList
+      cdkDropListSortingDisabled
+      [cdkDropListConnectedTo]="['dl-three-0', 'dl-three-1', 'dl-three-2', 'dl-three-3', 'dl-three-4']"
+      [cdkDropListData]="piecesBank3"
+      (cdkDropListDropped)="dropped($event)">
 
-          <div *cdkDragPreview class="piece-three">
+      <div [ngStyle]="{'visibility': displayBankThree || displayBankThreeTemporary ? 'visible': 'hidden'}">
+        <div class="bank-three-pieces" [ngClass]="{'bank-three-pieces-open': isDraggingIncoming3 && isHoveringOverBank}">
+          <div 
+            class="piece-three" 
+            *ngFor="let piece of piecesBank3; let i = index"
+            [ngStyle]="{'cursor': !isDragging1 && !isDragging2 ? 'grab' : 'not-allowed'}"
+            cdkDrag
+            (cdkDragStarted)="dragStarted(3)"
+            (cdkDragEnded)="dragEnded(3)"> 
+
             <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
             <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+
+            <div *cdkDragPreview class="piece-three">
+              <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
+              <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+            </div>
+            
           </div>
-          
         </div>
       </div>
     </div>
   </div>
-</div>
-<!-- END OF BANK -->
+  <!-- END OF BANK -->
+</section>

@@ -17,15 +17,26 @@ export class PieceBankComponent implements OnInit {
   isDragging1: boolean = false;
   isDragging2: boolean = false;
   isDragging3: boolean = false;
+  //used to add fake space to bank to fit piece
   isDraggingIncoming1: boolean = false;
   isDraggingIncoming2: boolean = false;
-  isDraggingIncoming3: boolean = false; //used to add fake space to bank to fit piece
+  isDraggingIncoming3: boolean = false;
+  isHoveringOverBank: boolean = false;
+
   displayBankOne: boolean = false;
   displayBankTwo: boolean = false;
   displayBankThree: boolean = false;
   displayBankOneTemporary: boolean = false;
   displayBankTwoTemporary: boolean = false;
   displayBankThreeTemporary: boolean = false;
+
+  piecesDropdownHeight1: string = 'auto';
+  piecesDroplistHeight1: string = 'auto';
+  piecesDropdownHeight2: string = 'auto';
+  piecesDroplistHeight2: string = 'auto';
+  piecesDropdownHeight3: string = 'auto';
+  piecesDroplistHeight3: string = 'auto';
+
 
 
   constructor(
@@ -44,6 +55,7 @@ export class PieceBankComponent implements OnInit {
         //fill all piece arrays
         this.removeAllPieces();
       }
+      this.calculatePieceContainerHeight();
     });
 
     this.bankCircleConnectorService.isDraggingFromCircle.subscribe((dragData) => {
@@ -56,6 +68,7 @@ export class PieceBankComponent implements OnInit {
         this.isDragging2 = dragData.enabled;
         this.isDraggingIncoming2 = dragData.enabled;
         this.displayBankTwoTemporary = false;
+        if (!dragData.enabled) debugger;
       }
       else {
         this.isDragging3 = dragData.enabled;
@@ -64,8 +77,15 @@ export class PieceBankComponent implements OnInit {
       }
     });
 
+    this.bankCircleConnectorService.pieceDroppedInCircle.subscribe((layer) => {
+      //check if actually open ...
+      debugger;
+      this.calculatePieceContainerHeight(layer);
+    });
+
     //call to set up empty arrays for each puzzle piece location ... NAME METHOD BETTER
     this.removeAllPieces();
+    this.calculatePieceContainerHeight();
   }
 
   dropped(event: CdkDragDrop<string[]>) {
@@ -77,8 +97,9 @@ export class PieceBankComponent implements OnInit {
       event.previousContainer.data,
       event.container.data,
       event.previousIndex,
-      event.currentIndex
+      0
     );
+    //event.currentIndex is replaced by 0 bc we always want to drop to top of bank (disabledSorting)
   }
 
   updatePiecesByIdTracker(event: CdkDragDrop<string[]>) {
@@ -165,29 +186,113 @@ export class PieceBankComponent implements OnInit {
   checkToDisplayStatic(layer: number) {
     if (layer === 1) {
       this.displayBankOne = !this.displayBankOne;
+      this.displayBankOneTemporary = false;
     }
     else if (layer === 2) {
       this.displayBankTwo = !this.displayBankTwo;
+      this.displayBankTwoTemporary = false;
     }
     else if (layer === 3) {
-      //this.displayBankThreeTemporary = !this.displayBankThreeTemporary;
-      //this.displayBankThree = this.displayBankThreeTemporary;
       this.displayBankThree = !this.displayBankThree;
+      this.displayBankThreeTemporary = false;
     }
+    this.calculatePieceContainerHeight();
   }
 
   checkToDisplayDragging(layer: number) {
     if (layer === 1 && this.isDragging1) {
-      this.displayBankOne = true;
-      //this.displayBankOneTemporary = true;
+      this.displayBankOneTemporary = true;
     }
     else if (layer === 2 && this.isDragging2) {
       this.displayBankTwoTemporary = true;
     }
     else if (layer === 3 && this.isDragging3) {
-      //this.displayBankThree = true;
       this.displayBankThreeTemporary = true;
     }
+  }
+
+  onHoverOverBank(entering: boolean) {
+    if (entering) this.isHoveringOverBank = true;
+    else this.isHoveringOverBank = false;
+
+    this.calculatePieceContainerHeight();
+  }
+
+  calculatePieceContainerHeight(layer?: number) {
+    //call for all three layers
+    if (!layer) {
+      this.calculatePieceContainerHeightOne();
+      this.calculatePieceContainerHeightTwo();
+      this.calculatePieceContainerHeightThree();
+    }
+    //run for only one layers
+    else {
+      switch (layer) {
+        case 1: this.calculatePieceContainerHeightOne();
+        debugger;
+                break;
+        case 2: this.calculatePieceContainerHeightTwo();
+                break;
+        case 3: this.calculatePieceContainerHeightThree();
+                break;
+      }
+    }  
+  }
+
+  calculatePieceContainerHeightOne(containerHeight = 0, dropdown = 'auto', droplist = 'auto') {
+    //LAYER ONE
+    const pieceHeight = 76;
+
+    if (this.displayBankOne || this.displayBankOneTemporary) {
+     containerHeight = this.piecesBank1.length * pieceHeight;
+      droplist = containerHeight + 'px';
+      dropdown = containerHeight + 55 + 'px';
+    }
+    if (this.isDraggingIncoming1 && this.isHoveringOverBank) {
+     containerHeight = (this.piecesBank1.length + 1) * pieceHeight;
+      droplist = containerHeight + 'px';
+      dropdown = containerHeight + 55 + 'px';
+    }
+    this.piecesDroplistHeight1 = droplist;
+    this.piecesDropdownHeight1 = dropdown;
+    console.log(dropdown);
+  }
+
+  calculatePieceContainerHeightTwo(containerHeight = 0, dropdown = 'auto', droplist = 'auto') {
+    //LAYER TWO
+    const pieceHeight = 76;
+
+    if (this.displayBankTwo || this.displayBankTwoTemporary) {
+      containerHeight = (Math.ceil(this.piecesBank2.length / 2)) * pieceHeight;
+      droplist = containerHeight + 'px';
+      dropdown = containerHeight + 55 + 'px';
+    }
+    if (this.isDraggingIncoming2 && this.isHoveringOverBank) {
+      //add one to make room for incoming piece
+      containerHeight = (Math.ceil((this.piecesBank2.length + 1) / 2)) * pieceHeight;
+      droplist = containerHeight + 'px';
+      dropdown = containerHeight + 55 + 'px';
+    }
+    this.piecesDroplistHeight2 = droplist;
+    this.piecesDropdownHeight2 = dropdown;
+  }
+
+  calculatePieceContainerHeightThree(containerHeight = 0, dropdown = 'auto', droplist = 'auto') {
+     //LAYER THREE
+     const pieceHeight = 40;
+
+     if (this.displayBankThree || this.displayBankThreeTemporary) {
+      containerHeight = this.piecesBank3.length * pieceHeight;
+      droplist = containerHeight + 'px';
+      dropdown = containerHeight + 55 + 'px';
+    }
+    if (this.isDraggingIncoming3 && this.isHoveringOverBank) {
+      containerHeight = (this.piecesBank3.length + 1) * pieceHeight;
+      droplist = containerHeight + 'px';
+      dropdown = containerHeight + 55 + 'px';
+    }
+    this.piecesDroplistHeight3 = droplist;
+    this.piecesDropdownHeight3 = dropdown;
   }
 
   loadAllPieces() {
