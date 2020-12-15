@@ -1,10 +1,9 @@
-/* Piece Bank to side */
-.layer-one-dropdown {
+/* Generic Layers */
+.dropdown {
   width: 230px;
   height: auto;
   border: 1px solid gray;
   border-radius: 10%;
-  background-color: #666666;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -13,8 +12,7 @@
   z-index: 15;
   cursor: default;
 }
-
-.layer-one-drop-toggle {
+.drop-toggle {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -23,170 +21,7 @@
   cursor: pointer;
 }
 
-.bank-one-droplist {
-  width: 170px;
-  height: 25px;
-  box-sizing: border-box;
-  position: absolute;
-  z-index: 10;
-  top: 26px;
-}
-
-.bank-one-pieces {
-  width: 170px;
-  height: auto;
-  box-sizing: border-box;
-  background-color: #666666;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  z-index: 10;
-}
-.bank-one-pieces-open {
-  padding-top: 76px;
-}
-
-.piece-one {
-  width: 170px;
-  height: 76px;
-  border: solid 2px black;
-  border-top-left-radius: 30%;
-  border-top-right-radius: 30%;
-  border-bottom-left-radius: 20%;
-  border-bottom-right-radius: 20%;
-  background-color: #bdbaba;
-  text-align: center;
-  display: block;
-  box-sizing: border-box;
-  position: relative;
-  top: -1px;
-  left: -1px;
-  transform-origin: center;
-}   
-.piece-one span {
-  width: 82px;
-  padding: 8px 34px;
-  text-align: center;
-  border: 1px solid #222222;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-}
-.piece-one span:nth-of-type(1) {
-  border-radius: 0%;
-}
-
-
-.layer-two-dropdown {
-  width: 230px;
-  height: auto;
-  border: 1px solid gray;
-  border-radius: 10%;
-  background-color: #444444;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-  margin-top: 5px;
-  z-index: 15;
-  cursor: default;
-}
-.layer-two-drop-toggle {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  cursor: pointer;
-}
-
-.bank-two-droplist {
-  width: 140px;
-  height: 25px;
-  box-sizing: border-box;
-  position: absolute;
-  z-index: 10;
-  top: 26px;
-}
-/* .droplist-open */
-
-.bank-two-pieces {
-  width: 140px;
-  box-sizing: border-box;
-  background-color: #444444;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  z-index: 10;
-}
-.bank-two-pieces-open {
-  /* padding-top: 76px; */
-  /* Could try inserting an empty object instead .... ngIf before ngFor statement */
-}
-
-.piece-two {
-  width: 70px;
-  height: 76px;
-  box-sizing: border-box;
-  border: solid 2px black;
-  border-top-left-radius: 30%;
-  border-top-right-radius: 30%;
-  border-bottom-left-radius: 20%;
-  border-bottom-right-radius: 20%;
-  background-color: #bdbaba;
-  text-align: center;
-  display: block;
-  position: relative;
-  transform-origin: center;
-}   
-.piece-two span {
-  width: 30px;
-  height: 36px;
-  padding: 8px 8px;
-  text-align: center;
-  border: 1px solid #222222;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-}
-.piece-two-open {
-  width: 70px;
-  height: 76px;
-}
-
-
-
-.layer-three-dropdown {
-  width: 230px;
-  height: auto;
-  border: 1px solid gray;
-  border-radius: 10%;
-  background-color: #222;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-  margin-top: 5px;
-  z-index: 15;
-  cursor: default;
-}
-.layer-three-drop-toggle {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  cursor: pointer;
-}
-
-.bank-three-droplist {
-  width: 105px;
+.droplist {
   height: 25px;
   box-sizing: border-box;
   position: absolute;
@@ -195,14 +30,10 @@
 }
 .droplist-open {
   margin: 10px auto 15px auto;
-  /* min-height: 150px; */ /* Fix this to match # of pieces (will be a directive & layer-specific) */
 }
 
-.bank-three-pieces {
-  width: 105px;
-  height: auto;
+.bank-pieces {
   box-sizing: border-box;
-  background-color: #222;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -210,51 +41,63 @@
   justify-content: flex-start;
   z-index: 10;
 }
+.piece-bank {
+  position: relative;
+}
+
+
+/* Layer One */
+.dropdown-one {
+  background-color: #666666;
+}
+.droplist-one {
+  width: 170px;
+}
+.bank-pieces-one {
+  width: 170px;
+  background-color: #666666;
+}
+.bank-pieces-open-one {
+  padding-top: 76px;
+}
+
+
+/* Layer Two */
+.dropdown-two {
+  background-color: #444444;
+  margin-top: 5px;
+}
+.droplist-two {
+  width: 140px;
+}
+.bank-pieces-two {
+  width: 140px;
+  background-color: #444444;  
+  flex-direction: row;
+}
+.piece-open-two {
+  width: 70px;
+  height: 76px;
+}
+
+ 
+/* Layer Three */
+.dropdown-three {
+  background-color: #222;
+  margin-top: 5px;
+}
+.droplist-three {
+  width: 105px;
+}
+.bank-pieces-three {
+  width: 105px;
+  background-color: #222;
+}
 /* Matches height of layer 3 pieces */
-.bank-three-pieces-open {
+.bank-pieces-open-three {
   padding-top: 40px;
 }
 
-.piece-three {
-  width: 105px;
-  height: 40px;
-  border: solid 2px black;
-  border-top-left-radius: 30%;
-  border-top-right-radius: 30%;
-  border-bottom-left-radius: 20%;
-  border-bottom-right-radius: 20%;
-  background-color: #bdbaba;
-  text-align: center;
-  transform-origin: center;
-  box-sizing: border-box;
-  position: relative; 
-  display: flex;
-  justify-content: space-between;
-}
-.piece-three span {
-  width: 30px;
-  height: 36px;
-  padding: 8px 8px;
-  text-align: center;
-  border: 1px solid #222222;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-}
-
-
-.green {
-  background-color: forestgreen;
-  background-image: url("../../assets/noise.png");
-}
-.orange {
-  background-color: orange;
-  background-image: url("../../assets/noise.png");
-}
-.purple {
-  background-color: rebeccapurple;
-  background-image: url("../../assets/noise.png");
-}
 
 .cdk-drag-preview {
   opacity: .8;
