@@ -71,7 +71,8 @@ export class CircleRepresentationComponent implements OnInit {
   dropped(event: CdkDragDrop<string[]>) {
     //move to new, dropped list, only if empty
     if (event.container.data.length === 0) {
-      this.updatePiecesByIdTracker(event);
+      //will be either false or layer number if dropped from bank
+      const layer = this.updatePiecesByIdTracker(event);
       this.solutionsGrabberService.computeRemainingSolutions(this.piecesByID);
 
       transferArrayItem(
@@ -80,6 +81,11 @@ export class CircleRepresentationComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
+
+      //call to inform and resize piece bank
+      if (layer) {
+        this.bankCircleConnectorService.droppedInCircle(layer);
+      }
     }
   }
    
@@ -94,22 +100,25 @@ export class CircleRepresentationComponent implements OnInit {
     const layer = stringToNum[containerIdArray[1]] - 1;
     const pieceId = (event.previousContainer.data[event.previousIndex] as any).id; //ADD MODEL/Interfaces for DIFF Pieces
     const newPosition = +containerIdArray[2];
+    let layerIfFromBank: any = false;
 
     //only remove if piece coming from circle, not bankComponent
     if (event.previousContainer.id.split('-')[0] === 'dl') {
       const oldPosition = +event.previousContainer.id.split('-')[2];
       this.updatePiecesByIdTrackerRemove({layer: layer, position: oldPosition, pieceId: pieceId});
     }
+    //if coming from bankComponent, return layer to inform bankComponent
+    else {
+      layerIfFromBank = layer + 1;
+    }
+
     this.updatePiecesByIdTrackerAdded({layer: layer, position: newPosition, pieceId: pieceId});
 
-
+    return layerIfFromBank;
   }
   
   updatePiecesByIdTrackerAdded(droppedPieceData: {layer: number, position: number, pieceId: number}) {
     this.piecesByID[droppedPieceData.layer][droppedPieceData.position] = droppedPieceData.pieceId;
-
-    //call to inform and resize piece bank
-    this.bankCircleConnectorService.droppedInCircle(droppedPieceData.layer + 1);
   }
 
   updatePiecesByIdTrackerRemove(droppedPieceData: {layer: number, position: number, pieceId: number}) {

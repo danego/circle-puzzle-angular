@@ -68,18 +68,20 @@ export class PieceBankComponent implements OnInit {
         this.isDragging2 = dragData.enabled;
         this.isDraggingIncoming2 = dragData.enabled;
         this.displayBankTwoTemporary = false;
-        if (!dragData.enabled) debugger;
       }
       else {
         this.isDragging3 = dragData.enabled;
         this.isDraggingIncoming3 = dragData.enabled;
         this.displayBankThreeTemporary = false;
       }
+
+      if (!dragData.enabled) {
+        this.calculatePieceContainerHeight();
+      }
     });
 
     this.bankCircleConnectorService.pieceDroppedInCircle.subscribe((layer) => {
       //check if actually open ...
-      debugger;
       this.calculatePieceContainerHeight(layer);
     });
 
@@ -100,6 +102,8 @@ export class PieceBankComponent implements OnInit {
       0
     );
     //event.currentIndex is replaced by 0 bc we always want to drop to top of bank (disabledSorting)
+
+    this.calculatePieceContainerHeight();
   }
 
   updatePiecesByIdTracker(event: CdkDragDrop<string[]>) {
@@ -199,14 +203,14 @@ export class PieceBankComponent implements OnInit {
     this.calculatePieceContainerHeight();
   }
 
-  checkToDisplayDragging(layer: number) {
-    if (layer === 1 && this.isDragging1) {
+  checkToDisplayDragging() {
+    if (this.isDragging1) {
       this.displayBankOneTemporary = true;
     }
-    else if (layer === 2 && this.isDragging2) {
+    else if (this.isDragging2) {
       this.displayBankTwoTemporary = true;
     }
-    else if (layer === 3 && this.isDragging3) {
+    else if (this.isDragging3) {
       this.displayBankThreeTemporary = true;
     }
   }
@@ -216,6 +220,7 @@ export class PieceBankComponent implements OnInit {
     else this.isHoveringOverBank = false;
 
     this.calculatePieceContainerHeight();
+    this.checkToDisplayDragging();
   }
 
   calculatePieceContainerHeight(layer?: number) {
@@ -229,7 +234,6 @@ export class PieceBankComponent implements OnInit {
     else {
       switch (layer) {
         case 1: this.calculatePieceContainerHeightOne();
-        debugger;
                 break;
         case 2: this.calculatePieceContainerHeightTwo();
                 break;
@@ -239,57 +243,69 @@ export class PieceBankComponent implements OnInit {
     }  
   }
 
-  calculatePieceContainerHeightOne(containerHeight = 0, dropdown = 'auto', droplist = 'auto') {
+  calculatePieceContainerHeightOne(containerHeight = 0, dropdown = 'auto', droplist = '76px') {
     //LAYER ONE
     const pieceHeight = 76;
 
     if (this.displayBankOne || this.displayBankOneTemporary) {
-     containerHeight = this.piecesBank1.length * pieceHeight;
-      droplist = containerHeight + 'px';
+      containerHeight = this.piecesBank1.length * pieceHeight;
+      //check for minimum height
+      if (containerHeight < 76) containerHeight = 76;
+
       dropdown = containerHeight + 55 + 'px';
+      droplist = containerHeight + 'px';
     }
     if (this.isDraggingIncoming1 && this.isHoveringOverBank) {
-     containerHeight = (this.piecesBank1.length + 1) * pieceHeight;
-      droplist = containerHeight + 'px';
+      containerHeight = (this.piecesBank1.length + 1) * pieceHeight;
+      if (containerHeight < 76) containerHeight = 76;
+
       dropdown = containerHeight + 55 + 'px';
+      droplist = containerHeight + 'px';
     }
     this.piecesDroplistHeight1 = droplist;
     this.piecesDropdownHeight1 = dropdown;
-    console.log(dropdown);
   }
 
-  calculatePieceContainerHeightTwo(containerHeight = 0, dropdown = 'auto', droplist = 'auto') {
+  calculatePieceContainerHeightTwo(containerHeight = 0, dropdown = 'auto', droplist = '76px') {
     //LAYER TWO
     const pieceHeight = 76;
 
     if (this.displayBankTwo || this.displayBankTwoTemporary) {
       containerHeight = (Math.ceil(this.piecesBank2.length / 2)) * pieceHeight;
-      droplist = containerHeight + 'px';
+      if (containerHeight < 76) containerHeight = 76;
+
       dropdown = containerHeight + 55 + 'px';
+      droplist = containerHeight + 'px';
     }
     if (this.isDraggingIncoming2 && this.isHoveringOverBank) {
       //add one to make room for incoming piece
       containerHeight = (Math.ceil((this.piecesBank2.length + 1) / 2)) * pieceHeight;
-      droplist = containerHeight + 'px';
+      if (containerHeight < 76) containerHeight = 76;
+
       dropdown = containerHeight + 55 + 'px';
+      droplist = containerHeight + 'px';
     }
-    this.piecesDroplistHeight2 = droplist;
     this.piecesDropdownHeight2 = dropdown;
+    this.piecesDroplistHeight2 = droplist;
   }
 
-  calculatePieceContainerHeightThree(containerHeight = 0, dropdown = 'auto', droplist = 'auto') {
+  calculatePieceContainerHeightThree(containerHeight = 0, dropdown = 'auto', droplist = '50px') {
      //LAYER THREE
      const pieceHeight = 40;
 
      if (this.displayBankThree || this.displayBankThreeTemporary) {
       containerHeight = this.piecesBank3.length * pieceHeight;
-      droplist = containerHeight + 'px';
+      if (containerHeight < 76) containerHeight = 76;
+
       dropdown = containerHeight + 55 + 'px';
+      droplist = containerHeight + 'px';
     }
     if (this.isDraggingIncoming3 && this.isHoveringOverBank) {
       containerHeight = (this.piecesBank3.length + 1) * pieceHeight;
-      droplist = containerHeight + 'px';
+      if (containerHeight < 76) containerHeight = 76;
+
       dropdown = containerHeight + 55 + 'px';
+      droplist = containerHeight + 'px';
     }
     this.piecesDroplistHeight3 = droplist;
     this.piecesDropdownHeight3 = dropdown;

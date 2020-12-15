@@ -7,6 +7,7 @@ import { LineRepresentationComponent } from './line-representation/line-represen
 import { PositionTopStartDirective } from './position-top-start.directive';
 import { PositionLeftStartDirective } from './position-left-start.directive';
 import { PositionBottomStartDirective } from './position-bottom-start.directive';
+import { StopPropoDirective } from './stop-propo.directive';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { RotatePieceDirective } from './rotate-piece.directive';
@@ -21,6 +22,7 @@ import { ControlPanelComponent } from './control-panel/control-panel.component';
     PositionTopStartDirective,
     PositionLeftStartDirective,
     PositionBottomStartDirective,
+    StopPropoDirective,
     RotatePieceDirective,
     PieceBankComponent,
     ControlPanelComponent

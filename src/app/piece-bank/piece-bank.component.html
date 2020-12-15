@@ -17,7 +17,7 @@
       class="bank-one-droplist"
       [ngClass]="{'droplist-open': displayBankOne}"
       [ngStyle]="{'cursor': checkIsDraggingForBank(1), 'height': piecesDroplistHeight1}"
-      (mouseover)="checkToDisplayDragging(1)"
+      stopPropo
       cdkDropList
       cdkDropListSortingDisabled
       [cdkDropListConnectedTo]="['dl-one-0', 'dl-one-1', 'dl-one-2', 'dl-one-3', 'dl-one-4', 'dl-one-5', 'dl-one-6', 'dl-one-7', 'dl-one-8', 'dl-one-9']"
@@ -71,7 +71,7 @@
       class="bank-two-droplist"
       [ngClass]="{'droplist-open': displayBankTwo}" 
       [ngStyle]="{'cursor': checkIsDraggingForBank(2), 'height': piecesDroplistHeight2}"
-      (mouseover)="checkToDisplayDragging(2)"
+      stopPropo
       cdkDropList
       cdkDropListSortingDisabled
       [cdkDropListConnectedTo]="['dl-two-0', 'dl-two-1', 'dl-two-2', 'dl-two-3', 'dl-two-4', 'dl-two-5', 'dl-two-6', 'dl-two-7', 'dl-two-8', 'dl-two-9']"
@@ -80,6 +80,7 @@
 
       <div [ngStyle]="{'visibility': displayBankTwo || displayBankTwoTemporary ? 'visible': 'hidden'}">
         <div class="bank-two-pieces"> <!-- [ngClass]="{'bank-two-pieces-open': isDraggingIncoming2}" -->
+
           <!-- necessary instead of padding bc this bank is rows AND columns -->
           <div *ngIf="isDraggingIncoming2 && isHoveringOverBank" class="piece-two-open"></div>
           
@@ -112,7 +113,7 @@
   <!-- BANK THREE -->
   <div 
     class="layer-three-dropdown"
-    [ngStyle]="{'min-height': displayBankThree || displayBankThreeTemporary ? '250px' : 'auto'}"
+    [ngStyle]="{'height': piecesDropdownHeight3}"
     (click)="checkToDisplayStatic(3)">
 
     <div class="layer-three-drop-toggle">
@@ -125,9 +126,9 @@
       id="piece-bank-three"
       class="bank-three-droplist"
       [ngClass]="{'droplist-open': displayBankThree}" 
-      [ngStyle]="{'cursor': checkIsDraggingForBank(3)}"
-      (mouseover)="checkToDisplayDragging(3)"
+      [ngStyle]="{'cursor': checkIsDraggingForBank(3), 'height': piecesDroplistHeight3}"
       cdkDropList
+      stopPropo
       cdkDropListSortingDisabled
       [cdkDropListConnectedTo]="['dl-three-0', 'dl-three-1', 'dl-three-2', 'dl-three-3', 'dl-three-4']"
       [cdkDropListData]="piecesBank3"
