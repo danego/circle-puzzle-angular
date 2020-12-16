@@ -1,30 +1,31 @@
 
 <!-- LAYER ZERO -->
 <section class="circle-puzzle" id="circle-puzzle">
-  <div class="layer-zero">
-    <div class="layer-zero-middle"> 
+  <div class="layer layer-zero">
+    <div class="layer-middle layer-middle-zero"> 
       <div 
-        class="piece-zero" 
+        class="piece piece-zero piece-circle" 
         [positionTopStart]="i"
         [circleHeight]="750"
         [pieceWidth]="42"
         [pieceHeight]="42"
         *ngFor="let piece of pieces[0]; let i = index"
-        [ngClass]="{ 'green': piece === 'G', 'orange': piece === 'O', 'purple': piece === 'P' }"
-        > 
+        [ngClass]="{ 'green': piece === 'G', 'orange': piece === 'O', 'purple': piece === 'P' }">
+
         <span>{{ piece }}</span>
+
       </div>
     </div>
   </div>
 
 
   <!-- LAYER ONE -->
-  <div class="layer-one">
-    <div cdkDropListGroup class="layer-one-middle">
+  <div class="layer layer-one">
+    <div cdkDropListGroup class="layer-middle layer-middle-one">
       <div 
         id="{{'dl-one-' + i}}"
         *ngFor="let array of pieces[1]; let i = index"
-        class="drag-list-one"
+        class="drag-list drag-list-one"
         [ngStyle]="{'cursor': isDragging2 || isDragging3 ? 'not-allowed' : 'default'}"
         cdkDropList
         [cdkDropListData]="pieces[1][i]"
@@ -36,7 +37,7 @@
         [pieceHeight]="76">
 
         <div 
-          class="piece-one" 
+          class="piece piece-one piece-circle" 
           [ngStyle]="{'cursor': !isDragging1 && !isDragging2 && !isDragging3 ? 'grab' : 'not-allowed'}"
           *ngFor="let piece of pieces[1][i]"
           cdkDrag
@@ -72,12 +73,12 @@
 
 
   <!-- LAYER TWO -->
-  <div cdkDropListGroup class="layer-two" >
-    <div class="layer-two-middle">
+  <div cdkDropListGroup class="layer layer-two" >
+    <div class="layer-middle layer-middle-two">
       <div
         id="{{'dl-two-' + i}}"        
         *ngFor="let array of pieces[2]; let i = index"
-        class="drag-list-two"
+        class="drag-list drag-list-two"
         [ngStyle]="{'cursor': isDragging1 || isDragging3 ? 'not-allowed' : 'default'}"
         cdkDropList
         [cdkDropListData]="pieces[2][i]"
@@ -89,7 +90,7 @@
         [pieceHeight]="76">
 
         <div 
-          class="piece-two" 
+          class="piece piece-two piece-circle" 
           [ngStyle]="{'cursor': !isDragging1 && !isDragging2 && !isDragging3 ? 'grab' : 'not-allowed'}"
           *ngFor="let piece of pieces[2][i]"
           cdkDrag
@@ -112,12 +113,12 @@
 
   
   <!-- LAYER TWO -->
-  <div cdkDropListGroup class="layer-three">
-    <div class="layer-three-middle"> 
+  <div cdkDropListGroup class="layer layer-three">
+    <div class="layer-middle layer-middle-three"> 
       <div
         id="{{'dl-three-' + i}}" 
         *ngFor="let array of pieces[3]; let i = index"
-        class="drag-list-three"
+        class="drag-list drag-list-three"
         [ngStyle]="{'cursor': isDragging1 || isDragging2 ? 'not-allowed' : 'default'}"
         cdkDropList
         [cdkDropListData]="pieces[3][i]"
@@ -129,7 +130,7 @@
         [pieceHeight]="40">
 
         <div 
-          class="piece-three" 
+          class="piece piece-three piece-circle" 
           [ngStyle]="{'cursor': !isDragging1 && !isDragging2 && !isDragging3 ? 'grab' : 'not-allowed'}"
           *ngFor="let piece of pieces[3][i]"
           cdkDrag

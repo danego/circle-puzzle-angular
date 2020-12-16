@@ -3,3 +3,7 @@ article {
   flex: row none;
   justify-content: center;
 }
+
+piece-bank {
+  margin-right: 20px;
+}

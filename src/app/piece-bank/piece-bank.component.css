@@ -41,6 +41,7 @@
   justify-content: flex-start;
   z-index: 10;
 }
+/* for the actual piece styling */
 .piece-bank {
   position: relative;
 }
@@ -57,10 +58,10 @@
   width: 170px;
   background-color: #666666;
 }
+/* Matches height of layer 1 pieces */
 .bank-pieces-open-one {
   padding-top: 76px;
 }
-
 
 /* Layer Two */
 .dropdown-two {
@@ -80,7 +81,6 @@
   height: 76px;
 }
 
- 
 /* Layer Three */
 .dropdown-three {
   background-color: #222;
@@ -93,7 +93,6 @@
   width: 105px;
   background-color: #222;
 }
-/* Matches height of layer 3 pieces */
 .bank-pieces-open-three {
   padding-top: 40px;
 }

@@ -7,231 +7,122 @@
   box-sizing: border-box;
 }
 
-/* Div Rotation Styling*/
-/* Div Rotation Layer-Zero*/
-.layer-zero {
+/* Generic Stylings */
+.layer {
   border: 1px black solid;
+  border-radius: 50%;
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.layer-middle {
+  border-radius: 50%;
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.piece-circle {
+  position: absolute; 
+  z-index: 30;
+}
+
+
+/* Div Rotation Styling*/
+.layer-zero {
   height: 800px;
   width: 800px;
-  border-radius: 50%;
   background-color: #999999;
-  box-sizing: border-box;
+  position: relative;
+  top: 0;
+  left: 0;
 }
-.layer-zero-middle {
+.layer-middle-zero {
   height: 750px;
   width: 750px;
   background-color: #999999;
-  border-radius: 50%;
-  /* border: 1px red solid; */
-  position: absolute;
-  box-sizing: border-box;
-  top: 50%;
-  left: 50%;
   margin: -375px 0 0 -375px;  
-}
-.piece-zero {
-  /*transform: rotate(-0.19turn);*/
-  width: 42px;
-  height: 42px;
-  position: absolute; 
-  padding: 10px;
-  background-color: #bdbaba;
-  border: solid 2px black;
-  transform-origin: center;
-  box-sizing: border-box;
-}
-.piece-zero span {
-  text-align: center;
-  display: block;
-  cursor: default;
 }
 
 .layer-one {
   width: 700px;
   height: 700px;
-  border: 1px solid black;
-  border-radius: 50%;
   background-color: #666666;
-  position: absolute;
-  box-sizing: border-box;
-  top: 50%;
-  left: 50%;
   margin: -350px 0 0 -350px;
 }
-.layer-one-middle {
+.layer-middle-one {
   height: 600px;
   width: 600px;
   background-color: #666666;
-  border-radius: 50%;
-  /* border: 1px red solid; */
-  position: absolute;
-  box-sizing: border-box;
-  top: 50%;
-  left: 50%;
   margin: -300px 0 0 -300px;  
 }
-/* CHECK FOR CLASS DUPLICATION, PARE DOWN */
-.piece-one {
-  width: 170px;
-  height: 76px;
-  border: solid 2px black;
-  border-top-left-radius: 30%;
-  border-top-right-radius: 30%;
-  border-bottom-left-radius: 20%;
-  border-bottom-right-radius: 20%;
-  background-color: #bdbaba;
-  text-align: center;
-  display: block;
-  box-sizing: border-box;
-  position: absolute; 
-  top: -1px;
-  left: -1px;
-  transform-origin: center;
-  z-index: 30;
-}
-.piece-one span {
-  width: 82px;
-  padding: 8px 34px;
-  text-align: center;
-  border: 1px solid #222222;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-}
-.piece-one span:nth-of-type(1) {
-  border-radius: 0%;
-}
-
-
 
 .layer-two {
   height: 500px;
   width: 500px;
   background-color: #444444;
   border: 1px black dashed;
-  border-radius: 50%;
-  position: absolute;
-  box-sizing: border-box;
-  top: 50%;
-  left: 50%;
   margin: -250px 0 0 -250px;
 }
-.layer-two-middle {
+.layer-middle-two {
   height: 400px;
   width: 400px;
   background-color: #444444;
-  border-radius: 50%;
-  /* border: 1px red solid; */
-  position: absolute;
-  box-sizing: border-box;
-  top: 50%;
-  left: 50%;
   margin: -200px 0 0 -200px;  
 }
-/* */
-.piece-two {
-  width: 70px;
-  height: 76px;
-  border: solid 2px black;
-  border-top-left-radius: 30%;
-  border-top-right-radius: 30%;
-  border-bottom-left-radius: 20%;
-  border-bottom-right-radius: 20%;
-  background-color: #bdbaba;
-  text-align: center;
-  display: block;
-  box-sizing: border-box;
-  transform-origin: center;
-  position: absolute; 
-  top: 0px;
-  left: 0px;
-  z-index: 30;
-}
-.piece-two span {
-  width: 30px;
-  height: 36px;
-  padding: 8px 8px;
-  text-align: center;
-  border: 1px solid #222222;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-}
-
-
-
 
 .layer-three {
   height: 300px;
   width: 300px;
   background-color: #222;
   border: 1px black dashed;
-  border-radius: 50%;
-  position: absolute;
-  box-sizing: border-box;
-  top: 50%;
-  left: 50%;
   margin: -150px 0 0 -150px;
 }
-.layer-three-middle {
+.layer-middle-three {
   height: 240px;
   width: 240px;
   background-color: #222;
-  border-radius: 50%;
-  /* border: 1px red solid; */
-  position: absolute;
-  box-sizing: border-box;
-  top: 50%;
-  left: 50%;
   margin: -120px 0 0 -120px;  
 }
-.piece-three {
-  width: 105px;
-  height: 40px;
-  border: solid 2px black;
-  border-top-left-radius: 30%;
-  border-top-right-radius: 30%;
-  border-bottom-left-radius: 20%;
-  border-bottom-right-radius: 20%;
-  background-color: #bdbaba;
-  text-align: center;
-  display: block;
-  box-sizing: border-box;
-  transform-origin: center;
-  display: flex;
-  justify-content: space-between;
-  position: absolute; 
-  top: 0px;
-  left: 0px;
-  z-index: 30;
-}
-.piece-three span {
-  width: 30px;
-  height: 36px;
-  padding: 8px 8px;
-  text-align: center;
-  border: 1px solid #222222;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-}
 
-.green {
-  background-color: forestgreen;
-  background-image: url("../../assets/noise.png");
-}
-.orange {
-  background-color: orange;
-  background-image: url("../../assets/noise.png");
-}
-.purple {
-  background-color: rebeccapurple;
-  background-image: url("../../assets/noise.png");
-}
 
 /* Drag & Drop Styling */
+.drag-list {
+  border-top-left-radius: 31%;
+  border-top-right-radius: 31%;
+  border-bottom-left-radius: 21%;
+  border-bottom-right-radius: 21%;
+  background-color: white;
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+}
 
-.drag-placeholder {
+.drag-list-one {
+  width: 170px;
+  height: 76px;
+  border: 1px dotted black; 
+}
+.drag-list-two {
+  width: 70px;
+  height: 76px;
+}
+.drag-list-three {
+  width: 105px;
+  height: 40px;
+}
+
+
+.cdk-drag-preview {
+  opacity: .8;
+}
+.cdk-drag-placeholder {
+  z-index: 20;
+}
+
+/*
+.drag-placeholder { 
   width: 170px;
   height: 76px;
   border-top-left-radius: 30%;
@@ -245,52 +136,4 @@
   transform-origin: center;
   border: 3px dotted brown;
 }
-
-.drag-list-one {
-  width: 170px;
-  height: 76px;
-  border: 1px dotted black;
-  border-top-left-radius: 31%;
-  border-top-right-radius: 31%;
-  border-bottom-left-radius: 21%;
-  border-bottom-right-radius: 21%;
-  background-color: white;
-  display: block;
-  box-sizing: border-box;
-  position: absolute;
-}
-
-.drag-list-two {
-  width: 70px;
-  height: 76px;
-  border-top-left-radius: 31%;
-  border-top-right-radius: 31%;
-  border-bottom-left-radius: 21%;
-  border-bottom-right-radius: 21%;
-  background-color: white;
-  display: block;
-  box-sizing: border-box;
-  position: absolute; 
-}
-
-.drag-list-three {
-  width: 105px;
-  height: 40px;
-  /* border: dotted 2px black; */
-  border-top-left-radius: 31%;
-  border-top-right-radius: 31%;
-  border-bottom-left-radius: 21%;
-  border-bottom-right-radius: 21%;
-  background-color: white;
-  display: block;
-  box-sizing: border-box;
-  position: absolute; 
-}
-
-.cdk-drag-preview {
-  opacity: .8;
-}
-
-.cdk-drag-placeholder {
-  z-index: 20;
-}
+*/

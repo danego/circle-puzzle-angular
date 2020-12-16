@@ -28,7 +28,7 @@
         <div class="bank-pieces bank-pieces-one" [ngClass]="{'bank-pieces-open-one': isDraggingIncoming1 && isHoveringOverBank}"> 
 
           <div 
-            class="piece-one piece-bank" 
+            class="piece piece-one piece-bank" 
             *ngFor="let piece of piecesBank1; let i = index"
             [ngStyle]="{'cursor': !isDragging2 && !isDragging3 ? 'grab' : 'not-allowed'}"
             cdkDrag
@@ -40,7 +40,7 @@
             <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
             <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
 
-            <div *cdkDragPreview class="piece-one piece-bank">
+            <div *cdkDragPreview class="piece piece-one piece-bank">
               <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">{{ piece.top }}</span>
               <br>
               <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
@@ -85,7 +85,7 @@
           <div *ngIf="isDraggingIncoming2 && isHoveringOverBank" class="piece-open-two"></div>
           
           <div 
-            class="piece-two piece-bank" 
+            class="piece piece-two piece-bank" 
             *ngFor="let piece of piecesBank2; let i = index"
             [ngStyle]="{'cursor': !isDragging1 && !isDragging3 ? 'grab' : 'not-allowed'}"
             cdkDrag
@@ -97,7 +97,7 @@
             <br>
             <span [ngClass]="{ 'green': piece.bottom === 'G', 'orange': piece.bottom === 'O', 'purple': piece.bottom === 'P' }">{{ piece.bottom }}</span>
 
-            <div *cdkDragPreview class="piece-two piece-bank">
+            <div *cdkDragPreview class="piece piece-two piece-bank">
               <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
               <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
               <br>
@@ -137,7 +137,7 @@
       <div [ngStyle]="{'visibility': displayBankThree || displayBankThreeTemporary ? 'visible': 'hidden'}">
         <div class="bank-pieces bank-pieces-three" [ngClass]="{'bank-pieces-open-three': isDraggingIncoming3 && isHoveringOverBank}">
           <div 
-            class="piece-three piece-bank" 
+            class="piece piece-three piece-bank" 
             *ngFor="let piece of piecesBank3; let i = index"
             [ngStyle]="{'cursor': !isDragging1 && !isDragging2 ? 'grab' : 'not-allowed'}"
             cdkDrag
@@ -147,7 +147,7 @@
             <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
             <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
 
-            <div *cdkDragPreview class="piece-three piece-bank">
+            <div *cdkDragPreview class="piece piece-three piece-bank">
               <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
               <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
             </div>

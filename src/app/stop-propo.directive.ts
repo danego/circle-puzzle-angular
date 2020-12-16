@@ -1,6 +1,6 @@
 /* 
  * This directive stops click propagation
- * It is placed on the Hourglass Icon element, so as to not click & start timer underneath
+ * It is placed on the DropList elements, so as to not click & toggle Piece Bank visibility underneath
  */
 
 import { Directive, HostListener } from '@angular/core';

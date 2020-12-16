@@ -8,30 +8,50 @@ body {
   */
 }
 
-.piece-one {
-  width: 170px;
-  height: 76px;
+.piece {
+  box-sizing: border-box;
+  background-color: #bdbaba;
   border: solid 2px black;
   border-top-left-radius: 30%;
   border-top-right-radius: 30%;
   border-bottom-left-radius: 20%;
   border-bottom-right-radius: 20%;
-  background-color: #bdbaba;
   text-align: center;
-  display: block;
-  box-sizing: border-box;
-  top: -1px;
-  left: -1px;
   transform-origin: center;
+  display: block;
 }
-.piece-one span {
-  width: 82px;
-  padding: 8px 34px;
+.piece span {
   text-align: center;
   border: 1px solid #222222;
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;
+}
+
+.piece-zero {
+  width: 42px;
+  height: 42px;
+  padding: 10px;
+  border-radius: 0%;
+  position: absolute; 
+}
+.piece-zero span {
+  text-align: center;
+  display: block;
+  cursor: default;
+  border: none;
+  border-radius: 0%;
+}
+
+.piece-one {
+  width: 170px;
+  height: 76px;
+  top: -1px;
+  left: -1px;
+}
+.piece-one span {
+  width: 82px;
+  padding: 8px 34px;
 }
 .piece-one span:nth-of-type(1) {
   border-radius: 0%;
@@ -40,40 +60,20 @@ body {
 .piece-two {
   width: 70px;
   height: 76px;
-  border: solid 2px black;
-  border-top-left-radius: 30%;
-  border-top-right-radius: 30%;
-  border-bottom-left-radius: 20%;
-  border-bottom-right-radius: 20%;
-  background-color: #bdbaba;
-  text-align: center;
-  display: block;
-  box-sizing: border-box;
-  transform-origin: center;
+  top: 0px;
+  left: 0px;
 }
 .piece-two span {
   width: 30px;
   height: 36px;
   padding: 8px 8px;
-  text-align: center;
-  border: 1px solid #222222;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
 }
 
 .piece-three {
   width: 105px;
   height: 40px;
-  border: solid 2px black;
-  border-top-left-radius: 30%;
-  border-top-right-radius: 30%;
-  border-bottom-left-radius: 20%;
-  border-bottom-right-radius: 20%;
-  background-color: #bdbaba;
-  text-align: center;
-  box-sizing: border-box;
-  transform-origin: center;
+  top: 0px;
+  left: 0px;
   display: flex;
   justify-content: space-between;
 }
@@ -81,11 +81,6 @@ body {
   width: 30px;
   height: 36px;
   padding: 8px 8px;
-  text-align: center;
-  border: 1px solid #222222;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
 }
 
 .green {
