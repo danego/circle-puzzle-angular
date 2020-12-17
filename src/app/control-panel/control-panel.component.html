@@ -1,35 +1,44 @@
 <section>
-  <button (click)="moveAllToBank()">Move All to Bank</button>
-  <button (click)="moveAllToCircle()">Move all to Circle</button>
+  <div class="button-container">
+    <button (click)="moveAllToBank()">Move All to Bank</button>
+    <button (click)="moveAllToCircle()">Move all to Circle</button>
+  </div>
+
   <div class="spacer"></div>
 
-  <button (click)="onGenerateSolutions()">Generate Solutions</button>
-
-  <fieldset>
-    <legend>Subset Size</legend>
-    <ul>
-      <li>
-        <label for="small-soln">Display small subset</label>
-        <input type="radio" id="small-soln" name="subset" value="S" disabled>
-      </li>
-      <li>
-        <label for="large-soln">Display large subset</label>
-        <input type="radio" id="large-soln" name="subset" value="L" disabled>
-      </li>
-    </ul>
-  </fieldset>
-
-  <div class="soln-dropdown">
-    <label for="soln-number">Select solution #: </label>
-    <select id="soln-number" (change)="onLoadNewSolution($event)">
-      <option disabled selected>Solutions:</option>
-      <option *ngFor="let soln of numberOfSolutionsArray; let i = index">{{i}}</option>
-    </select>
+  
+  <div id="solutions" class="solutions" *ngIf="displaySolutionsPanel">
+    <div class="soln-picker">
+      <mat-slide-toggle 
+        disableRipple="true" 
+        labelPosition="before" 
+        checked="true" 
+        (change)="onSlideChange($event)"
+        [ngClass]="!limitSolutionsShown ? 'all-solutions' : 'limited-solutions'">
+        Show all solutions
+      </mat-slide-toggle>
+    
+      <div class="soln-dropdown">
+        <label for="soln-number">Select solution #: </label>
+        <select id="soln-number" (change)="onLoadNewSolution($event)">
+          <option disabled selected>Solutions:</option>
+          <option *ngFor="let soln of numberOfSolutionsArray; let i = index">{{i}}</option>
+        </select>
+      </div>
+    </div>
+  
+    <div class="solutions-remaining">
+      <p *ngIf="remainingSolutions !== 1 || !allPiecesUsed">{{ remainingSolutions }} remaining {{ remainingSolutions === 1 ? 'solution' : 'solutions' }}</p>
+      <p *ngIf="remainingSolutions === 1 && allPiecesUsed">You found solution #{{ currentSolutionNumber }}</p>
+    </div>
   </div>
 
-  <div class="solutions-remaining">
-    <span>There {{ remainingSolutions === 1 ? 'is' : 'are' }} {{ remainingSolutions }} remaining {{ remainingSolutions === 1 ? 'solution' : 'solutions' }} from here.</span>
-    <p *ngIf="remainingSolutions === 1 && allPiecesUsed">You found solution #{{ currentSolutionNumber }}</p>
-  </div>
-
+  <button 
+    class="solutions-toggle" 
+    (click)="displaySolutionsPanel = !displaySolutionsPanel">
+    {{displaySolutionsPanel ? 'Hide' : 'Reveal'}} Solutions Panel
+  </button>
+  <!--
+    *ngIf="!displaySolutionsPanel" 
+  -->
 </section>

@@ -13,6 +13,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { RotatePieceDirective } from './rotate-piece.directive';
 import { PieceBankComponent } from './piece-bank/piece-bank.component';
 import { ControlPanelComponent } from './control-panel/control-panel.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 
 @NgModule({
   declarations: [
@@ -25,12 +27,13 @@ import { ControlPanelComponent } from './control-panel/control-panel.component';
     StopPropoDirective,
     RotatePieceDirective,
     PieceBankComponent,
-    ControlPanelComponent
+    ControlPanelComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    DragDropModule
+    DragDropModule,
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

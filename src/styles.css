@@ -95,3 +95,6 @@ body {
   background-color: rebeccapurple;
   background-image: url("./assets/noise.png");
 }
+body { 
+  font-family: 'Times New Roman', Times, serif !important;
+}

@@ -13,6 +13,8 @@ export class ControlPanelComponent implements OnInit {
   numberOfSolutionsArray: any[] = [];
   remainingSolutions: number = 0;
   allPiecesUsed: boolean = false;
+  displaySolutionsPanel: boolean = false;
+  limitSolutionsShown: boolean = false;
   currentSolutionNumber: number;
 
   constructor(
@@ -32,6 +34,8 @@ export class ControlPanelComponent implements OnInit {
     this.solutionsGrabberService.currentSolutionNumber.subscribe((solnNumber) => {
       this.currentSolutionNumber = solnNumber;
     });
+
+    this.onGenerateSolutions();
   }
 
   moveAllToBank() {
@@ -45,6 +49,17 @@ export class ControlPanelComponent implements OnInit {
   onGenerateSolutions() {
     const numberOfSolutions = this.solutionsGrabberService.startGeneratingSolutions();
     this.numberOfSolutionsArray = new Array(numberOfSolutions);
+  }
+
+  onSlideChange(event) {
+    this.limitSolutionsShown = !event.checked;
+
+    if (this.limitSolutionsShown) {
+      this.numberOfSolutionsArray = new Array(11);
+    }
+    else {
+      this.onGenerateSolutions();
+    }
   }
   
   onLoadNewSolution(event) {
