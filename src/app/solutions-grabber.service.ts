@@ -106,6 +106,22 @@ export class SolutionsGrabberService {
     this._currentSolutionById[2] = new Array(10).fill('');
   }
 
+  moveAllPieces(moveType: string, solutionNumber?: number) {
+    if (moveType === 'toBank') {
+      this.setupPieceIdsEmpty();
+    }
+    else if (moveType === 'toCircle') {
+      //toCircle is either default order of pieces OR a new solution
+      if (solutionNumber) {
+        this.switchPieceOrderToNewSolution(solutionNumber);
+      }
+      else {
+        this.switchPieceOrderToDefault();
+      }
+    }
+    this.computeRemainingSolutions();
+  }
+
   switchPieceOrderToNewSolution(solutionNumber: number) {
     //update ID tracker 
     this.makeDeepCopyFromSolution(solutionNumber);
@@ -142,6 +158,49 @@ export class SolutionsGrabberService {
       if ((this.currentPuzzlePiecesSequence[3][i].id !== this.allGeneratedSolutionsById[solutionNumber][2][i])) {
         for (let j = i; j < 5; j++) {
           if (this.currentPuzzlePiecesSequence[3][j].id === this.allGeneratedSolutionsById[solutionNumber][2][i]) {
+            this.switchPuzzlePieces(i, j, 3);
+          }
+        }
+      }
+    }
+  }
+
+  switchPieceOrderToDefault() {
+    //update ID tracker 
+    this.setupPieceIds();    
+
+    //separate bc solutions do not include fixed layer 0
+    //Layer One
+    for (let i = 0; i < 10; i++) {
+      //if bankAvlbl piece is already in position, skip to next index
+      //if not equal, run through bankAvlbl[] to find match & switch
+      if ((this.currentPuzzlePiecesSequence[1][i].id !== i)) {
+        for (let j = i; j < 10; j++) {
+          if (this.currentPuzzlePiecesSequence[1][j].id === i) {
+            this.switchPuzzlePieces(i, j, 1);
+          }
+        }
+      }
+    }
+    //Layer Two
+    for (let i = 0; i < 10; i++) {
+      //if bankAvlbl piece is already in position, skip to next index
+      //if not equal, run through bankAvlbl[] to find match & switch
+      if ((this.currentPuzzlePiecesSequence[2][i].id !== i)) {
+        for (let j = i; j < 10; j++) {
+          if (this.currentPuzzlePiecesSequence[2][j].id === i) {
+            this.switchPuzzlePieces(i, j, 2);
+          }
+        }
+      }
+    }
+    //Layer Three
+    for (let i = 0; i < 5; i++) {
+      //if bankAvlbl piece is already in position, skip to next index
+      //if not equal, run through bankAvlbl[] to find match & switch
+      if ((this.currentPuzzlePiecesSequence[3][i].id !== i)) {
+        for (let j = i; j < 5; j++) {
+          if (this.currentPuzzlePiecesSequence[3][j].id === i) {
             this.switchPuzzlePieces(i, j, 3);
           }
         }

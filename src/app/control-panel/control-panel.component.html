@@ -12,7 +12,7 @@
       <mat-slide-toggle 
         disableRipple="true" 
         labelPosition="before" 
-        checked="true" 
+        [checked]="!limitSolutionsShown" 
         (change)="onSlideChange($event)"
         [ngClass]="!limitSolutionsShown ? 'all-solutions' : 'limited-solutions'">
         Show all solutions

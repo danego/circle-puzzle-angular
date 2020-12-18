@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { BankCircleConnectorService } from '../bank-circle-connector.service';
 import { SolutionsGrabberService } from '../solutions-grabber.service';
@@ -9,7 +10,7 @@ import { SolutionsGrabberService } from '../solutions-grabber.service';
   styleUrls: ['./control-panel.component.css']
 })
 
-export class ControlPanelComponent implements OnInit {
+export class ControlPanelComponent implements OnInit, OnDestroy {
   numberOfSolutionsArray: any[] = [];
   remainingSolutions: number = 0;
   allPiecesUsed: boolean = false;
@@ -17,21 +18,25 @@ export class ControlPanelComponent implements OnInit {
   limitSolutionsShown: boolean = false;
   currentSolutionNumber: number;
 
+  remainingSolutionsSub: Subscription;
+  allPiecesUsedSub: Subscription;
+  currentSolutionNumberSub: Subscription;
+
   constructor(
     private bankCircleConnectorService: BankCircleConnectorService,
     private solutionsGrabberService: SolutionsGrabberService
   ) { }
 
   ngOnInit() {
-    this.solutionsGrabberService.remainingSolutions.subscribe((remainingSolutions) => {
+    this.remainingSolutionsSub = this.solutionsGrabberService.remainingSolutions.subscribe((remainingSolutions) => {
       this.remainingSolutions = remainingSolutions;
     });
 
-    this.solutionsGrabberService.allPiecesUsedSubject.subscribe((allPiecesUsed) => {
+    this.allPiecesUsedSub = this.solutionsGrabberService.allPiecesUsedSubject.subscribe((allPiecesUsed) => {
       this.allPiecesUsed = allPiecesUsed;
     });
 
-    this.solutionsGrabberService.currentSolutionNumber.subscribe((solnNumber) => {
+    this.currentSolutionNumberSub = this.solutionsGrabberService.currentSolutionNumber.subscribe((solnNumber) => {
       this.currentSolutionNumber = solnNumber;
     });
 
@@ -43,7 +48,7 @@ export class ControlPanelComponent implements OnInit {
   }
 
   moveAllToCircle() {
-    this.bankCircleConnectorService.transferAllToCircle('default');
+    this.bankCircleConnectorService.transferAllToCircle();
   }
 
   onGenerateSolutions() {
@@ -64,7 +69,12 @@ export class ControlPanelComponent implements OnInit {
   
   onLoadNewSolution(event) {
     const newSolutionNumber = event.target.value;
-    this.solutionsGrabberService.switchPieceOrderToNewSolution(newSolutionNumber);
-    this.bankCircleConnectorService.transferAllToCircle('newSolution');
+    this.bankCircleConnectorService.transferAllToCircle(newSolutionNumber);
+  }
+
+  ngOnDestroy() {
+    this.remainingSolutionsSub.unsubscribe();
+    this.allPiecesUsedSub.unsubscribe();
+    this.currentSolutionNumberSub.unsubscribe();
   }
 }

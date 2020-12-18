@@ -19,15 +19,17 @@ export class BankCircleConnectorService {
   constructor(private solutionsGrabberService: SolutionsGrabberService) {}
 
   transferAllToBank() {
-    this.solutionsGrabberService.setupPieceIdsEmpty();
-    this.solutionsGrabberService.computeRemainingSolutions();
+    this.solutionsGrabberService.moveAllPieces('toBank');
     this.moveAllPieces.next('toBank');
+
   }
-  transferAllToCircle(moveType: string) {
-    if (moveType === 'default') {
-      this.solutionsGrabberService.setupPieceIds();
+  transferAllToCircle(solutionNumber?: number) {
+    if (solutionNumber) {
+      this.solutionsGrabberService.moveAllPieces('toCircle', solutionNumber);
     }
-    this.solutionsGrabberService.computeRemainingSolutions();
+    else {
+      this.solutionsGrabberService.moveAllPieces('toCircle');
+    }
     this.moveAllPieces.next('toCircle');
   }
 

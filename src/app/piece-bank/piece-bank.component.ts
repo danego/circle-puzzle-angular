@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Subscription } from 'rxjs';
 
 import { SolutionsGrabberService } from '../solutions-grabber.service';
 import { BankCircleConnectorService } from '../bank-circle-connector.service';
@@ -10,7 +11,8 @@ import { BankCircleConnectorService } from '../bank-circle-connector.service';
   templateUrl: './piece-bank.component.html',
   styleUrls: ['./piece-bank.component.css']
 })
-export class PieceBankComponent implements OnInit {
+
+export class PieceBankComponent implements OnInit, OnDestroy {
   piecesBank1: any[];
   piecesBank2: any[];
   piecesBank3: any[];
@@ -37,6 +39,9 @@ export class PieceBankComponent implements OnInit {
   piecesDropdownHeight3: string = 'auto';
   piecesDroplistHeight3: string = 'auto';
 
+  moveAllPieces: Subscription;
+  isDragging: Subscription;
+  droppedPiece: Subscription;
 
 
   constructor(
@@ -46,7 +51,7 @@ export class PieceBankComponent implements OnInit {
 
 
   ngOnInit() {
-    this.bankCircleConnectorService.moveAllPieces.subscribe((destination: string) => {
+    this.moveAllPieces = this.bankCircleConnectorService.moveAllPieces.subscribe((destination: string) => {
       if (destination === 'toBank') {
         //empty all piece arrays in this component
         this.loadAllPieces();
@@ -58,7 +63,7 @@ export class PieceBankComponent implements OnInit {
       this.calculatePieceContainerHeight();
     });
 
-    this.bankCircleConnectorService.isDraggingFromCircle.subscribe((dragData) => {
+    this.isDragging = this.bankCircleConnectorService.isDraggingFromCircle.subscribe((dragData) => {
       if (dragData.layer === 1) {
         this.isDragging1 = dragData.enabled;
         this.isDraggingIncoming1 = dragData.enabled;
@@ -80,7 +85,7 @@ export class PieceBankComponent implements OnInit {
       }
     });
 
-    this.bankCircleConnectorService.pieceDroppedInCircle.subscribe((layer) => {
+    this.droppedPiece = this.bankCircleConnectorService.pieceDroppedInCircle.subscribe((layer) => {
       //check if actually open ...
       this.calculatePieceContainerHeight(layer);
     });
@@ -333,5 +338,11 @@ export class PieceBankComponent implements OnInit {
     this.piecesBank1 = [];
     this.piecesBank2 = [];
     this.piecesBank3 = [];
+  }
+
+  ngOnDestroy() {
+    this.moveAllPieces.unsubscribe();
+    this.isDragging.unsubscribe();
+    this.droppedPiece.unsubscribe();
   }
 }

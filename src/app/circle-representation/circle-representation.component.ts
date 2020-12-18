@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Subscription } from 'rxjs';
 
 import { SolutionsGrabberService } from '../solutions-grabber.service';
 import { BankCircleConnectorService } from '../bank-circle-connector.service';
@@ -10,13 +11,18 @@ import { BankCircleConnectorService } from '../bank-circle-connector.service';
   templateUrl: './circle-representation.component.html',
   styleUrls: ['./circle-representation.component.css']
 })
-export class CircleRepresentationComponent implements OnInit {
+
+export class CircleRepresentationComponent implements OnInit, OnDestroy {
   pieces: any[][];
   piecesByID: any[] = new Array(3);
 
   isDragging1: boolean = false;
   isDragging2: boolean = false;
   isDragging3: boolean = false;
+
+  moveAllPieces: Subscription;
+  isDragging: Subscription;
+  droppedPieceData: Subscription;
 
   constructor(
     private solutionsGrabberService: SolutionsGrabberService,
@@ -25,7 +31,7 @@ export class CircleRepresentationComponent implements OnInit {
 
   ngOnInit() {
     //updates ALL pieces to either empty, default, or current solution
-    this.bankCircleConnectorService.moveAllPieces.subscribe((destination: string) => {
+    this.moveAllPieces = this.bankCircleConnectorService.moveAllPieces.subscribe((destination: string) => {
       if (destination === 'toBank') {
         //empty all piece arrays in this component
         this.loadEmptyPieceSequence();
@@ -43,7 +49,7 @@ export class CircleRepresentationComponent implements OnInit {
     });
 
     //updates isDragging data for correct cursor display from BankComponent
-    this.bankCircleConnectorService.isDraggingFromBank.subscribe((dragData) => {
+    this.isDragging = this.bankCircleConnectorService.isDraggingFromBank.subscribe((dragData) => {
       if (dragData.layer === 1) {
         this.isDragging1 = dragData.enabled;
       }
@@ -56,7 +62,7 @@ export class CircleRepresentationComponent implements OnInit {
     });
     
     //updates piecesById tracker when piece is dropped into bank (ie removed)
-    this.bankCircleConnectorService.droppedPieceData.subscribe((droppedPieceData) => {
+    this.droppedPieceData = this.bankCircleConnectorService.droppedPieceData.subscribe((droppedPieceData) => {
       this.updatePiecesByIdTrackerRemove(droppedPieceData);
       this.solutionsGrabberService.computeRemainingSolutions(this.piecesByID);
     });
@@ -122,9 +128,7 @@ export class CircleRepresentationComponent implements OnInit {
   }
 
   updatePiecesByIdTrackerRemove(droppedPieceData: {layer: number, position: number, pieceId: number}) {
-    //this.piecesByID[droppedPieceData.layer].splice(droppedPieceData.position, 1);
     this.piecesByID[droppedPieceData.layer][droppedPieceData.position] = '';
-    //console.log(this.piecesByID);
   }
 
   dragStarted(layer: number) {
@@ -199,4 +203,10 @@ export class CircleRepresentationComponent implements OnInit {
       this.pieces[3][i] = [];
     }
   }
-}
+
+  ngOnDestroy() {
+    this.moveAllPieces.unsubscribe();
+    this.isDragging.unsubscribe();
+    this.droppedPieceData.unsubscribe();
+  }
+ }
