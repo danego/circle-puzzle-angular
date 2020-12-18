@@ -10,11 +10,13 @@ import { SolutionsGrabberService } from './solutions-grabber.service';
 export class BankCircleConnectorService {
   private bankPiecesArray = [];
   private circlePiecesArray = [];
+
   isDraggingFromBank = new Subject<{ layer: number, enabled: boolean }>();
   isDraggingFromCircle = new Subject<{ layer: number, enabled: boolean }>();
   moveAllPieces = new Subject<string>(); //emits either 'toBank' or 'toCircle'
   droppedPieceData = new Subject<{ layer: number, position: number, pieceId: number }>();
   pieceDroppedInCircle = new Subject<number>();
+  displayColorLetters = new Subject<boolean>();
 
   constructor(private solutionsGrabberService: SolutionsGrabberService) {}
 
@@ -72,5 +74,9 @@ export class BankCircleConnectorService {
       layer: layer,
       enabled: false
     });
+  }
+
+  toggleColorLetters(enabled: boolean) {
+    this.displayColorLetters.next(enabled);
   }
 }

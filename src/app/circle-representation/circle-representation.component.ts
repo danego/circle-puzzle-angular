@@ -15,14 +15,16 @@ import { BankCircleConnectorService } from '../bank-circle-connector.service';
 export class CircleRepresentationComponent implements OnInit, OnDestroy {
   pieces: any[][];
   piecesByID: any[] = new Array(3);
+  displayColorLetters: boolean = true;
 
   isDragging1: boolean = false;
   isDragging2: boolean = false;
   isDragging3: boolean = false;
-
+  
   moveAllPieces: Subscription;
   isDragging: Subscription;
   droppedPieceData: Subscription;
+  toggleColorLetters: Subscription;
 
   constructor(
     private solutionsGrabberService: SolutionsGrabberService,
@@ -65,6 +67,11 @@ export class CircleRepresentationComponent implements OnInit, OnDestroy {
     this.droppedPieceData = this.bankCircleConnectorService.droppedPieceData.subscribe((droppedPieceData) => {
       this.updatePiecesByIdTrackerRemove(droppedPieceData);
       this.solutionsGrabberService.computeRemainingSolutions(this.piecesByID);
+    });
+
+    //turn on/off letters on span elements for pieces
+    this.toggleColorLetters = this.bankCircleConnectorService.displayColorLetters.subscribe((lettersEnabled) => {
+      this.displayColorLetters = lettersEnabled;
     });
 
     this.pieces = new Array(4);
@@ -208,5 +215,6 @@ export class CircleRepresentationComponent implements OnInit, OnDestroy {
     this.moveAllPieces.unsubscribe();
     this.isDragging.unsubscribe();
     this.droppedPieceData.unsubscribe();
+    this.toggleColorLetters.unsubscribe();
   }
  }

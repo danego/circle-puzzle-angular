@@ -17,6 +17,7 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
   displaySolutionsPanel: boolean = false;
   limitSolutionsShown: boolean = false;
   currentSolutionNumber: number;
+  displayColorLetters: boolean = true;
 
   remainingSolutionsSub: Subscription;
   allPiecesUsedSub: Subscription;
@@ -49,6 +50,11 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
 
   moveAllToCircle() {
     this.bankCircleConnectorService.transferAllToCircle();
+  }
+
+  onToggleColorLetters() {
+    this.displayColorLetters = !this.displayColorLetters;
+    this.bankCircleConnectorService.toggleColorLetters(this.displayColorLetters);
   }
 
   onGenerateSolutions() {

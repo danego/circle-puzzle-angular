@@ -26,6 +26,7 @@ body {
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;
+  vertical-align: top;
 }
 
 .piece-zero {
@@ -50,8 +51,11 @@ body {
   left: -1px;
 }
 .piece-one span {
-  width: 82px;
+  width: 83px;
+  height: 36px;
   padding: 8px 34px;
+  /* margin: 0px 1px;
+  width: 82px; */
 }
 .piece-one span:nth-of-type(1) {
   border-radius: 0%;
@@ -74,6 +78,8 @@ body {
   height: 40px;
   top: 0px;
   left: 0px;
+}
+.piece-three-container {
   display: flex;
   justify-content: space-between;
 }

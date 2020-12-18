@@ -16,6 +16,8 @@ export class PieceBankComponent implements OnInit, OnDestroy {
   piecesBank1: any[];
   piecesBank2: any[];
   piecesBank3: any[];
+  displayColorLetters: boolean = true;
+  
   isDragging1: boolean = false;
   isDragging2: boolean = false;
   isDragging3: boolean = false;
@@ -42,6 +44,8 @@ export class PieceBankComponent implements OnInit, OnDestroy {
   moveAllPieces: Subscription;
   isDragging: Subscription;
   droppedPiece: Subscription;
+  toggleColorLetters: Subscription;
+
 
 
   constructor(
@@ -88,6 +92,11 @@ export class PieceBankComponent implements OnInit, OnDestroy {
     this.droppedPiece = this.bankCircleConnectorService.pieceDroppedInCircle.subscribe((layer) => {
       //check if actually open ...
       this.calculatePieceContainerHeight(layer);
+    });
+
+     //turn on/off letters on span elements for pieces
+     this.toggleColorLetters = this.bankCircleConnectorService.displayColorLetters.subscribe((lettersEnabled) => {
+      this.displayColorLetters = lettersEnabled;
     });
 
     //call to set up empty arrays for each puzzle piece location ... NAME METHOD BETTER
@@ -344,5 +353,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
     this.moveAllPieces.unsubscribe();
     this.isDragging.unsubscribe();
     this.droppedPiece.unsubscribe();
+    this.toggleColorLetters.unsubscribe();
+
   }
 }
