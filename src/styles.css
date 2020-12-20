@@ -22,7 +22,6 @@ body {
 }
 .piece span {
   text-align: center;
-  border: 1px solid #222222;
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;
@@ -62,16 +61,17 @@ body {
 }
 
 .piece-two {
-  width: 70px;
+  width: 100px;
   height: 76px;
   top: 0px;
   left: 0px;
 }
 .piece-two span {
-  width: 30px;
+  width: 44px;
   height: 36px;
   padding: 8px 8px;
 }
+
 
 .piece-three {
   width: 105px;
@@ -84,22 +84,27 @@ body {
   justify-content: space-between;
 }
 .piece-three span {
-  width: 30px;
-  height: 36px;
-  padding: 8px 8px;
+  width: 35px;
+  height: 35px;
+  padding: 7px 7.5px;
+  position: relative;
+  top: 1px;
 }
 
 .green {
   background-color: forestgreen;
   background-image: url("./assets/noise.png");
+  border: 1px solid rgb(23, 94, 23);
 }
 .orange {
   background-color: orange;
   background-image: url("./assets/noise.png");
+  border: 1px solid rgb(170, 111, 2);
 }
 .purple {
   background-color: rebeccapurple;
   background-image: url("./assets/noise.png");
+  border: 1px solid rgb(45, 23, 68);
 }
 body { 
   font-family: 'Times New Roman', Times, serif !important;

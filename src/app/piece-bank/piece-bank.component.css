@@ -69,15 +69,15 @@
   margin-top: 5px;
 }
 .droplist-two {
-  width: 140px;
+  width: 200px;
 }
 .bank-pieces-two {
-  width: 140px;
+  width: 200px;
   background-color: #444444;  
   flex-direction: row;
 }
 .piece-open-two {
-  width: 70px;
+  width: 100px;
   height: 76px;
 }
 
