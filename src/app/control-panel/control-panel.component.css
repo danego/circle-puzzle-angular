@@ -13,21 +13,21 @@ section>div {
   margin: auto 5px;
 }
 
-button {
+button, input {
   margin: 3px;
   padding: 10px;
   border: 1px solid #222222;
   border-radius: 30px;
   cursor: pointer;
 }
-button:hover {
+button:hover, input:hover {
   background-color: #c5c5c5;
 }
-button:active {
+button:active, input:active {
   border: 1px solid rgba(255,64,129);
   background-color: rgba(255, 64, 129, 0.2);
 }
-button:focus {
+button:focus, input:focus {
   outline: none;
 }
 
@@ -70,6 +70,9 @@ button:focus {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+}
+.soln-number {
+  max-height: 500px;
 }
 select:focus {
   outline: none;
