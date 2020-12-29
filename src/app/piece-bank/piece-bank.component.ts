@@ -305,7 +305,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
 
   calculatePieceContainerHeightThree(containerHeight = 0, dropdown = 'auto', droplist = '50px') {
      //LAYER THREE
-     const pieceHeight = 40;
+     const pieceHeight = 47;
 
      if (this.displayBankThree || this.displayBankThreeTemporary) {
       containerHeight = this.piecesBank3.length * pieceHeight;

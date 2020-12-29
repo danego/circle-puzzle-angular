@@ -111,10 +111,14 @@
 .drag-list-two {
   width: 100px;
   height: 76px;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
 }
 .drag-list-three {
   width: 105px;
-  height: 40px;
+  height: 47px;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
 }
 
 
