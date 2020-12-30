@@ -3,7 +3,7 @@
   width: 230px;
   height: auto;
   border: 1px solid gray;
-  border-radius: 10%;
+  border-radius: 15px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

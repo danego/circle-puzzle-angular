@@ -6,12 +6,14 @@ import { Directive, HostBinding, Input, OnInit } from "@angular/core";
 
 export class PositionTopStartDirective implements OnInit {
   circleRadius: number;
+  fontSizeNumber: number;
 
   //selector tag is also used to input piece number
   @Input('positionTopStart') pieceNumber: string;
   @Input('circleHeight') circleHeight: string;
   @Input('pieceWidth') pieceWidth: string;
   @Input('pieceHeight') pieceHeight: string;
+  @Input('currentFontSize') fontSize: string; //for dynamic em height ... must get real size before doing these positioning calcs
 
   @HostBinding('style.top') top: string;
   @HostBinding('style.bottom') bottom: string;
@@ -23,11 +25,13 @@ export class PositionTopStartDirective implements OnInit {
 
   ngOnInit() {
     const piece = +this.pieceNumber;
-    this.circleRadius = +this.circleHeight / 2;
+    this.fontSizeNumber = +this.fontSize;
+    this.circleRadius = +this.circleHeight * this.fontSizeNumber / 2;
     
     this.convertToAngleCssCartesian(this.convertToAngleDegrees(piece), piece);
     this.generateRotateDegrees(piece);
     //this.rotate = 'rotate(200deg)';
+    console.log('positionTOp');
   }
 
   convertToAngleDegrees(piece: number) {
@@ -56,8 +60,8 @@ export class PositionTopStartDirective implements OnInit {
   //takes the degree of triangle to X axis and the piece # to determine quadrant
   convertToAngleCssCartesian(triangleDegrees: number, piece: number) {  
     //halve inputted dimensions for puzzle piece  
-    const accountForPieceX = +this.pieceWidth / 2;
-    const accountForPieceY = +this.pieceHeight / 2;
+    const accountForPieceX = +this.pieceWidth * this.fontSizeNumber / 2;
+    const accountForPieceY = +this.pieceHeight * this.fontSizeNumber / 2;
   
     //we must push from opposite direction and thus must add in radius
     const xLegPlusCircle = this.circleRadius * this.getCosFromDegrees(triangleDegrees);

@@ -16,6 +16,7 @@ export class CircleRepresentationComponent implements OnInit, OnDestroy {
   pieces: any[][];
   piecesByID: any[] = new Array(3);
   displayColorLetters: boolean = true;
+  currentFontSizeForEms: number = 9;
 
   isDragging1: boolean = false;
   isDragging2: boolean = false;

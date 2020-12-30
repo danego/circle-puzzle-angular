@@ -1,14 +1,15 @@
 
 <!-- LAYER ZERO -->
-<section class="circle-puzzle" id="circle-puzzle">
+<section class="circle-puzzle" id="circle-puzzle" [ngStyle]="{'font-size': currentFontSizeForEms + 'px'}">
   <div class="layer layer-zero">
     <div class="layer-middle layer-middle-zero"> 
       <div 
         class="piece piece-zero piece-circle" 
         [positionTopStart]="i"
-        [circleHeight]="750"
-        [pieceWidth]="42"
-        [pieceHeight]="42"
+        [circleHeight]="75"
+        [pieceWidth]="4.2"
+        [pieceHeight]="4.2"
+        [currentFontSize]="currentFontSizeForEms"
         *ngFor="let piece of pieces[0]; let i = index"
         [ngClass]="{ 'green': piece === 'G', 'orange': piece === 'O', 'purple': piece === 'P' }">
 
@@ -34,9 +35,10 @@
         cdkDropListConnectedTo="piece-bank-one"
         (cdkDropListDropped)="dropped($event)"
         [positionTopStart]="i"
-        [circleHeight]="600"
-        [pieceWidth]="170"
-        [pieceHeight]="76">
+        [circleHeight]="60"
+        [pieceWidth]="17"
+        [pieceHeight]="7.6"
+        [currentFontSize]="currentFontSizeForEms">
 
         <div 
           class="piece piece-one piece-circle" 
@@ -97,9 +99,10 @@
         cdkDropListConnectedTo="piece-bank-two"
         (cdkDropListDropped)="dropped($event)"
         [positionLeftStart]="i"
-        [circleHeight]="400"
-        [pieceWidth]="100"
-        [pieceHeight]="76">
+        [circleHeight]="40"
+        [pieceWidth]="10"
+        [pieceHeight]="7.6"
+        [currentFontSize]="currentFontSizeForEms">
 
         <div 
           class="piece piece-two piece-circle" 
@@ -147,9 +150,10 @@
         cdkDropListConnectedTo="piece-bank-three"
         (cdkDropListDropped)="dropped($event)"
         [positionBottomStart]="i"
-        [circleHeight]="240"
-        [pieceWidth]="105"
-        [pieceHeight]="40">
+        [circleHeight]="24"
+        [pieceWidth]="10.5"
+        [pieceHeight]="4"
+        [currentFontSize]="currentFontSizeForEms">
 
         <div 
           class="piece piece-three piece-circle" 

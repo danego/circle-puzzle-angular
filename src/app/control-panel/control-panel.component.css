@@ -4,7 +4,8 @@ section {
   box-sizing: border-box;
   margin: 10px 10px 20px 10px;
   padding: 8px 0px;
-  background-color: ivory;
+  background-color: whitesmoke; /*ivory*/
+  border: 1px solid #222222;
   display: flex;
   justify-content: space-around;
   align-items: center;
