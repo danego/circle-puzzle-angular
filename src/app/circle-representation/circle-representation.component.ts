@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { SolutionsGrabberService } from '../solutions-grabber.service';
 import { BankCircleConnectorService } from '../bank-circle-connector.service';
+import { PieceSizingService } from '../piece-sizing.service';
 
 
 @Component({
@@ -16,7 +17,7 @@ export class CircleRepresentationComponent implements OnInit, OnDestroy {
   pieces: any[][];
   piecesByID: any[] = new Array(3);
   displayColorLetters: boolean = true;
-  currentFontSizeForEms: number = 9;
+  currentFontSizeForEms: number = 1;
 
   isDragging1: boolean = false;
   isDragging2: boolean = false;
@@ -26,10 +27,12 @@ export class CircleRepresentationComponent implements OnInit, OnDestroy {
   isDragging: Subscription;
   droppedPieceData: Subscription;
   toggleColorLetters: Subscription;
+  fontSizeFactor: Subscription;
 
   constructor(
     private solutionsGrabberService: SolutionsGrabberService,
-    private bankCircleConnectorService: BankCircleConnectorService
+    private bankCircleConnectorService: BankCircleConnectorService,
+    private pieceSizingService: PieceSizingService
   ) { }
 
   ngOnInit() {
@@ -74,6 +77,17 @@ export class CircleRepresentationComponent implements OnInit, OnDestroy {
     this.toggleColorLetters = this.bankCircleConnectorService.displayColorLetters.subscribe((lettersEnabled) => {
       this.displayColorLetters = lettersEnabled;
     });
+
+    //update fontSize to resize puzzle dynamically
+    this.fontSizeFactor = this.pieceSizingService.fontSizeFactor.subscribe((newFontSize) => {
+      window.setTimeout(() => {
+        console.log('new fontsize in circle.ts');
+        console.log(newFontSize);
+        this.currentFontSizeForEms = newFontSize;
+      }, 0)
+    });
+    console.log('NGONIT in circle.ts');
+
 
     this.pieces = new Array(4);
     this.pieces[0] = this.solutionsGrabberService.allPuzzlePieces[0].slice();

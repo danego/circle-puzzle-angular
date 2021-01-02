@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
 
@@ -26,6 +26,10 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
   currentSolutionNumberSub: Subscription;
 
   controlButtonsForm: FormGroup;
+
+  @HostBinding('style.margin') margin;
+  @HostBinding('style.height') height;
+
 
   constructor(
     private bankCircleConnectorService: BankCircleConnectorService,
@@ -132,9 +136,9 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
 
   onToggleSolutionsPanel() {
     this.displaySolutionsPanel = !this.displaySolutionsPanel;
-    this.controlButtonsForm.get('toggleSolutionsPanel').patchValue(
-      this.displaySolutionsPanel ? "Hide Solutions Panel" : "Reveal Solutions Panel"
-    );
+    this.controlButtonsForm.patchValue({
+      toggleSolutionsPanel: this.displaySolutionsPanel ? "Hide Solutions Panel" : "Reveal Solutions Panel",
+    });
   }
 
   ngOnDestroy() {

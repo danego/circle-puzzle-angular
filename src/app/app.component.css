@@ -1,4 +1,12 @@
+main {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 15px);
+}
+
 article {
+  flex-grow: 1;
+  border: 1px solid rebeccapurple;
   display: flex;
   flex: row none;
   justify-content: center;

@@ -1,8 +1,8 @@
 .circle-puzzle {
-  background-color: #999999;
-  border-radius: 50%;
   position: relative;
   box-sizing: border-box;
+  border: 1px solid red;
+
 }
 
 /* Generic Stylings */

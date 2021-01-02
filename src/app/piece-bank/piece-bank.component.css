@@ -1,3 +1,9 @@
+section {
+  border: 1px solid red;
+  height: 100%;
+  font-size: 6px;
+}
+
 /* Generic Layers */
 .dropdown {
   width: 230px;
@@ -100,6 +106,7 @@
 
 .cdk-drag-preview {
   opacity: .8;
+  font-size: 7px;  /* Subscribe to service for dynamic sizing */
 }
 
 .cdk-drag-placeholder {

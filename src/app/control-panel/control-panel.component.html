@@ -11,7 +11,7 @@
   <div class="spacer"></div>
 
   
-  <div id="solutions" class="solutions" *ngIf="displaySolutionsPanel">
+  <div id="solutions" class="solutions" [ngStyle]="{'display': displaySolutionsPanel ? 'flex' : 'none'}">
     <div class="soln-picker">
       <mat-slide-toggle 
         disableRipple="true" 
@@ -47,7 +47,5 @@
     class="solutions-toggle" 
     (click)="onToggleSolutionsPanel()"
     formControlName="toggleSolutionsPanel">
-  <!--
-    *ngIf="!displaySolutionsPanel" 
-  -->
+
 </section>

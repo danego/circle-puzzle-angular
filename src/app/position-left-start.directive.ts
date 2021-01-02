@@ -1,10 +1,10 @@
-import { Directive, Input, HostBinding, OnInit } from '@angular/core';
+import { Directive, Input, HostBinding, OnChanges } from '@angular/core';
 
 @Directive({
   selector: '[positionLeftStart]'
 })
 
-export class PositionLeftStartDirective implements OnInit{
+export class PositionLeftStartDirective implements OnChanges{
   circleRadius: number;
   fontSizeNumber: number;
 
@@ -23,7 +23,7 @@ export class PositionLeftStartDirective implements OnInit{
 
   constructor() {}
 
-  ngOnInit() {
+  ngOnChanges() {
     const piece = +this.pieceNumber;
     this.fontSizeNumber = +this.fontSize;
     this.circleRadius = +this.circleHeight * this.fontSizeNumber / 2;

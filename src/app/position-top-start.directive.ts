@@ -1,10 +1,10 @@
-import { Directive, HostBinding, Input, OnInit } from "@angular/core";
+import { Directive, HostBinding, Input, OnChanges, SimpleChanges } from "@angular/core";
 
 @Directive({
   selector: '[positionTopStart]'
 })
 
-export class PositionTopStartDirective implements OnInit {
+export class PositionTopStartDirective implements OnChanges {
   circleRadius: number;
   fontSizeNumber: number;
 
@@ -23,15 +23,13 @@ export class PositionTopStartDirective implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges) {
     const piece = +this.pieceNumber;
     this.fontSizeNumber = +this.fontSize;
     this.circleRadius = +this.circleHeight * this.fontSizeNumber / 2;
     
     this.convertToAngleCssCartesian(this.convertToAngleDegrees(piece), piece);
     this.generateRotateDegrees(piece);
-    //this.rotate = 'rotate(200deg)';
-    console.log('positionTOp');
   }
 
   convertToAngleDegrees(piece: number) {

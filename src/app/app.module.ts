@@ -15,6 +15,7 @@ import { RotatePieceDirective } from './rotate-piece.directive';
 import { PieceBankComponent } from './piece-bank/piece-bank.component';
 import { ControlPanelComponent } from './control-panel/control-panel.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { CalculateHeightDirective } from './calculate-height.directive';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     RotatePieceDirective,
     PieceBankComponent,
     ControlPanelComponent,
+    CalculateHeightDirective
   ],
   imports: [
     BrowserModule,
