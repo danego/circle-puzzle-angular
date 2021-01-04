@@ -17,6 +17,8 @@ import { ControlPanelComponent } from './control-panel/control-panel.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CalculateHeightDirective } from './calculate-height.directive';
 
+import { IsScrollingDirective } from './is-scrolling.directive';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { CalculateHeightDirective } from './calculate-height.directive';
     RotatePieceDirective,
     PieceBankComponent,
     ControlPanelComponent,
-    CalculateHeightDirective
+    CalculateHeightDirective,
+    IsScrollingDirective
   ],
   imports: [
     BrowserModule,

@@ -17,7 +17,7 @@ export class CircleRepresentationComponent implements OnInit, OnDestroy {
   pieces: any[][];
   piecesByID: any[] = new Array(3);
   displayColorLetters: boolean = true;
-  currentFontSizeForEms: number = 1;
+  fontSizeFactor: number = 2;
 
   isDragging1: boolean = false;
   isDragging2: boolean = false;
@@ -27,7 +27,7 @@ export class CircleRepresentationComponent implements OnInit, OnDestroy {
   isDragging: Subscription;
   droppedPieceData: Subscription;
   toggleColorLetters: Subscription;
-  fontSizeFactor: Subscription;
+  fontSizeFactorSub: Subscription;
 
   constructor(
     private solutionsGrabberService: SolutionsGrabberService,
@@ -79,11 +79,11 @@ export class CircleRepresentationComponent implements OnInit, OnDestroy {
     });
 
     //update fontSize to resize puzzle dynamically
-    this.fontSizeFactor = this.pieceSizingService.fontSizeFactor.subscribe((newFontSize) => {
+    this.fontSizeFactorSub = this.pieceSizingService.fontSizeFactor.subscribe((newFontSize) => {
       window.setTimeout(() => {
         console.log('new fontsize in circle.ts');
         console.log(newFontSize);
-        this.currentFontSizeForEms = newFontSize;
+        this.fontSizeFactor = newFontSize;
       }, 0)
     });
     console.log('NGONIT in circle.ts');
@@ -231,5 +231,6 @@ export class CircleRepresentationComponent implements OnInit, OnDestroy {
     this.isDragging.unsubscribe();
     this.droppedPieceData.unsubscribe();
     this.toggleColorLetters.unsubscribe();
+    this.fontSizeFactorSub.unsubscribe();
   }
  }

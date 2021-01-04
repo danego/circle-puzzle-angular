@@ -1,12 +1,13 @@
-<section (mouseover)="onHoverOverBank(true)" (mouseleave)="onHoverOverBank(false)">
+<section (mouseover)="onHoverOverBank(true)" (mouseleave)="onHoverOverBank(false)" [ngStyle]="{'font-size': fontSizeFactor + 'px', 'height': containerSize + 'px'}" isScrolling>
 
   <!-- BANK ONE -->
+  <div class="drop-disappear-top"><div class="drop-disappear-top-child"></div></div>
   <div 
     class="dropdown dropdown-one" 
     [ngStyle]="{'height': piecesDropdownHeight1}"
     (click)="checkToDisplayStatic(1)">
 
-    <div class="drop-toggle">
+    <div class="drop-toggle drop-toggle-one">
       <div>Open Layer One Pieces</div>
       <svg *ngIf="!displayBankOne" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
       <svg *ngIf="displayBankOne" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
@@ -24,7 +25,7 @@
       [cdkDropListData]="piecesBank1"
       (cdkDropListDropped)="dropped($event)">
       
-      <div [ngStyle]="{'visibility': displayBankOne || displayBankOneTemporary ? 'visible': 'hidden'}">
+      <div [ngStyle]="{'display': displayBankOne || displayBankOneTemporary ? 'block': 'none'}">
         <div class="bank-pieces bank-pieces-one" [ngClass]="{'bank-pieces-open-one': isDraggingIncoming1 && isHoveringOverBank}"> 
 
           <div 
@@ -41,7 +42,7 @@
               <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
               <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
               
-              <div *cdkDragPreview class="piece piece-one piece-bank">
+              <div *cdkDragPreview class="piece piece-one piece-bank" [ngStyle]="{'font-size': fontSizeFactor + 'px'}">
                 <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">{{ piece.top }}</span>
                 <br>
                 <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
@@ -55,7 +56,7 @@
               <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }"></span>
               <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }"></span>
 
-              <div *cdkDragPreview class="piece piece-one piece-bank">
+              <div *cdkDragPreview class="piece piece-one piece-bank" [ngStyle]="{'font-size': fontSizeFactor + 'px'}">
                 <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }"></span>
                 <br>
                 <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }"></span>
@@ -94,7 +95,7 @@
       [cdkDropListData]="piecesBank2"
       (cdkDropListDropped)="dropped($event)">
 
-      <div [ngStyle]="{'visibility': displayBankTwo || displayBankTwoTemporary ? 'visible': 'hidden'}">
+      <div [ngStyle]="{'display': displayBankTwo || displayBankTwoTemporary ? 'block': 'none'}">
         <div class="bank-pieces bank-pieces-two"> <!-- [ngClass]="{'bank-two-pieces-open': isDraggingIncoming2}" -->
 
           <!-- necessary instead of padding bc this bank is rows AND columns -->
@@ -114,7 +115,7 @@
               <br>
               <span [ngClass]="{ 'green': piece.bottom === 'G', 'orange': piece.bottom === 'O', 'purple': piece.bottom === 'P' }">{{ piece.bottom }}</span>
               
-              <div *cdkDragPreview class="piece piece-two piece-bank">
+              <div *cdkDragPreview class="piece piece-two piece-bank" [ngStyle]="{'font-size': fontSizeFactor + 'px'}">
                 <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
                 <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
                 <br>
@@ -128,7 +129,7 @@
               <br>
               <span [ngClass]="{ 'green': piece.bottom === 'G', 'orange': piece.bottom === 'O', 'purple': piece.bottom === 'P' }"></span>
 
-              <div *cdkDragPreview class="piece piece-two piece-bank">
+              <div *cdkDragPreview class="piece piece-two piece-bank" [ngStyle]="{'font-size': fontSizeFactor + 'px'}">
                 <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }"></span>
                 <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }"></span>
                 <br>
@@ -166,7 +167,7 @@
       [cdkDropListData]="piecesBank3"
       (cdkDropListDropped)="dropped($event)">
 
-      <div [ngStyle]="{'visibility': displayBankThree || displayBankThreeTemporary ? 'visible': 'hidden'}">
+      <div [ngStyle]="{'display': displayBankThree || displayBankThreeTemporary ? 'block': 'none'}">
         <div class="bank-pieces bank-pieces-three" [ngClass]="{'bank-pieces-open-three': isDraggingIncoming3 && isHoveringOverBank}">
           <div 
             class="piece piece-three piece-bank" 
@@ -182,7 +183,7 @@
                 <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
               </div>
               
-              <div *cdkDragPreview class="piece piece-three piece-bank">
+              <div *cdkDragPreview class="piece piece-three piece-bank" [ngStyle]="{'font-size': fontSizeFactor + 'px'}">
                 <div class="piece-three-container">
                   <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
                   <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
@@ -196,7 +197,7 @@
                 <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }"></span>
               </div>
 
-              <div *cdkDragPreview class="piece piece-three piece-bank">
+              <div *cdkDragPreview class="piece piece-three piece-bank" [ngStyle]="{'font-size': fontSizeFactor + 'px'}">
                 <div class="piece-three-container">                  
                   <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }"></span>
                   <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }"></span>

@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { SolutionsGrabberService } from '../solutions-grabber.service';
 import { BankCircleConnectorService } from '../bank-circle-connector.service';
+import { PieceSizingService } from '../piece-sizing.service';
 
 
 @Component({
@@ -17,6 +18,8 @@ export class PieceBankComponent implements OnInit, OnDestroy {
   piecesBank2: any[];
   piecesBank3: any[];
   displayColorLetters: boolean = true;
+  fontSizeFactor: number = 2;
+  containerSize: number;
   
   isDragging1: boolean = false;
   isDragging2: boolean = false;
@@ -45,12 +48,13 @@ export class PieceBankComponent implements OnInit, OnDestroy {
   isDragging: Subscription;
   droppedPiece: Subscription;
   toggleColorLetters: Subscription;
-
-
+  fontSizeFactorSub: Subscription;
+  containerSizeSub: Subscription;
 
   constructor(
     private solutionsGrabberService: SolutionsGrabberService,
-    private bankCircleConnectorService: BankCircleConnectorService
+    private bankCircleConnectorService: BankCircleConnectorService,
+    private pieceSizingService: PieceSizingService
   ) { }
 
 
@@ -94,10 +98,22 @@ export class PieceBankComponent implements OnInit, OnDestroy {
       this.calculatePieceContainerHeight(layer);
     });
 
-     //turn on/off letters on span elements for pieces
-     this.toggleColorLetters = this.bankCircleConnectorService.displayColorLetters.subscribe((lettersEnabled) => {
+    //turn on/off letters on span elements for pieces
+    this.toggleColorLetters = this.bankCircleConnectorService.displayColorLetters.subscribe((lettersEnabled) => {
       this.displayColorLetters = lettersEnabled;
     });
+
+    //updates fontSize to correctly size pieces and incoming piece margins
+    this.fontSizeFactorSub = this.pieceSizingService.fontSizeFactor.subscribe((newFontSize) => {
+      this.fontSizeFactor = newFontSize;
+    });
+
+    //updates container size for scrolling piece banks
+    this.containerSizeSub = this.pieceSizingService.containerSize.subscribe((newContainerSize) => {
+      const containerHeightMinusMargins = newContainerSize - 20;
+      this.containerSize = containerHeightMinusMargins;
+    });
+
 
     //call to set up empty arrays for each puzzle piece location ... NAME METHOD BETTER
     this.removeAllPieces();
@@ -105,17 +121,16 @@ export class PieceBankComponent implements OnInit, OnDestroy {
   }
 
   dropped(event: CdkDragDrop<string[]>) {
-
     this.updatePiecesByIdTracker(event);
 
     //move to new, dropped list even if not empty
+    //event.currentIndex is replaced by 0 bc we always want to drop to top of bank (disabledSorting)
     transferArrayItem(
       event.previousContainer.data,
       event.container.data,
       event.previousIndex,
       0
     );
-    //event.currentIndex is replaced by 0 bc we always want to drop to top of bank (disabledSorting)
 
     this.calculatePieceContainerHeight();
   }
@@ -259,7 +274,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
 
   calculatePieceContainerHeightOne(containerHeight = 0, dropdown = 'auto', droplist = '76px') {
     //LAYER ONE
-    const pieceHeight = 76;
+    const pieceHeight = 7.6 * this.fontSizeFactor;
 
     if (this.displayBankOne || this.displayBankOneTemporary) {
       containerHeight = this.piecesBank1.length * pieceHeight;
@@ -282,7 +297,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
 
   calculatePieceContainerHeightTwo(containerHeight = 0, dropdown = 'auto', droplist = '76px') {
     //LAYER TWO
-    const pieceHeight = 76;
+    const pieceHeight = 7.6 * this.fontSizeFactor;
 
     if (this.displayBankTwo || this.displayBankTwoTemporary) {
       containerHeight = (Math.ceil(this.piecesBank2.length / 2)) * pieceHeight;
@@ -305,7 +320,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
 
   calculatePieceContainerHeightThree(containerHeight = 0, dropdown = 'auto', droplist = '50px') {
      //LAYER THREE
-     const pieceHeight = 40;
+     const pieceHeight = 4 * this.fontSizeFactor;
 
      if (this.displayBankThree || this.displayBankThreeTemporary) {
       containerHeight = this.piecesBank3.length * pieceHeight;
@@ -354,6 +369,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
     this.isDragging.unsubscribe();
     this.droppedPiece.unsubscribe();
     this.toggleColorLetters.unsubscribe();
-
+    this.fontSizeFactorSub.unsubscribe();
+    this.containerSizeSub.unsubscribe();
   }
 }

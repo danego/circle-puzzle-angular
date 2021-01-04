@@ -7,13 +7,18 @@ import { BehaviorSubject, Subject } from 'rxjs';
 
 export class PieceSizingService {
 
-  private fontSize: number = 10;
-
+  //private fontSize: number = 10;
   //fontSizeFactor = new BehaviorSubject<number>(this.fontSize);
   fontSizeFactor = new Subject<number>();
+  containerSize = new Subject<number>();
 
   setNewFontSizeFactor(newFontSize: number) {
-    this.fontSize = newFontSize;
+    //this.fontSize = newFontSize;
     this.fontSizeFactor.next(newFontSize);
+  }
+
+  //used for pieceBank container
+  setNewContainerHeight(newContainerHeight) {
+    this.containerSize.next(newContainerHeight);
   }
 }

@@ -1,12 +1,27 @@
 section {
-  border: 1px solid red;
-  height: 100%;
-  font-size: 6px;
+  /* min-height: 142px; */
+  overflow: auto;
+  border-bottom: 5px ridge rgba(102, 51, 153, 0.5);
+  position: relative;
+}
+.drop-disappear-top {
+  min-width: 230px;
+  height: 0px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+.drop-disappear-top-child {
+  background-color: rgba(102, 51, 153, 0.5);
+  border-radius: 30%;
+  position: absolute;
+  min-width: 230px;
+  height: 10px;
 }
 
 /* Generic Layers */
 .dropdown {
-  width: 230px;
+  min-width: 230px;
   height: auto;
   border: 1px solid gray;
   border-radius: 15px;
@@ -15,7 +30,6 @@ section {
   justify-content: space-between;
   align-items: center;
   position: relative;
-  z-index: 15;
   cursor: default;
 }
 .drop-toggle {
@@ -25,6 +39,7 @@ section {
   justify-content: space-around;
   align-items: center;
   cursor: pointer;
+  font-size: 15px;
 }
 
 .droplist {
@@ -57,16 +72,22 @@ section {
 .dropdown-one {
   background-color: #666666;
 }
+.drop-toggle-one {
+  background-color: #666666;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  z-index: 21;
+}
 .droplist-one {
-  width: 170px;
+  width: 17em;
 }
 .bank-pieces-one {
-  width: 170px;
+  width: 17em;
   background-color: #666666;
 }
 /* Matches height of layer 1 pieces */
 .bank-pieces-open-one {
-  padding-top: 76px;
+  padding-top: 7.6em;
 }
 
 /* Layer Two */
@@ -75,16 +96,16 @@ section {
   margin-top: 5px;
 }
 .droplist-two {
-  width: 200px;
+  width: 20em;
 }
 .bank-pieces-two {
-  width: 200px;
+  width: 20em;
   background-color: #444444;  
   flex-direction: row;
 }
 .piece-open-two {
-  width: 100px;
-  height: 76px;
+  width: 10em;
+  height: 7.6em;
 }
 
 /* Layer Three */
@@ -93,20 +114,20 @@ section {
   margin-top: 5px;
 }
 .droplist-three {
-  width: 105px;
+  width: 10.5em;
+
 }
 .bank-pieces-three {
-  width: 105px;
+  width: 10.5em;
   background-color: #222;
 }
 .bank-pieces-open-three {
-  padding-top: 40px;
+  padding-top: 4em;
 }
 
 
 .cdk-drag-preview {
   opacity: .8;
-  font-size: 7px;  /* Subscribe to service for dynamic sizing */
 }
 
 .cdk-drag-placeholder {

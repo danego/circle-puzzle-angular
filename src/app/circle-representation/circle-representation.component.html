@@ -1,6 +1,6 @@
 
 <!-- LAYER ZERO -->
-<section class="circle-puzzle" id="circle-puzzle" [ngStyle]="{'font-size': currentFontSizeForEms + 'px'}">
+<section class="circle-puzzle" id="circle-puzzle" [ngStyle]="{'font-size': fontSizeFactor + 'px'}">
   <div class="layer layer-zero">
     <div class="layer-middle layer-middle-zero"> 
       <div 
@@ -9,7 +9,7 @@
         [circleHeight]="75"
         [pieceWidth]="4.2"
         [pieceHeight]="4.2"
-        [currentFontSize]="currentFontSizeForEms"
+        [currentFontSize]="fontSizeFactor"
         *ngFor="let piece of pieces[0]; let i = index"
         [ngClass]="{ 'green': piece === 'G', 'orange': piece === 'O', 'purple': piece === 'P' }">
 
@@ -38,7 +38,7 @@
         [circleHeight]="60"
         [pieceWidth]="17"
         [pieceHeight]="7.6"
-        [currentFontSize]="currentFontSizeForEms">
+        [currentFontSize]="fontSizeFactor">
 
         <div 
           class="piece piece-one piece-circle" 
@@ -102,7 +102,7 @@
         [circleHeight]="40"
         [pieceWidth]="10"
         [pieceHeight]="7.6"
-        [currentFontSize]="currentFontSizeForEms">
+        [currentFontSize]="fontSizeFactor">
 
         <div 
           class="piece piece-two piece-circle" 
@@ -153,7 +153,7 @@
         [circleHeight]="24"
         [pieceWidth]="10.5"
         [pieceHeight]="4"
-        [currentFontSize]="currentFontSizeForEms">
+        [currentFontSize]="fontSizeFactor">
 
         <div 
           class="piece piece-three piece-circle" 

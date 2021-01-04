@@ -1,11 +1,8 @@
 import { 
   Directive, 
-  HostBinding, 
   ElementRef, 
   AfterViewInit, 
   HostListener, 
-  OnInit, 
-  AfterContentInit 
 } from '@angular/core';
 
 import { PieceSizingService } from './piece-sizing.service';
@@ -15,32 +12,29 @@ import { PieceSizingService } from './piece-sizing.service';
   selector: "[calculateHeight]"
 })
 
-export class CalculateHeightDirective implements OnInit, AfterViewInit, AfterContentInit {
+export class CalculateHeightDirective implements AfterViewInit {
 
+  //note - only works when moving to bigger size.
+  //     - would have to minimize puzzle first if smaller screen
   //@HostListener('window:resize') onResize() {
+  //  this.pieceSizingService.setNewFontSizeFactor(2); 
   //  this.calculateHeight();
   //}
 
   constructor(private elementRef: ElementRef, private pieceSizingService: PieceSizingService) {}
 
-  ngOnInit() {
-    
-  }
-  
-  ngAfterContentInit() {
-    const currentHeight = this.elementRef.nativeElement.offsetHeight;
-    console.log('aftercontentinit ' + currentHeight);
+  ngAfterViewInit() {
+    this.calculateHeight();
   }
 
-  ngAfterViewInit() {
+  calculateHeight() {
     const startingCircleHeightFactor = 800;
     const startingFontSizeFactor = 10;
     
     const currentHeight = this.elementRef.nativeElement.offsetHeight;
     const newFontSizeFactor = +(currentHeight / startingCircleHeightFactor * startingFontSizeFactor).toFixed(2);
     
-    console.log(currentHeight);
-    console.log(newFontSizeFactor);
     this.pieceSizingService.setNewFontSizeFactor(newFontSizeFactor);
+    this.pieceSizingService.setNewContainerHeight(currentHeight);
   }
 }
