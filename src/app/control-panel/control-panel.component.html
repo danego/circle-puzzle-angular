@@ -38,7 +38,7 @@
   
     <div class="solutions-remaining">
       <p *ngIf="remainingSolutions !== 1 || !allPiecesUsed">{{ remainingSolutions }} remaining {{ remainingSolutions === 1 ? 'solution' : 'solutions' }}</p>
-      <p *ngIf="remainingSolutions === 1 && allPiecesUsed">You found solution #{{ currentSolutionNumber }}</p>
+      <p *ngIf="remainingSolutions === 1 && allPiecesUsed">You found solution # {{ currentSolutionNumber }}</p>
     </div>
   </div>
 

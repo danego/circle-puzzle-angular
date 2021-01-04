@@ -6,12 +6,11 @@ main {
 
 article {
   flex-grow: 1;
-  border: 1px solid rebeccapurple;
   display: flex;
   flex: row none;
   justify-content: space-evenly;
 }
 
 piece-bank {
-  margin: 10px 20px 10px 0;
+  margin: 10px 20px 10px 0; /* TODO Consider larger top margin (then also update in piecebank.ts */
 }

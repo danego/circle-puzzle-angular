@@ -1,22 +1,9 @@
 section {
   /* min-height: 142px; */
   overflow: auto;
-  border-bottom: 5px ridge rgba(102, 51, 153, 0.5);
-  position: relative;
-}
-.drop-disappear-top {
-  min-width: 230px;
-  height: 0px;
-  position: sticky;
-  top: 0;
-  z-index: 20;
-}
-.drop-disappear-top-child {
-  background-color: rgba(102, 51, 153, 0.5);
-  border-radius: 30%;
-  position: absolute;
-  min-width: 230px;
-  height: 10px;
+  border-radius: 15px;
+  box-sizing: border-box;
+  padding: 1px 0;
 }
 
 /* Generic Layers */
@@ -30,6 +17,7 @@ section {
   justify-content: space-between;
   align-items: center;
   position: relative;
+  z-index: 15;
   cursor: default;
 }
 .drop-toggle {
@@ -39,7 +27,8 @@ section {
   justify-content: space-around;
   align-items: center;
   cursor: pointer;
-  font-size: 15px;
+  font-family: sans-serif;
+  font-size: 14px;
 }
 
 .droplist {
@@ -71,12 +60,6 @@ section {
 /* Layer One */
 .dropdown-one {
   background-color: #666666;
-}
-.drop-toggle-one {
-  background-color: #666666;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  z-index: 21;
 }
 .droplist-one {
   width: 17em;

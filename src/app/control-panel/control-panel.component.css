@@ -1,14 +1,15 @@
 section {
-  height: 82px;
+  height: 75px;
   width: calc(100% - 20px);
   box-sizing: border-box;
-  margin: 10px 10px 20px 10px;
-  padding: 8px 0px;
+  margin: 5px 10px 10px 10px;
   background-color: whitesmoke; /*ivory*/
   border: 1px solid #222222;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  font-family: sans-serif !important;
+  font-size: 14px !important;
 }
 section>div {
   margin: auto 5px;
@@ -20,6 +21,8 @@ button, input {
   border: 1px solid #222222;
   border-radius: 30px;
   cursor: pointer;
+  font-family: sans-serif;
+  font-size: 14px;
 }
 button:hover, input:hover {
   background-color: #c5c5c5;
@@ -31,6 +34,11 @@ button:active, input:active {
 button:focus, input:focus {
   outline: none;
 }
+.button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 
 
 
@@ -40,7 +48,7 @@ button:focus, input:focus {
 
 /* Solution Picker */
 .solutions-toggle {
-  width: 160px;
+  width: 170px;
   margin-right: 10px;
 }
 
@@ -60,7 +68,6 @@ button:focus, input:focus {
 .all-solutions {
   color: rgba(255,64,129);
   font-family: 'Times New Roman', Times, serif;
-
 }
 .limited-solutions {
   font-family: 'Times New Roman', Times, serif;
@@ -74,6 +81,8 @@ button:focus, input:focus {
 }
 .soln-number {
   max-height: 500px;
+  font-family: sans-serif;
+  font-size: 14px;
 }
 select:focus {
   outline: none;
@@ -82,11 +91,12 @@ select:focus {
 
 .solutions-remaining {
   width: 200px;
+  height: 50px;
   box-sizing: border-box;
   margin: 5px;
   margin-left: 15px;
   padding: 2px;
-  border: 1px solid #222222;
+  border: 1px dashed #222222;
   border-radius: 30px;
   display: flex;
   align-items: center;
