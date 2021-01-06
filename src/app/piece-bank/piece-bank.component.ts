@@ -19,6 +19,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
   piecesBank3: any[];
   displayColorLetters: boolean = true;
   fontSizeFactor: number = 2;
+  fontSizeForPieces: number;
   containerSize: number;
   
   isDragging1: boolean = false;
@@ -49,6 +50,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
   droppedPiece: Subscription;
   toggleColorLetters: Subscription;
   fontSizeFactorSub: Subscription;
+  fontSizeForPiecesSub: Subscription;
   containerSizeSub: Subscription;
 
   constructor(
@@ -106,6 +108,11 @@ export class PieceBankComponent implements OnInit, OnDestroy {
     //updates fontSize to correctly size pieces and incoming piece margins
     this.fontSizeFactorSub = this.pieceSizingService.fontSizeFactor.subscribe((newFontSize) => {
       this.fontSizeFactor = newFontSize;
+    });
+
+    //update actual fontSize for text on pieces
+    this.fontSizeForPiecesSub = this.pieceSizingService.fontSizeForPieces.subscribe((newFontSize) => {
+      this.fontSizeForPieces = newFontSize;
     });
 
     //updates container size for scrolling piece banks
@@ -370,6 +377,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
     this.droppedPiece.unsubscribe();
     this.toggleColorLetters.unsubscribe();
     this.fontSizeFactorSub.unsubscribe();
+    this.fontSizeForPiecesSub.unsubscribe();
     this.containerSizeSub.unsubscribe();
   }
 }

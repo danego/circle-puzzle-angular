@@ -15,7 +15,7 @@ import { PieceSizingService } from './piece-sizing.service';
 export class CalculateHeightDirective implements AfterViewInit {
 
   //note - only works when moving to bigger size.
-  //     - would have to minimize puzzle first if smaller screen
+  //     - would have to minimize puzzle first for smaller screen
   //@HostListener('window:resize') onResize() {
   //  this.pieceSizingService.setNewFontSizeFactor(2); 
   //  this.calculateHeight();
@@ -28,13 +28,7 @@ export class CalculateHeightDirective implements AfterViewInit {
   }
 
   calculateHeight() {
-    const startingCircleHeightFactor = 800;
-    const startingFontSizeFactor = 10;
-    
     const currentHeight = this.elementRef.nativeElement.offsetHeight;
-    const newFontSizeFactor = +(currentHeight / startingCircleHeightFactor * startingFontSizeFactor).toFixed(2);
-    
-    this.pieceSizingService.setNewFontSizeFactor(newFontSizeFactor);
     this.pieceSizingService.setNewContainerHeight(currentHeight);
   }
 }

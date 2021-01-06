@@ -36,16 +36,40 @@
             (cdkDragEnded)="dragEnded(1)"> 
 
             <div *ngIf="displayColorLetters; else noLetterOne">
-              <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">{{ piece.top }}</span>
+              <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">
+                <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                  {{ piece.top }}
+                </div>
+              </span>
               <br>
-              <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
-              <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+              <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">
+                <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                  {{ piece.left }}
+                </div>
+              </span>
+              <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">
+                <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                  {{ piece.right }}
+                </div>
+              </span>
               
               <div *cdkDragPreview class="piece piece-one piece-bank" [ngStyle]="{'font-size': fontSizeFactor + 'px'}">
-                <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">{{ piece.top }}</span>
+                <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">
+                  <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                    {{ piece.top }}
+                  </div>
+                </span>
                 <br>
-                <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
-                <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+                <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">
+                  <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                    {{ piece.left }}
+                  </div>
+                </span>
+                <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">
+                  <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                    {{ piece.right }}
+                  </div>
+                </span>
               </div>
             </div>
 
@@ -109,16 +133,40 @@
             (cdkDragEnded)="dragEnded(2)"> 
 
             <div *ngIf="displayColorLetters; else noLetterTwo">
-              <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
-              <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+              <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">
+                <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                  {{ piece.left }}
+                </div>
+              </span>
+              <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">
+                <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                  {{ piece.right }}
+                </div>
+              </span>
               <br>
-              <span [ngClass]="{ 'green': piece.bottom === 'G', 'orange': piece.bottom === 'O', 'purple': piece.bottom === 'P' }">{{ piece.bottom }}</span>
+              <span [ngClass]="{ 'green': piece.bottom === 'G', 'orange': piece.bottom === 'O', 'purple': piece.bottom === 'P' }">
+                <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                  {{ piece.bottom }}
+                </div>
+              </span>
               
               <div *cdkDragPreview class="piece piece-two piece-bank" [ngStyle]="{'font-size': fontSizeFactor + 'px'}">
-                <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
-                <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+                <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">
+                  <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                    {{ piece.left }}
+                  </div>
+                </span>
+                <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">
+                  <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                    {{ piece.right }}
+                  </div>
+                </span>
                 <br>
-                <span [ngClass]="{ 'green': piece.bottom === 'G', 'orange': piece.bottom === 'O', 'purple': piece.bottom === 'P' }">{{ piece.bottom }}</span>
+                <span [ngClass]="{ 'green': piece.bottom === 'G', 'orange': piece.bottom === 'O', 'purple': piece.bottom === 'P' }">
+                  <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                    {{ piece.bottom }}
+                  </div>
+                </span>
               </div>
             </div>
 
@@ -178,14 +226,30 @@
 
             <div *ngIf="displayColorLetters; else noLetterThree">
               <div class="piece-three-container">
-                <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
-                <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+                <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">
+                  <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                    {{ piece.left }}
+                  </div>
+                </span>
+                <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">
+                  <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                    {{ piece.right }}
+                  </div>
+                </span>
               </div>
               
               <div *cdkDragPreview class="piece piece-three piece-bank" [ngStyle]="{'font-size': fontSizeFactor + 'px'}">
                 <div class="piece-three-container">
-                  <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">{{ piece.left }}</span>
-                  <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">{{ piece.right }}</span>
+                  <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">
+                    <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                      {{ piece.left }}
+                    </div>
+                  </span>
+                  <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">
+                    <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                      {{ piece.right }}
+                    </div>
+                  </span>
                 </div>
               </div>
             </div>

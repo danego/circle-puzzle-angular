@@ -1,6 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 body {
-  /*font-size: 10;*/
   font-family: sans-serif;
   background-color: papayawhip;
   /*
@@ -22,11 +21,15 @@ body {
   display: block;
 }
 .piece span {
+  box-sizing: border-box;
   text-align: center;
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;
   vertical-align: top;
+}
+.piece span div {
+  font-family: monospace;
 }
 
 .piece-zero {
@@ -42,7 +45,6 @@ body {
   cursor: default;
   border: none;
   border-radius: 0%;
-  font-size: 12px;
 }
 
 .piece-one {
