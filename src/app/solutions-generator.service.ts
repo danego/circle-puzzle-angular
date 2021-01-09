@@ -347,7 +347,7 @@ export class SolutionsGeneratorService {
       this.allSolvedPuzzlePieces.push(solvedPuzzlePieces);
     }
     else if (!alreadyExists()) {
-      console.log('     perfect fit!');
+      //console.log('     perfect fit!');
       this.allSolvedPuzzlePieces.push(solvedPuzzlePieces);
     }
   } //end of cementSolvedArray()

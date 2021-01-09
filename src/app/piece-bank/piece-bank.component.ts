@@ -372,12 +372,12 @@ export class PieceBankComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.moveAllPieces.unsubscribe();
-    this.isDragging.unsubscribe();
-    this.droppedPiece.unsubscribe();
-    this.toggleColorLetters.unsubscribe();
-    this.fontSizeFactorSub.unsubscribe();
-    this.fontSizeForPiecesSub.unsubscribe();
-    this.containerSizeSub.unsubscribe();
+    if (this.moveAllPieces) this.moveAllPieces.unsubscribe();
+    if (this.isDragging) this.isDragging.unsubscribe();
+    if (this.droppedPiece) this.droppedPiece.unsubscribe();
+    if (this.toggleColorLetters) this.toggleColorLetters.unsubscribe();
+    if (this.fontSizeFactorSub) this.fontSizeFactorSub.unsubscribe();
+    if (this.fontSizeForPiecesSub) this.fontSizeForPiecesSub.unsubscribe();
+    if (this.containerSizeSub) this.containerSizeSub.unsubscribe();
   }
 }

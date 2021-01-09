@@ -142,8 +142,8 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.remainingSolutionsSub.unsubscribe();
-    this.allPiecesUsedSub.unsubscribe();
-    this.currentSolutionNumberSub.unsubscribe();
+    if (this.remainingSolutionsSub) this.remainingSolutionsSub.unsubscribe();
+    if (this.allPiecesUsedSub) this.allPiecesUsedSub.unsubscribe();
+    if (this.currentSolutionNumberSub) this.currentSolutionNumberSub.unsubscribe();
   }
 }

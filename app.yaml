@@ -1,0 +1,60 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+
+skip_files:
+- ^(?!dist)  # Skip any files not in the dist folder
+handlers:
+- url: /(.+\.js)
+  static_files: dist/puzzle-circle-angular/\1
+  upload: dist/puzzle-circle-angular/(.+\.js)
+  secure: always
+  redirect_http_response_code: 301
+
+- url: /(.+\.css)
+  static_files: dist/puzzle-circle-angular/\1
+  upload: dist/puzzle-circle-angular/(.+\.css)
+  secure: always
+  redirect_http_response_code: 301
+
+- url: /(.+\.png)
+  static_files: dist/puzzle-circle-angular/\1
+  upload: dist/puzzle-circle-angular/(.+\.png)
+  secure: always
+  redirect_http_response_code: 301
+
+- url: /(.+\.jpg)
+  static_files: dist/puzzle-circle-angular/\1
+  upload: dist/puzzle-circle-angular/(.+\.jpg)
+  secure: always
+  redirect_http_response_code: 301
+
+- url: /(.+\.svg)
+  static_files: dist/puzzle-circle-angular/\1
+  upload: dist/puzzle-circle-angular/(.+\.svg)
+  secure: always
+  redirect_http_response_code: 301
+
+- url: /favicon.ico
+  static_files: dist/puzzle-circle-angular/favicon.ico
+  upload: dist/puzzle-circle-angular/favicon.ico
+  secure: always
+  redirect_http_response_code: 301
+
+- url: /(.+\.json)
+  static_files: dist/puzzle-circle-angular/\1
+  upload: dist/puzzle-circle-angular/(.+\.json)
+  secure: always
+  redirect_http_response_code: 301
+
+- url: /(.+)
+  static_files: dist/puzzle-circle-angular/index.html
+  upload: dist/puzzle-circle-angular/index.html
+  secure: always
+  redirect_http_response_code: 301
+
+- url: /
+  static_files: dist/puzzle-circle-angular/index.html
+  upload: dist/puzzle-circle-angular/index.html
+  secure: always
+  redirect_http_response_code: 301
