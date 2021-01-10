@@ -1,16 +1,28 @@
+h1 {
+  color: rebeccapurple;
+}
+
 main {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;  /* column */
   height: calc(100vh - 15px);
 }
 
 article {
   flex-grow: 1;
   display: flex;
-  flex: row none;
   justify-content: space-evenly;
 }
 
 piece-bank {
   margin: 10px 20px 10px 0; /* TODO Consider larger top margin (then also update in piecebank.ts */
+}
+
+.text {
+  margin-top: 40px;
+}
+
+footer {
+  margin-top: 30px;
+  text-align: right;
 }

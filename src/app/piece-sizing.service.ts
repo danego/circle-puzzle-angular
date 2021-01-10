@@ -29,7 +29,7 @@ export class PieceSizingService {
   setNewFontSizeFactor(newContainerHeight: number): number {
     const startingCircleHeightFactor = 800;
     const startingFontSizeFactor = 10;
-    const newFontSizeFactor = +(newContainerHeight / startingCircleHeightFactor * startingFontSizeFactor).toFixed(2);
+    const newFontSizeFactor = +(newContainerHeight / startingCircleHeightFactor * startingFontSizeFactor).toFixed(3);
 
     //this.fontSize = newFontSize;
     this.fontSizeFactor.next(newFontSizeFactor);

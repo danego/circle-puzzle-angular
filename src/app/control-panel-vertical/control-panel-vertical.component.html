@@ -1,0 +1,49 @@
+<section [formGroup]="controlButtonsForm">
+  <input 
+    type="button"
+    class="solutions-toggle" 
+    (click)="onToggleSolutionsPanel()"
+    formControlName="toggleSolutionsPanel">
+
+  <div id="solutions" class="solutions" [ngStyle]="{'display': displaySolutionsPanel ? 'flex' : 'none'}">
+    <div class="soln-picker">
+      <mat-slide-toggle 
+        disableRipple="true" 
+        labelPosition="before" 
+        [checked]="!limitSolutionsShown" 
+        (change)="onSlideChange($event)"
+        formControlName="showAllSolutions"
+        [ngClass]="!limitSolutionsShown ? 'all-solutions' : 'limited-solutions'">
+        Show all solutions
+      </mat-slide-toggle>
+    
+      <div class="soln-dropdown">
+        <label for="soln-number">Select solution #: </label>
+        <select 
+          id="soln-number" 
+          class="soln-number" 
+          (change)="onLoadNewSolution($event)"
+          formControlName="solutionNumberDropdown">
+          <option disabled>Solutions:</option>
+          <option *ngFor="let solnNumber of numberOfSolutionsArray; let i = index">{{ solnNumber }}</option>
+        </select>
+      </div>
+    </div>
+  
+    <div class="solutions-remaining">
+      <p *ngIf="remainingSolutions !== 1 || !allPiecesUsed">{{ remainingSolutions }} remaining {{ remainingSolutions === 1 ? 'solution' : 'solutions' }}</p>
+      <p *ngIf="remainingSolutions === 1 && allPiecesUsed">You found solution # {{ currentSolutionNumber }}</p>
+    </div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="button-container">
+    <button (click)="moveAllToBank()">Move All to Bank</button>
+    <button (click)="moveAllToCircle()">Move all to Circle</button>
+    <input 
+      type="button"
+      (click)="onToggleColorLetters()"
+      formControlName="toggleLetters">
+  </div>
+</section>
