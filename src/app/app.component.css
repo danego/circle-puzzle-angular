@@ -3,25 +3,51 @@ h1 {
 }
 
 main {
-  display: flex;
-  flex-direction: row;  /* column */
   height: calc(100vh - 15px);
+  display: flex;
+  flex-direction: column;
+}
+main.layout-vertical {
+  flex-direction: column;
+  align-items: center;
+}
+main.layout-horizontal {
+  flex-direction: row;
 }
 
 article {
+  width: 100%;
   flex-grow: 1;
   display: flex;
   justify-content: space-evenly;
 }
-
-piece-bank {
-  margin: 10px 20px 10px 0; /* TODO Consider larger top margin (then also update in piecebank.ts */
+article.layout-vertical {
+  flex-direction: column;
+  align-items: center;
 }
+article.layout-mixed {
+
+}
+article.layout-horizontal {
+  flex-direction: row;
+  /*   align-items: center;  ??? */
+}
+
+piece-bank.layout-vertical {
+  margin-bottom: 10px;
+}
+piece-bank.layout-mixed {
+  margin-right: 10px;
+}
+piece-bank.layout-horizontal {
+  margin: 10px 10px 0px 10px; /* TODO Consider larger top margin (then also update in piecebank.ts */
+}
+
+
 
 .text {
   margin-top: 40px;
 }
-
 footer {
   margin-top: 30px;
   text-align: right;

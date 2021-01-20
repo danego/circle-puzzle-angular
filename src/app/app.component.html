@@ -1,16 +1,28 @@
 <h1><em>Concentra</em> Puzzle Solver</h1>
 
-<main>
-  <!--
-    <control-panel></control-panel>
-  -->
+<main [ngClass]="currentLayout">
+
+  <control-panel *ngIf="currentLayout === 'layout-mixed'"></control-panel>
   
-  <article calculateHeight>
-    <piece-bank></piece-bank>
+
+  <div *ngIf="displayControls" (click)="displayControls = !displayControls"> <!--ngIf for mobile-->
+    <span>Main Menu</span>
+    <svg  
+      xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rebeccapurple" 
+      width="25px" height="25px"><path d="M0 0h24v24H0z" fill="none"/>
+      <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+    </svg>
+  </div>
+  <control-panel-vertical *ngIf="currentLayout === 'layout-vertical'"></control-panel-vertical>
+
+  
+  <article calculateHeight [ngClass]="currentLayout">
+    <piece-bank [ngClass]="currentLayout"></piece-bank>
     <circle-representation></circle-representation>
+
+    <control-panel-vertical *ngIf="currentLayout === 'layout-horizontal'"></control-panel-vertical>
   </article>
 
-  <control-panel-vertical></control-panel-vertical>
 </main>
 
 <!--

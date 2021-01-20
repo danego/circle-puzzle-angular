@@ -26,9 +26,36 @@ export class CalculateHeightDirective implements AfterViewInit {
   ngAfterViewInit() {
     this.calculateHeight();
   }
-
+  
   calculateHeight() {
     const currentHeight = this.elementRef.nativeElement.offsetHeight;
-    this.pieceSizingService.setNewContainerHeight(currentHeight);
+    const currentWidth = this.elementRef.nativeElement.offsetWidth;
+
+    this.pieceSizingService.setNewContainerHeight(
+      currentWidth,
+      currentHeight,
+      this.determineLayout(currentWidth, currentHeight)
+    );
+  }
+
+  determineLayout(width, height) {
+    //either 'vertical', 'mixed', or 'vertical'
+    let layout: string;
+
+    //mobile to tablet
+    if (width < 1000 || height < 600) {
+      if (width > 700) {
+        layout = 'layout-mixed';
+      }
+      else {
+        layout = 'layout-vertical';
+      }
+    }
+    //laptop to ultra
+    else {
+      layout = 'layout-horizontal'; 
+    }
+
+    return layout;
   }
 }

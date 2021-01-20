@@ -1,4 +1,4 @@
-<section (mouseover)="onHoverOverBank(true)" (mouseleave)="onHoverOverBank(false)" [ngStyle]="{'font-size': fontSizeFactor + 'px', 'height': containerSize + 'px'}"> <!--isScrolling-->
+<section (mouseover)="onHoverOverBank(true)" (mouseleave)="onHoverOverBank(false)" [ngStyle]="{'font-size': fontSizeFactor + 'px', 'height': containerSize + 'px', 'min-width': minBankWidth + 'px'}"> <!--isScrolling-->
 
   <!-- BANK ONE -->
   <div 
@@ -7,7 +7,7 @@
     (click)="checkToDisplayStatic(1)">
 
     <div class="drop-toggle">
-      <div>Open Layer One Pieces</div>
+      <div>Layer One Pieces</div>
       <svg *ngIf="!displayBankOne" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
       <svg *ngIf="displayBankOne" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
     </div>
@@ -25,7 +25,10 @@
       (cdkDropListDropped)="dropped($event)">
       
       <div [ngStyle]="{'display': displayBankOne || displayBankOneTemporary ? 'block': 'none'}">
-        <div class="bank-pieces bank-pieces-one" [ngClass]="{'bank-pieces-open-one': isDraggingIncoming1 && isHoveringOverBank}"> 
+        <div class="bank-pieces bank-pieces-one"> <!-- [ngClass]="{'bank-pieces-open-one': isDraggingIncoming1 && isHoveringOverBank}" -->
+
+          <!-- necessary instead of padding bc this bank is rows AND columns -->
+          <div *ngIf="isDraggingIncoming1 && isHoveringOverBank" class="piece-open-one"></div>
 
           <div 
             class="piece piece-one piece-bank" 
@@ -101,7 +104,7 @@
     (click)="checkToDisplayStatic(2)">
 
     <div class="drop-toggle">
-      <div>Open Layer Two Pieces</div>
+      <div>Layer Two Pieces</div>
       <svg *ngIf="!displayBankTwo" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
       <svg *ngIf="displayBankTwo" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
     </div>
@@ -119,9 +122,8 @@
       (cdkDropListDropped)="dropped($event)">
 
       <div [ngStyle]="{'display': displayBankTwo || displayBankTwoTemporary ? 'block': 'none'}">
-        <div class="bank-pieces bank-pieces-two"> <!-- [ngClass]="{'bank-two-pieces-open': isDraggingIncoming2}" -->
+        <div class="bank-pieces bank-pieces-two">
 
-          <!-- necessary instead of padding bc this bank is rows AND columns -->
           <div *ngIf="isDraggingIncoming2 && isHoveringOverBank" class="piece-open-two"></div>
           
           <div 
@@ -197,7 +199,7 @@
     (click)="checkToDisplayStatic(3)">
 
     <div class="drop-toggle">
-      <div style="color: white">Open Layer Three Pieces</div>
+      <div style="color: white">Layer Three Pieces</div>
       <svg *ngIf="!displayBankThree" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" fill="white" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
       <svg *ngIf="displayBankThree" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" fill="white" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
     </div>
@@ -215,7 +217,10 @@
       (cdkDropListDropped)="dropped($event)">
 
       <div [ngStyle]="{'display': displayBankThree || displayBankThreeTemporary ? 'block': 'none'}">
-        <div class="bank-pieces bank-pieces-three" [ngClass]="{'bank-pieces-open-three': isDraggingIncoming3 && isHoveringOverBank}">
+        <div class="bank-pieces bank-pieces-three">
+          
+          <div *ngIf="isDraggingIncoming3 && isHoveringOverBank" class="piece-open-three"></div>
+
           <div 
             class="piece piece-three piece-bank" 
             *ngFor="let piece of piecesBank3; let i = index"

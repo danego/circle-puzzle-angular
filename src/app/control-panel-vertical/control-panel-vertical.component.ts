@@ -4,6 +4,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 
 import { BankCircleConnectorService } from '../bank-circle-connector.service';
 import { SolutionsGrabberService } from '../solutions-grabber.service';
+import { PieceSizingService } from '../piece-sizing.service';
 
 @Component({
   selector: 'control-panel-vertical',
@@ -20,10 +21,12 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
   limitSolutionsShown: boolean = false;
   currentSolutionNumber: number;
   displayColorLetters: boolean = true;
+  containerSize: number;
 
   remainingSolutionsSub: Subscription;
   allPiecesUsedSub: Subscription;
   currentSolutionNumberSub: Subscription;
+  containerSizeSub: Subscription;
 
   controlButtonsForm: FormGroup;
 
@@ -33,10 +36,11 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
 
   constructor(
     private bankCircleConnectorService: BankCircleConnectorService,
-    private solutionsGrabberService: SolutionsGrabberService
+    private solutionsGrabberService: SolutionsGrabberService,
+    private pieceSizingService: PieceSizingService
   ) { }
 
-  ngOnInit() {
+   ngOnInit() {
     this.remainingSolutionsSub = this.solutionsGrabberService.remainingSolutions.subscribe((remainingSolutions) => {
       this.remainingSolutions = remainingSolutions;
     });
@@ -47,6 +51,12 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
 
     this.currentSolutionNumberSub = this.solutionsGrabberService.currentSolutionNumber.subscribe((solnNumber) => {
       this.currentSolutionNumber = solnNumber;
+    });
+
+    //updates container size for scrolling piece banks
+    this.containerSizeSub = this.pieceSizingService.containerSize.subscribe((newContainerSize) => {
+      const containerHeightMinusMargins = newContainerSize - 20;
+      this.containerSize = containerHeightMinusMargins;
     });
 
     //note: the values of the toggle controls are inverted
@@ -145,5 +155,6 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
     if (this.remainingSolutionsSub) this.remainingSolutionsSub.unsubscribe();
     if (this.allPiecesUsedSub) this.allPiecesUsedSub.unsubscribe();
     if (this.currentSolutionNumberSub) this.currentSolutionNumberSub.unsubscribe();
+    if (this.containerSizeSub) this.containerSizeSub.unsubscribe();
   }
 }

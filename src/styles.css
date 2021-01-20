@@ -30,6 +30,10 @@ body {
 .piece span div {
   font-family: monospace;
 }
+/* for mobile small piece fix. MAKE THIS ITS OWN SECTION */
+.layout-vertical .piece {
+  border: solid 1px black;
+}
 
 .piece-zero {
   width: 4.2em;

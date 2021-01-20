@@ -46,7 +46,7 @@ section {
   box-sizing: border-box;
   position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
   z-index: 10;
@@ -62,15 +62,15 @@ section {
   background-color: #666666;
 }
 .droplist-one {
-  width: 17em;
+  width: 51em;  /* 17em */
 }
 .bank-pieces-one {
-  width: 17em;
+  width: 51em;
   background-color: #666666;
 }
-/* Matches height of layer 1 pieces */
-.bank-pieces-open-one {
-  padding-top: 7.6em;
+.piece-open-one {
+  width: 17em;
+  height: 7.6em;
 }
 
 /* Layer Two */
@@ -84,7 +84,6 @@ section {
 .bank-pieces-two {
   width: 20em;
   background-color: #444444;  
-  flex-direction: row;
 }
 .piece-open-two {
   width: 10em;
@@ -97,15 +96,16 @@ section {
   margin-top: 5px;
 }
 .droplist-three {
-  width: 10.5em;
+  width: 21em; /* 10.5em */
 
 }
 .bank-pieces-three {
-  width: 10.5em;
+  width: 21em;
   background-color: #222;
 }
-.bank-pieces-open-three {
-  padding-top: 4em;
+.piece-open-three {
+  width: 10.5em;
+  height: 4em;
 }
 
 

@@ -21,6 +21,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
   fontSizeFactor: number = 2;
   fontSizeForPieces: number;
   containerSize: number;
+  minBankWidth: number;
   
   isDragging1: boolean = false;
   isDragging2: boolean = false;
@@ -52,6 +53,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
   fontSizeFactorSub: Subscription;
   fontSizeForPiecesSub: Subscription;
   containerSizeSub: Subscription;
+  minBankWidthSub: Subscription;
 
   constructor(
     private solutionsGrabberService: SolutionsGrabberService,
@@ -119,6 +121,10 @@ export class PieceBankComponent implements OnInit, OnDestroy {
     this.containerSizeSub = this.pieceSizingService.containerSize.subscribe((newContainerSize) => {
       const containerHeightMinusMargins = newContainerSize - 20;
       this.containerSize = containerHeightMinusMargins;
+    });
+
+    this.minBankWidthSub = this.pieceSizingService.minBankSize.subscribe(newBankWidth => {
+      this.minBankWidth = newBankWidth;
     });
 
 
@@ -379,5 +385,6 @@ export class PieceBankComponent implements OnInit, OnDestroy {
     if (this.fontSizeFactorSub) this.fontSizeFactorSub.unsubscribe();
     if (this.fontSizeForPiecesSub) this.fontSizeForPiecesSub.unsubscribe();
     if (this.containerSizeSub) this.containerSizeSub.unsubscribe();
+    if (this.minBankWidthSub) this.minBankWidthSub.unsubscribe();
   }
 }
