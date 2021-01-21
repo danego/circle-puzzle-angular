@@ -1,15 +1,27 @@
 import { Injectable } from "@angular/core";
-import { Subject, ReplaySubject } from 'rxjs';
+import { Subject, BehaviorSubject, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class PieceSizingService {
-  pieceWidthByEm = {
-    layerOne: 17,
-    layerTwo: 10, // x2
-    layerThree: 10.5
+  pieceSizesByEm = {
+    pieceOne: {
+      width: 17,
+      height: 7.6,
+      bankWidth: 17
+    },
+    pieceTwo: {
+      width: 10,
+      height: 7.6,
+      bankWidth: 20
+    },
+    pieceThree: {
+      width: 10.5,
+      height: 4,
+      bankWidth: 10.5
+    }
   };
 
   //private fontSize: number = 10;
@@ -19,6 +31,7 @@ export class PieceSizingService {
   containerSize = new ReplaySubject<number>(1);
   minBankSize = new Subject<number>();
   currentLayout = new Subject<string>();
+  pieceSizes = new BehaviorSubject<object>({...this.pieceSizesByEm});
 
   //NOTE: now we get containerSmallSide and layout style 
   // - calculate based off control panel width/height and pieceBanks (accounting for dynamic piece width w/in)
@@ -35,14 +48,16 @@ export class PieceSizingService {
 
 
       //used for pieceBank container
-      this.setNewContainerSizeForBank(containerLimitingSize, layoutStyle);
+      this.setNewContainerSizeForBank(containerLimitingSize, newContainerHeight, layoutStyle, newFontSizeFactor);
 
       this.currentLayout.next(layoutStyle);
+
+      this.pieceSizes.next({...this.pieceSizesByEm});
     }, 0);
   }
 
   private calculateCircleSize(newContainerWidth: number, newContainerHeight: number, layoutStyle: string) {
-    let pieceBankStartingWidth = 232;  //232 + 10
+    let pieceBankStartingWidth = 232;
     let pieceBankXMargin;
     let controlPanelWidth = 250;
     let circleSize;
@@ -64,12 +79,12 @@ export class PieceSizingService {
       }
 
       const newFontSizeFactor = this.setNewFontSizeFactor(circleSize);
-      const minPieceBankSize = Math.ceil(newFontSizeFactor * this.pieceWidthByEm.layerTwo * 2);
+      const minPieceBankSize = Math.ceil(newFontSizeFactor * this.pieceSizesByEm.pieceTwo.width * 2);
 
-      //232- 40 (padding)
-      if (minPieceBankSize > 192) {
+      //232px - 40px (for padding)
+      if (minPieceBankSize > (pieceBankStartingWidth - 40)) {
         const pieceBankMinPadding = 40;
-        const newPieceBankWidth = Math.ceil(newFontSizeFactor * this.pieceWidthByEm.layerTwo * 2) + pieceBankMinPadding;
+        const newPieceBankWidth = Math.ceil(newFontSizeFactor * this.pieceSizesByEm.pieceTwo.width * 2) + pieceBankMinPadding;
 
         circleSize = newContainerWidth - newPieceBankWidth - pieceBankXMargin - controlPanelWidth;
         this.minBankSize.next(newPieceBankWidth);
@@ -104,16 +119,38 @@ export class PieceSizingService {
     this.fontSizeForPieces.next(fontSizeForPiecesText);
   }
 
-  private setNewContainerSizeForBank(containerSize: number, layoutStyle: string) {
+  private setNewContainerSizeForBank(containerSize: number, containerHeight: number, layoutStyle: string, fontSizeFactor: number) {
+    // double up piece columns if space is available
+    if (layoutStyle === 'layout-vertical' || layoutStyle === 'layout-mixed') {
+      this.setBankWidthsForRepeats(fontSizeFactor);
+    }
+
     if (layoutStyle === 'layout-vertical') {
-      this.containerSize.next(200);
+      //set bankHeight to fill remaining vertical space
+      let bankHeight = containerHeight - containerSize;
+      if (bankHeight > containerSize * 2 / 3) bankHeight = Math.floor(containerSize * 2 / 3);
+      if (bankHeight < 200) bankHeight = 200;
+      this.containerSize.next(bankHeight);
     }
     else {
       this.containerSize.next(containerSize);
     }
+  }
 
-
-
-    //ALSO PASS IN WIDTH & PIECE DISTRIBUTION TO PIECEbanks
+  private setBankWidthsForRepeats(fontSizeFactor: number) {
+    //set width for each layer
+    let pieceBankInnerWidth = 192;  //232px - 40px (for padding)
+    // Layer One
+    let pieceOneWholeRepeats = Math.floor(pieceBankInnerWidth / (this.pieceSizesByEm.pieceOne.width * fontSizeFactor));
+    if (pieceOneWholeRepeats > 3) pieceOneWholeRepeats = 3;
+    this.pieceSizesByEm.pieceOne.bankWidth = pieceOneWholeRepeats * this.pieceSizesByEm.pieceOne.width;
+    // Layer Two
+    let pieceTwoWholeRepeats = Math.floor(pieceBankInnerWidth / (this.pieceSizesByEm.pieceTwo.width * fontSizeFactor));
+    if (pieceTwoWholeRepeats > 3) pieceTwoWholeRepeats = 3;
+    this.pieceSizesByEm.pieceTwo.bankWidth = pieceTwoWholeRepeats * this.pieceSizesByEm.pieceTwo.width;
+    // Layer Three
+    let pieceThreeWholeRepeats = Math.floor(pieceBankInnerWidth / (this.pieceSizesByEm.pieceThree.width * fontSizeFactor));
+    if (pieceThreeWholeRepeats > 2) pieceThreeWholeRepeats = 2;
+    this.pieceSizesByEm.pieceThree.bankWidth = pieceThreeWholeRepeats * this.pieceSizesByEm.pieceThree.width;
   }
 }

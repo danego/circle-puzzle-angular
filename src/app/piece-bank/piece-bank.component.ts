@@ -20,8 +20,10 @@ export class PieceBankComponent implements OnInit, OnDestroy {
   displayColorLetters: boolean = true;
   fontSizeFactor: number = 2;
   fontSizeForPieces: number;
+  currentLayout: string;
   containerSize: number;
   minBankWidth: number;
+  pieceSizes: any;
   
   isDragging1: boolean = false;
   isDragging2: boolean = false;
@@ -54,6 +56,8 @@ export class PieceBankComponent implements OnInit, OnDestroy {
   fontSizeForPiecesSub: Subscription;
   containerSizeSub: Subscription;
   minBankWidthSub: Subscription;
+  pieceSizesSub: Subscription;
+  currentLayoutSub: Subscription;
 
   constructor(
     private solutionsGrabberService: SolutionsGrabberService,
@@ -117,14 +121,25 @@ export class PieceBankComponent implements OnInit, OnDestroy {
       this.fontSizeForPieces = newFontSize;
     });
 
+    //get current layout to apply vertical class directly on cdkDragPreview
+    this.currentLayoutSub = this.pieceSizingService.currentLayout.subscribe(currentLayout => {
+      this.currentLayout = currentLayout;
+    });
+
     //updates container size for scrolling piece banks
     this.containerSizeSub = this.pieceSizingService.containerSize.subscribe((newContainerSize) => {
       const containerHeightMinusMargins = newContainerSize - 20;
       this.containerSize = containerHeightMinusMargins;
     });
 
+    //overall minimum width of bank 
     this.minBankWidthSub = this.pieceSizingService.minBankSize.subscribe(newBankWidth => {
       this.minBankWidth = newBankWidth;
+    });
+
+    //get global piece sizes & bankWidths for # of piece repeat
+    this.pieceSizesSub = this.pieceSizingService.pieceSizes.subscribe(pieceSizesData => {
+      this.pieceSizes = pieceSizesData;
     });
 
 
@@ -287,10 +302,11 @@ export class PieceBankComponent implements OnInit, OnDestroy {
 
   calculatePieceContainerHeightOne(containerHeight = 0, dropdown = 'auto', droplist = '76px') {
     //LAYER ONE
-    const pieceHeight = 7.6 * this.fontSizeFactor;
+    const pieceHeight = this.pieceSizes.pieceOne.height * this.fontSizeFactor;
+    const repeatFactor = this.pieceSizes.pieceOne.bankWidth / this.pieceSizes.pieceOne.width;
 
     if (this.displayBankOne || this.displayBankOneTemporary) {
-      containerHeight = this.piecesBank1.length * pieceHeight;
+      containerHeight = (Math.ceil(this.piecesBank1.length / repeatFactor)) * pieceHeight;
       //check for minimum height
       if (containerHeight < 76) containerHeight = 76;
 
@@ -298,7 +314,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
       droplist = containerHeight + 'px';
     }
     if (this.isDraggingIncoming1 && this.isHoveringOverBank) {
-      containerHeight = (this.piecesBank1.length + 1) * pieceHeight;
+      containerHeight = (Math.ceil((this.piecesBank1.length + 1) / repeatFactor)) * pieceHeight;
       if (containerHeight < 76) containerHeight = 76;
 
       dropdown = containerHeight + 55 + 'px';
@@ -310,10 +326,11 @@ export class PieceBankComponent implements OnInit, OnDestroy {
 
   calculatePieceContainerHeightTwo(containerHeight = 0, dropdown = 'auto', droplist = '76px') {
     //LAYER TWO
-    const pieceHeight = 7.6 * this.fontSizeFactor;
+    const pieceHeight = this.pieceSizes.pieceTwo.height * this.fontSizeFactor;
+    const repeatFactor = this.pieceSizes.pieceTwo.bankWidth / this.pieceSizes.pieceTwo.width;
 
     if (this.displayBankTwo || this.displayBankTwoTemporary) {
-      containerHeight = (Math.ceil(this.piecesBank2.length / 2)) * pieceHeight;
+      containerHeight = (Math.ceil(this.piecesBank2.length / repeatFactor)) * pieceHeight;
       if (containerHeight < 76) containerHeight = 76;
 
       dropdown = containerHeight + 55 + 'px';
@@ -321,7 +338,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
     }
     if (this.isDraggingIncoming2 && this.isHoveringOverBank) {
       //add one to make room for incoming piece
-      containerHeight = (Math.ceil((this.piecesBank2.length + 1) / 2)) * pieceHeight;
+      containerHeight = (Math.ceil((this.piecesBank2.length + 1) / repeatFactor)) * pieceHeight;
       if (containerHeight < 76) containerHeight = 76;
 
       dropdown = containerHeight + 55 + 'px';
@@ -333,17 +350,18 @@ export class PieceBankComponent implements OnInit, OnDestroy {
 
   calculatePieceContainerHeightThree(containerHeight = 0, dropdown = 'auto', droplist = '50px') {
      //LAYER THREE
-     const pieceHeight = 4 * this.fontSizeFactor;
+     const pieceHeight = this.pieceSizes.pieceThree.height * this.fontSizeFactor;
+     const repeatFactor = this.pieceSizes.pieceThree.bankWidth / this.pieceSizes.pieceThree.width;
 
      if (this.displayBankThree || this.displayBankThreeTemporary) {
-      containerHeight = this.piecesBank3.length * pieceHeight;
+      containerHeight = (Math.ceil(this.piecesBank3.length / repeatFactor)) * pieceHeight;
       if (containerHeight < 76) containerHeight = 76;
 
       dropdown = containerHeight + 55 + 'px';
       droplist = containerHeight + 'px';
     }
     if (this.isDraggingIncoming3 && this.isHoveringOverBank) {
-      containerHeight = (this.piecesBank3.length + 1) * pieceHeight;
+      containerHeight = (Math.ceil((this.piecesBank3.length + 1) / repeatFactor)) * pieceHeight;
       if (containerHeight < 76) containerHeight = 76;
 
       dropdown = containerHeight + 55 + 'px';
@@ -386,5 +404,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
     if (this.fontSizeForPiecesSub) this.fontSizeForPiecesSub.unsubscribe();
     if (this.containerSizeSub) this.containerSizeSub.unsubscribe();
     if (this.minBankWidthSub) this.minBankWidthSub.unsubscribe();
+    if (this.pieceSizesSub) this.pieceSizesSub.unsubscribe();
+    if (this.currentLayoutSub) this.currentLayoutSub.unsubscribe();
   }
 }

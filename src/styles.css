@@ -31,7 +31,8 @@ body {
   font-family: monospace;
 }
 /* for mobile small piece fix. MAKE THIS ITS OWN SECTION */
-.layout-vertical .piece {
+.layout-vertical .piece, .layout-vertical.piece, 
+.layout-mixed .piece, .layout-mixed.piece {
   border: solid 1px black;
 }
 

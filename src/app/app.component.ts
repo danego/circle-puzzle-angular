@@ -27,6 +27,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.currentLayoutSub.unsubscribe();
+    if (this.currentLayoutSub) this.currentLayoutSub.unsubscribe();
   }
 }

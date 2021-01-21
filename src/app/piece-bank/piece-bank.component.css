@@ -61,16 +61,8 @@ section {
 .dropdown-one {
   background-color: #666666;
 }
-.droplist-one {
-  width: 51em;  /* 17em */
-}
 .bank-pieces-one {
-  width: 51em;
   background-color: #666666;
-}
-.piece-open-one {
-  width: 17em;
-  height: 7.6em;
 }
 
 /* Layer Two */
@@ -78,16 +70,8 @@ section {
   background-color: #444444;
   margin-top: 5px;
 }
-.droplist-two {
-  width: 20em;
-}
 .bank-pieces-two {
-  width: 20em;
   background-color: #444444;  
-}
-.piece-open-two {
-  width: 10em;
-  height: 7.6em;
 }
 
 /* Layer Three */
@@ -95,17 +79,8 @@ section {
   background-color: #222;
   margin-top: 5px;
 }
-.droplist-three {
-  width: 21em; /* 10.5em */
-
-}
 .bank-pieces-three {
-  width: 21em;
   background-color: #222;
-}
-.piece-open-three {
-  width: 10.5em;
-  height: 4em;
 }
 
 

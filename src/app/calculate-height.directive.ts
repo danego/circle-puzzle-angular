@@ -44,7 +44,7 @@ export class CalculateHeightDirective implements AfterViewInit {
 
     //mobile to tablet
     if (width < 1000 || height < 600) {
-      if (width > 700) {
+      if (width > 700 || width > height) {
         layout = 'layout-mixed';
       }
       else {
