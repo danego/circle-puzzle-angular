@@ -91,8 +91,13 @@ export class PieceSizingService {
       }
     }
    
+    //check if height is limiting factor
     if (circleSize > newContainerHeight) {
       circleSize = newContainerHeight; 
+    }
+    //max circle size = 1200px / 15 fontSizeFactor
+    if (circleSize > 1200) {
+      circleSize = 1200;
     }
 
     return circleSize;

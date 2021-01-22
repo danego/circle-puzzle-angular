@@ -26,6 +26,19 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
+  generateHeightBasedOnLayout() {
+    let heightValue;
+    // for starting and sizing
+    if (!this.currentLayout) {
+      heightValue = 'calc(100vh - 15px)';
+    }
+    // after circleSize and layout generated
+    else {
+      heightValue = 'auto';
+    }
+    return heightValue;
+  }
+
   ngOnDestroy() {
     if (this.currentLayoutSub) this.currentLayoutSub.unsubscribe();
   }
