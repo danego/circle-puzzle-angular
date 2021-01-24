@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { SolutionsGrabberService } from '../solutions-grabber.service';
 import { BankCircleConnectorService } from '../bank-circle-connector.service';
 import { PieceSizingService } from '../piece-sizing.service';
+import { SizingDataInterface } from '../sizing-data.interface';
 
 
 @Component({
@@ -18,12 +19,10 @@ export class PieceBankComponent implements OnInit, OnDestroy {
   piecesBank2: any[];
   piecesBank3: any[];
   displayColorLetters: boolean = true;
-  fontSizeFactor: number = 2;
+  fontSizeFactor: number;
   fontSizeForPieces: number;
   currentLayout: string;
-  containerSize: number;
-  minBankWidth: number;
-  pieceSizes: any;
+  pieceSizes: SizingDataInterface;
   
   isDragging1: boolean = false;
   isDragging2: boolean = false;
@@ -52,12 +51,8 @@ export class PieceBankComponent implements OnInit, OnDestroy {
   isDragging: Subscription;
   droppedPiece: Subscription;
   toggleColorLetters: Subscription;
-  fontSizeFactorSub: Subscription;
-  fontSizeForPiecesSub: Subscription;
-  containerSizeSub: Subscription;
-  minBankWidthSub: Subscription;
-  pieceSizesSub: Subscription;
   currentLayoutSub: Subscription;
+  pieceSizesSub: Subscription;
 
   constructor(
     private solutionsGrabberService: SolutionsGrabberService,
@@ -111,35 +106,21 @@ export class PieceBankComponent implements OnInit, OnDestroy {
       this.displayColorLetters = lettersEnabled;
     });
 
-    //updates fontSize to correctly size pieces and incoming piece margins
-    this.fontSizeFactorSub = this.pieceSizingService.fontSizeFactor.subscribe((newFontSize) => {
-      this.fontSizeFactor = newFontSize;
-    });
-
-    //update actual fontSize for text on pieces
-    this.fontSizeForPiecesSub = this.pieceSizingService.fontSizeForPieces.subscribe((newFontSize) => {
-      this.fontSizeForPieces = newFontSize;
-    });
-
     //get current layout to apply vertical class directly on cdkDragPreview
     this.currentLayoutSub = this.pieceSizingService.currentLayout.subscribe(currentLayout => {
       this.currentLayout = currentLayout;
     });
 
-    //updates container size for scrolling piece banks
-    this.containerSizeSub = this.pieceSizingService.containerSize.subscribe((newContainerSize) => {
-      const containerHeightMinusMargins = newContainerSize - 20;
-      this.containerSize = containerHeightMinusMargins;
-    });
-
-    //overall minimum width of bank 
-    this.minBankWidthSub = this.pieceSizingService.minBankSize.subscribe(newBankWidth => {
-      this.minBankWidth = newBankWidth;
-    });
-
-    //get global piece sizes & bankWidths for # of piece repeat
+    //get global piece sizes, # of piece repeats (bankWidths), overall puzzle sizing, piece font size,
+    // & implicitly get bank height, & minimum bank width
     this.pieceSizesSub = this.pieceSizingService.pieceSizes.subscribe(pieceSizesData => {
       this.pieceSizes = pieceSizesData;
+      this.fontSizeFactor = pieceSizesData.fontSizeFactor;
+      if (pieceSizesData.fontSizeForPieces) {
+        this.fontSizeForPieces = pieceSizesData.fontSizeForPieces;
+      }
+      //containerSize accessed from pieceSizes in HTML
+      //minBankWidth accessed from pieceSizes in HTML
     });
 
 
@@ -400,11 +381,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
     if (this.isDragging) this.isDragging.unsubscribe();
     if (this.droppedPiece) this.droppedPiece.unsubscribe();
     if (this.toggleColorLetters) this.toggleColorLetters.unsubscribe();
-    if (this.fontSizeFactorSub) this.fontSizeFactorSub.unsubscribe();
-    if (this.fontSizeForPiecesSub) this.fontSizeForPiecesSub.unsubscribe();
-    if (this.containerSizeSub) this.containerSizeSub.unsubscribe();
-    if (this.minBankWidthSub) this.minBankWidthSub.unsubscribe();
-    if (this.pieceSizesSub) this.pieceSizesSub.unsubscribe();
     if (this.currentLayoutSub) this.currentLayoutSub.unsubscribe();
+    if (this.pieceSizesSub) this.pieceSizesSub.unsubscribe();
   }
 }

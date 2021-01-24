@@ -100,18 +100,14 @@
 }
 
 .drag-list-one {
-  width: 17em;
-  height: 7.6em;
   border: 1px dotted black; 
 }
+/*  Place back in for borders
 .drag-list-two {
-  width: 10em;
-  height: 7.6em;
 }
 .drag-list-three {
-  width: 10.5em;
-  height: 4em;
 }
+*/
 
 
 .cdk-drag-preview {

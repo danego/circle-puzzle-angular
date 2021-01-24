@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { SolutionsGrabberService } from '../solutions-grabber.service';
 import { BankCircleConnectorService } from '../bank-circle-connector.service';
 import { PieceSizingService } from '../piece-sizing.service';
+import { SizingDataInterface } from '../sizing-data.interface';
 
 
 @Component({
@@ -17,8 +18,9 @@ export class CircleRepresentationComponent implements OnInit, OnDestroy {
   pieces: any[][];
   piecesByID: any[] = new Array(3);
   displayColorLetters: boolean = true;
-  fontSizeFactor: number = 2;
+  fontSizeFactor: number;
   fontSizeForPieces: number;
+  pieceSizes: SizingDataInterface;
 
   isDragging1: boolean = false;
   isDragging2: boolean = false;
@@ -28,8 +30,7 @@ export class CircleRepresentationComponent implements OnInit, OnDestroy {
   isDragging: Subscription;
   droppedPieceData: Subscription;
   toggleColorLetters: Subscription;
-  fontSizeFactorSub: Subscription;
-  fontSizeForPiecesSub: Subscription;
+  pieceSizesSub: Subscription;
 
   constructor(
     private solutionsGrabberService: SolutionsGrabberService,
@@ -80,14 +81,13 @@ export class CircleRepresentationComponent implements OnInit, OnDestroy {
       this.displayColorLetters = lettersEnabled;
     });
 
-    //update fontSize to resize puzzle dynamically
-    this.fontSizeFactorSub = this.pieceSizingService.fontSizeFactor.subscribe((newFontSize) => {
-      this.fontSizeFactor = newFontSize;
-    });
-
-    //update actual fontSize for text on pieces
-    this.fontSizeForPiecesSub = this.pieceSizingService.fontSizeForPieces.subscribe((newFontSize) => {
-      this.fontSizeForPieces = newFontSize;
+    //get global piece sizes, overall puzzle sizing, & piece font size, 
+    this.pieceSizesSub = this.pieceSizingService.pieceSizes.subscribe(pieceSizesData => {
+      this.pieceSizes = pieceSizesData;
+      this.fontSizeFactor = pieceSizesData.fontSizeFactor;
+      if (pieceSizesData.fontSizeForPieces) {
+        this.fontSizeForPieces = pieceSizesData.fontSizeForPieces;
+      }
     });
 
     this.pieces = new Array(4);
@@ -232,7 +232,6 @@ export class CircleRepresentationComponent implements OnInit, OnDestroy {
     if (this.isDragging) this.isDragging.unsubscribe();
     if (this.droppedPieceData) this.droppedPieceData.unsubscribe();
     if (this.toggleColorLetters) this.toggleColorLetters.unsubscribe();
-    if (this.fontSizeFactorSub) this.fontSizeFactorSub.unsubscribe();
-    if (this.fontSizeForPiecesSub) this.fontSizeForPiecesSub.unsubscribe();
+    if (this.pieceSizesSub) this.pieceSizesSub.unsubscribe();
   }
  }

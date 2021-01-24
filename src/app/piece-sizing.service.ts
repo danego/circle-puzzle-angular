@@ -1,12 +1,19 @@
 import { Injectable } from "@angular/core";
-import { Subject, BehaviorSubject, ReplaySubject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
+
+import { SizingDataInterface } from './sizing-data.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class PieceSizingService {
-  pieceSizesByEm = {
+  private _pieceSizes: SizingDataInterface = {
+    pieceZero: {
+      width: 4.2,
+      height: 4.2,
+      bankWidth: 0
+    },
     pieceOne: {
       width: 17,
       height: 7.6,
@@ -21,21 +28,17 @@ export class PieceSizingService {
       width: 10.5,
       height: 4,
       bankWidth: 10.5
-    }
+    },
+    fontSizeFactor: 2,
+    containerSize: 0,
+    minBankWidth: 0
   };
 
-  //private fontSize: number = 10;
-  //fontSizeFactor = new BehaviorSubject<number>(this.fontSize);
-  fontSizeFactor = new Subject<number>();
-  fontSizeForPieces = new Subject<number>();
-  containerSize = new ReplaySubject<number>(1);
-  minBankSize = new Subject<number>();
   currentLayout = new Subject<string>();
-  pieceSizes = new BehaviorSubject<object>({...this.pieceSizesByEm});
+  pieceSizes = new BehaviorSubject<SizingDataInterface>({...this._pieceSizes});
 
-  //NOTE: now we get containerSmallSide and layout style 
-  // - calculate based off control panel width/height and pieceBanks (accounting for dynamic piece width w/in)
-
+  //dynamically calculate overall puzzle sizing, piece font size, # of piece repeats, 
+  //adjacent component heights (piece bank & vertical control panel), & minimum bank width
   setNewContainerHeight(newContainerWidth: number, newContainerHeight: number, layoutStyle: string) {
     //Timeout to avoid angular 'already checked' error
     window.setTimeout(() => {
@@ -43,16 +46,14 @@ export class PieceSizingService {
 
       //used for circle and piece sizing
       const newFontSizeFactor = this.setNewFontSizeFactor(containerLimitingSize);
-      this.fontSizeFactor.next(newFontSizeFactor);
+      this._pieceSizes.fontSizeFactor = newFontSizeFactor;
       this.setNewFontSizeForPieces(newFontSizeFactor);
-
 
       //used for pieceBank container
       this.setNewContainerSizeForBank(containerLimitingSize, newContainerHeight, layoutStyle, newFontSizeFactor);
 
       this.currentLayout.next(layoutStyle);
-
-      this.pieceSizes.next({...this.pieceSizesByEm});
+      this.pieceSizes.next({...this._pieceSizes});
     }, 0);
   }
 
@@ -79,15 +80,15 @@ export class PieceSizingService {
       }
 
       const newFontSizeFactor = this.setNewFontSizeFactor(circleSize);
-      const minPieceBankSize = Math.ceil(newFontSizeFactor * this.pieceSizesByEm.pieceTwo.width * 2);
+      const minPieceBankSize = Math.ceil(newFontSizeFactor * this._pieceSizes.pieceTwo.width * 2);
 
       //232px - 40px (for padding)
       if (minPieceBankSize > (pieceBankStartingWidth - 40)) {
         const pieceBankMinPadding = 40;
-        const newPieceBankWidth = Math.ceil(newFontSizeFactor * this.pieceSizesByEm.pieceTwo.width * 2) + pieceBankMinPadding;
+        const newPieceBankWidth = Math.ceil(newFontSizeFactor * this._pieceSizes.pieceTwo.width * 2) + pieceBankMinPadding;
 
         circleSize = newContainerWidth - newPieceBankWidth - pieceBankXMargin - controlPanelWidth;
-        this.minBankSize.next(newPieceBankWidth);
+        this._pieceSizes.minBankWidth = newPieceBankWidth;
       }
     }
    
@@ -121,7 +122,7 @@ export class PieceSizingService {
     //because startingFontSizeFactor == 10px and relative font size to that is 15px
     const fontSizeConversion = 1.5;
     const fontSizeForPiecesText = +(fontSizeFactor * fontSizeConversion).toFixed(2);
-    this.fontSizeForPieces.next(fontSizeForPiecesText);
+    this._pieceSizes.fontSizeForPieces = fontSizeForPiecesText;
   }
 
   private setNewContainerSizeForBank(containerSize: number, containerHeight: number, layoutStyle: string, fontSizeFactor: number) {
@@ -135,10 +136,12 @@ export class PieceSizingService {
       let bankHeight = containerHeight - containerSize;
       if (bankHeight > containerSize * 2 / 3) bankHeight = Math.floor(containerSize * 2 / 3);
       if (bankHeight < 200) bankHeight = 200;
-      this.containerSize.next(bankHeight);
+      bankHeight -= 20; //leave vertical margins
+      this._pieceSizes.containerSize = bankHeight;
     }
     else {
-      this.containerSize.next(containerSize);
+      containerSize -= 20; //leave vertical margins
+      this._pieceSizes.containerSize = containerSize;
     }
   }
 
@@ -146,16 +149,16 @@ export class PieceSizingService {
     //set width for each layer
     let pieceBankInnerWidth = 192;  //232px - 40px (for padding)
     // Layer One
-    let pieceOneWholeRepeats = Math.floor(pieceBankInnerWidth / (this.pieceSizesByEm.pieceOne.width * fontSizeFactor));
+    let pieceOneWholeRepeats = Math.floor(pieceBankInnerWidth / (this._pieceSizes.pieceOne.width * fontSizeFactor));
     if (pieceOneWholeRepeats > 3) pieceOneWholeRepeats = 3;
-    this.pieceSizesByEm.pieceOne.bankWidth = pieceOneWholeRepeats * this.pieceSizesByEm.pieceOne.width;
+    this._pieceSizes.pieceOne.bankWidth = pieceOneWholeRepeats * this._pieceSizes.pieceOne.width;
     // Layer Two
-    let pieceTwoWholeRepeats = Math.floor(pieceBankInnerWidth / (this.pieceSizesByEm.pieceTwo.width * fontSizeFactor));
+    let pieceTwoWholeRepeats = Math.floor(pieceBankInnerWidth / (this._pieceSizes.pieceTwo.width * fontSizeFactor));
     if (pieceTwoWholeRepeats > 3) pieceTwoWholeRepeats = 3;
-    this.pieceSizesByEm.pieceTwo.bankWidth = pieceTwoWholeRepeats * this.pieceSizesByEm.pieceTwo.width;
+    this._pieceSizes.pieceTwo.bankWidth = pieceTwoWholeRepeats * this._pieceSizes.pieceTwo.width;
     // Layer Three
-    let pieceThreeWholeRepeats = Math.floor(pieceBankInnerWidth / (this.pieceSizesByEm.pieceThree.width * fontSizeFactor));
+    let pieceThreeWholeRepeats = Math.floor(pieceBankInnerWidth / (this._pieceSizes.pieceThree.width * fontSizeFactor));
     if (pieceThreeWholeRepeats > 2) pieceThreeWholeRepeats = 2;
-    this.pieceSizesByEm.pieceThree.bankWidth = pieceThreeWholeRepeats * this.pieceSizesByEm.pieceThree.width;
+    this._pieceSizes.pieceThree.bankWidth = pieceThreeWholeRepeats * this._pieceSizes.pieceThree.width;
   }
 }

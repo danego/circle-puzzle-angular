@@ -5,6 +5,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { BankCircleConnectorService } from '../bank-circle-connector.service';
 import { SolutionsGrabberService } from '../solutions-grabber.service';
 import { PieceSizingService } from '../piece-sizing.service';
+import { SizingDataInterface } from '../sizing-data.interface';
 
 @Component({
   selector: 'control-panel-vertical',
@@ -21,12 +22,12 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
   limitSolutionsShown: boolean = false;
   currentSolutionNumber: number;
   displayColorLetters: boolean = true;
-  containerSize: number;
+  pieceSizes: SizingDataInterface;
 
   remainingSolutionsSub: Subscription;
   allPiecesUsedSub: Subscription;
   currentSolutionNumberSub: Subscription;
-  containerSizeSub: Subscription;
+  pieceSizesSub: Subscription;
 
   controlButtonsForm: FormGroup;
 
@@ -53,10 +54,10 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
       this.currentSolutionNumber = solnNumber;
     });
 
-    //updates container size for scrolling piece banks
-    this.containerSizeSub = this.pieceSizingService.containerSize.subscribe((newContainerSize) => {
-      const containerHeightMinusMargins = newContainerSize - 20;
-      this.containerSize = containerHeightMinusMargins;
+    // implicitly gets height for control panel
+    this.pieceSizesSub = this.pieceSizingService.pieceSizes.subscribe(pieceSizesData => {
+      this.pieceSizes = pieceSizesData;
+      //containerSize accessed from pieceSizes in HTML
     });
 
     //note: the values of the toggle controls are inverted
@@ -155,6 +156,6 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
     if (this.remainingSolutionsSub) this.remainingSolutionsSub.unsubscribe();
     if (this.allPiecesUsedSub) this.allPiecesUsedSub.unsubscribe();
     if (this.currentSolutionNumberSub) this.currentSolutionNumberSub.unsubscribe();
-    if (this.containerSizeSub) this.containerSizeSub.unsubscribe();
+    if (this.pieceSizesSub) this.pieceSizesSub.unsubscribe();
   }
 }

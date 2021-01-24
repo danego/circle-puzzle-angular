@@ -7,8 +7,8 @@
         class="piece piece-zero piece-circle" 
         [positionTopStart]="i"
         [circleHeight]="75"
-        [pieceWidth]="4.2"
-        [pieceHeight]="4.2"
+        [pieceWidth]="pieceSizes.pieceZero.width"
+        [pieceHeight]="pieceSizes.pieceZero.height"
         [currentFontSize]="fontSizeFactor"
         *ngFor="let piece of pieces[0]; let i = index"
         [ngClass]="{ 'green': piece === 'G', 'orange': piece === 'O', 'purple': piece === 'P' }">
@@ -33,15 +33,15 @@
         id="{{'dl-one-' + i}}"
         *ngFor="let array of pieces[1]; let i = index"
         class="drag-list drag-list-one"
-        [ngStyle]="{'cursor': isDragging2 || isDragging3 ? 'not-allowed' : 'default'}"
+        [ngStyle]="{'cursor': isDragging2 || isDragging3 ? 'not-allowed' : 'default', 'width': pieceSizes.pieceOne.width + 'em', 'height': pieceSizes.pieceOne.height + 'em'}"
         cdkDropList
         [cdkDropListData]="pieces[1][i]"
         cdkDropListConnectedTo="piece-bank-one"
         (cdkDropListDropped)="dropped($event)"
         [positionTopStart]="i"
         [circleHeight]="60"
-        [pieceWidth]="17"
-        [pieceHeight]="7.6"
+        [pieceWidth]="pieceSizes.pieceOne.width"
+        [pieceHeight]="pieceSizes.pieceOne.height"
         [currentFontSize]="fontSizeFactor">
 
         <div 
@@ -109,15 +109,15 @@
         id="{{'dl-two-' + i}}"        
         *ngFor="let array of pieces[2]; let i = index"
         class="drag-list drag-list-two"
-        [ngStyle]="{'cursor': isDragging1 || isDragging3 ? 'not-allowed' : 'default'}"
+        [ngStyle]="{'cursor': isDragging1 || isDragging3 ? 'not-allowed' : 'default', 'width': pieceSizes.pieceTwo.width + 'em', 'height': pieceSizes.pieceTwo.height + 'em'}"
         cdkDropList
         [cdkDropListData]="pieces[2][i]"
         cdkDropListConnectedTo="piece-bank-two"
         (cdkDropListDropped)="dropped($event)"
         [positionLeftStart]="i"
         [circleHeight]="40"
-        [pieceWidth]="10"
-        [pieceHeight]="7.6"
+        [pieceWidth]="pieceSizes.pieceTwo.width"
+        [pieceHeight]="pieceSizes.pieceTwo.height"
         [currentFontSize]="fontSizeFactor">
 
         <div 
@@ -172,15 +172,15 @@
         id="{{'dl-three-' + i}}" 
         *ngFor="let array of pieces[3]; let i = index"
         class="drag-list drag-list-three"
-        [ngStyle]="{'cursor': isDragging1 || isDragging2 ? 'not-allowed' : 'default'}"
+        [ngStyle]="{'cursor': isDragging1 || isDragging2 ? 'not-allowed' : 'default', 'width': pieceSizes.pieceThree.width + 'em', 'height': pieceSizes.pieceThree.height + 'em'}"
         cdkDropList
         [cdkDropListData]="pieces[3][i]"
         cdkDropListConnectedTo="piece-bank-three"
         (cdkDropListDropped)="dropped($event)"
         [positionBottomStart]="i"
         [circleHeight]="24"
-        [pieceWidth]="10.5"
-        [pieceHeight]="4"
+        [pieceWidth]="pieceSizes.pieceThree.width"
+        [pieceHeight]="pieceSizes.pieceThree.height"
         [currentFontSize]="fontSizeFactor">
 
         <div 
