@@ -39,36 +39,36 @@
             (cdkDragEnded)="dragEnded(1)"> 
 
             <div *ngIf="displayColorLetters; else noLetterOne">
-              <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">
+              <span [ngClass]="applyCorrectColorClass(piece.top)">
                 <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                   {{ piece.top }}
                 </div>
               </span>
               <br>
-              <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">
+              <span [ngClass]="applyCorrectColorClass(piece.left)">
                 <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                   {{ piece.left }}
                 </div>
               </span>
-              <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">
+              <span [ngClass]="applyCorrectColorClass(piece.right)">
                 <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                   {{ piece.right }}
                 </div>
               </span>
               
               <div *cdkDragPreview class="piece piece-one piece-bank" [ngClass]="currentLayout" [ngStyle]="{'font-size': fontSizeFactor + 'px'}">
-                <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">
+                <span [ngClass]="applyCorrectColorClass(piece.top)">
                   <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                     {{ piece.top }}
                   </div>
                 </span>
                 <br>
-                <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">
+                <span [ngClass]="applyCorrectColorClass(piece.left)">
                   <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                     {{ piece.left }}
                   </div>
                 </span>
-                <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">
+                <span [ngClass]="applyCorrectColorClass(piece.right)">
                   <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                     {{ piece.right }}
                   </div>
@@ -77,16 +77,16 @@
             </div>
 
             <ng-template #noLetterOne>
-              <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }"></span>
+              <span [ngClass]="applyCorrectColorClass(piece.top)"></span>
               <br>
-              <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }"></span>
-              <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }"></span>
+              <span [ngClass]="applyCorrectColorClass(piece.left)"></span>
+              <span [ngClass]="applyCorrectColorClass(piece.right)"></span>
 
               <div *cdkDragPreview class="piece piece-one piece-bank" [ngClass]="currentLayout" [ngStyle]="{'font-size': fontSizeFactor + 'px'}">
-                <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }"></span>
+                <span [ngClass]="applyCorrectColorClass(piece.top)"></span>
                 <br>
-                <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }"></span>
-                <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }"></span>
+                <span [ngClass]="applyCorrectColorClass(piece.left)"></span>
+                <span [ngClass]="applyCorrectColorClass(piece.right)"></span>
               </div>
             </ng-template>        
 
@@ -135,36 +135,36 @@
             (cdkDragEnded)="dragEnded(2)"> 
 
             <div *ngIf="displayColorLetters; else noLetterTwo">
-              <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">
+              <span [ngClass]="applyCorrectColorClass(piece.left)">
                 <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                   {{ piece.left }}
                 </div>
               </span>
-              <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">
+              <span [ngClass]="applyCorrectColorClass(piece.right)">
                 <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                   {{ piece.right }}
                 </div>
               </span>
               <br>
-              <span [ngClass]="{ 'green': piece.bottom === 'G', 'orange': piece.bottom === 'O', 'purple': piece.bottom === 'P' }">
+              <span [ngClass]="applyCorrectColorClass(piece.bottom)">
                 <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                   {{ piece.bottom }}
                 </div>
               </span>
               
               <div *cdkDragPreview class="piece piece-two piece-bank" [ngStyle]="{'font-size': fontSizeFactor + 'px'}" [ngClass]="currentLayout">
-                <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">
+                <span [ngClass]="applyCorrectColorClass(piece.left)">
                   <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                     {{ piece.left }}
                   </div>
                 </span>
-                <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">
+                <span [ngClass]="applyCorrectColorClass(piece.right)">
                   <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                     {{ piece.right }}
                   </div>
                 </span>
                 <br>
-                <span [ngClass]="{ 'green': piece.bottom === 'G', 'orange': piece.bottom === 'O', 'purple': piece.bottom === 'P' }">
+                <span [ngClass]="applyCorrectColorClass(piece.bottom)">
                   <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                     {{ piece.bottom }}
                   </div>
@@ -173,16 +173,16 @@
             </div>
 
             <ng-template #noLetterTwo>
-              <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }"></span>
-              <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }"></span>
+              <span [ngClass]="applyCorrectColorClass(piece.left)"></span>
+              <span [ngClass]="applyCorrectColorClass(piece.right)"></span>
               <br>
-              <span [ngClass]="{ 'green': piece.bottom === 'G', 'orange': piece.bottom === 'O', 'purple': piece.bottom === 'P' }"></span>
+              <span [ngClass]="applyCorrectColorClass(piece.bottom)"></span>
 
               <div *cdkDragPreview class="piece piece-two piece-bank" [ngStyle]="{'font-size': fontSizeFactor + 'px'}" [ngClass]="currentLayout">
-                <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }"></span>
-                <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }"></span>
+                <span [ngClass]="applyCorrectColorClass(piece.left)"></span>
+                <span [ngClass]="applyCorrectColorClass(piece.right)"></span>
                 <br>
-                <span [ngClass]="{ 'green': piece.bottom === 'G', 'orange': piece.bottom === 'O', 'purple': piece.bottom === 'P' }"></span>
+                <span [ngClass]="applyCorrectColorClass(piece.bottom)"></span>
               </div>
             </ng-template>
 
@@ -231,12 +231,12 @@
 
             <div *ngIf="displayColorLetters; else noLetterThree">
               <div class="piece-three-container">
-                <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">
+                <span [ngClass]="applyCorrectColorClass(piece.left)">
                   <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                     {{ piece.left }}
                   </div>
                 </span>
-                <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">
+                <span [ngClass]="applyCorrectColorClass(piece.right)">
                   <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                     {{ piece.right }}
                   </div>
@@ -245,12 +245,12 @@
               
               <div *cdkDragPreview class="piece piece-three piece-bank" [ngClass]="currentLayout" [ngStyle]="{'font-size': fontSizeFactor + 'px'}">
                 <div class="piece-three-container">
-                  <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">
+                  <span [ngClass]="applyCorrectColorClass(piece.left)">
                     <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                       {{ piece.left }}
                     </div>
                   </span>
-                  <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">
+                  <span [ngClass]="applyCorrectColorClass(piece.right)">
                     <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                       {{ piece.right }}
                     </div>
@@ -261,14 +261,14 @@
 
             <ng-template #noLetterThree>
               <div class="piece-three-container">
-                <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }"></span>
-                <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }"></span>
+                <span [ngClass]="applyCorrectColorClass(piece.left)"></span>
+                <span [ngClass]="applyCorrectColorClass(piece.right)"></span>
               </div>
 
               <div *cdkDragPreview class="piece piece-three piece-bank" [ngClass]="currentLayout" [ngStyle]="{'font-size': fontSizeFactor + 'px'}">
                 <div class="piece-three-container">                  
-                  <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }"></span>
-                  <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }"></span>
+                  <span [ngClass]="applyCorrectColorClass(piece.left)"></span>
+                  <span [ngClass]="applyCorrectColorClass(piece.right)"></span>
                 </div>
               </div>
             </ng-template>

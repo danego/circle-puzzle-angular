@@ -19,6 +19,7 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
   displaySolutionsPanel: boolean = false;
   limitSolutionsShown: boolean = false;
   currentSolutionNumber: number;
+  currentPattern: string = 'Planets';
   displayColorLetters: boolean = true;
 
   remainingSolutionsSub: Subscription;
@@ -53,6 +54,7 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
     //they display opposite message of what's currently shown.
     //will be needed when saving user preferences into local storage
     this.controlButtonsForm = new FormGroup({
+      'patternNameDropdown': new FormControl("Planets"),
       'toggleLetters': new FormControl("Toggle Letters Off"),
       'showAllSolutions': new FormControl(true),
       'solutionNumberDropdown': new FormControl("Solutions:"),
@@ -132,6 +134,18 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
   onLoadNewSolution(event) {
     const newSolutionNumber = event.target.value;
     this.bankCircleConnectorService.transferAllToCircle(newSolutionNumber);
+  }
+
+  onLoadNewPattern(event) {
+    const patternName = event.target.value;
+    this.solutionsGrabberService.changeCurrentPattern(patternName.toLowerCase());
+    this.bankCircleConnectorService.transferAllToCircle();
+    this.currentPattern = patternName;
+    this.generateSolutions();
+    //reset soln picker to default
+    this.controlButtonsForm.patchValue({
+      solutionNumberDropdown: "Solutions:"
+    });
   }
 
   onToggleSolutionsPanel() {

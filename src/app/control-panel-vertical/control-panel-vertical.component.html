@@ -13,7 +13,8 @@
         [checked]="!limitSolutionsShown" 
         (change)="onSlideChange($event)"
         formControlName="showAllSolutions"
-        [ngClass]="!limitSolutionsShown ? 'all-solutions' : 'limited-solutions'">
+        [ngClass]="!limitSolutionsShown ? 'all-solutions' : 'limited-solutions'"
+        *ngIf="currentPattern === 'Planets'">
         Show all solutions
       </mat-slide-toggle>
     
@@ -41,9 +42,24 @@
   <div class="button-container">
     <button (click)="moveAllToBank()">Move All to Bank</button>
     <button (click)="moveAllToCircle()">Move all to Circle</button>
+
     <input 
       type="button"
       (click)="onToggleColorLetters()"
       formControlName="toggleLetters">
+
+    <div class="pattern-dropdown">
+      <label for="pattern-select">Select Pattern: </label>
+      <select 
+        id="pattern-select" 
+        class="pattern-name" 
+        (change)="onLoadNewPattern($event)"
+        formControlName="patternNameDropdown">
+        <option disabled>Patterns:</option>
+        <option>Planets</option>
+        <option>Egypt</option>
+        <option>Atlantis</option>
+      </select>
+    </div>
   </div>
 </section>

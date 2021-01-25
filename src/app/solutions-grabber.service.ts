@@ -1,7 +1,8 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 import { SolutionsGeneratorService } from './solutions-generator.service';
+import { PiecesCatalogService } from './pieces-catalog.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,46 +15,18 @@ export class SolutionsGrabberService {
   allGeneratedSolutionsById: any[];
   remainingSolutions = new BehaviorSubject<number>(null);
   allPiecesUsed: boolean = false;
+  currentPattern: string = 'Planets';
+
   allPiecesUsedSubject = new Subject<boolean>();
   currentSolutionNumber = new Subject<number>();
 
 
   constructor(
-    private solutionsGeneratorService: SolutionsGeneratorService
+    private solutionsGeneratorService: SolutionsGeneratorService,
+    private piecesCatalogService: PiecesCatalogService
   ) {
-    //Keep for clarity elsewhere ... consistent layer numbering
-    this.allPuzzlePieces[0] = ['G', 'G', 'G', 'P', 'P', 'P', 'G', 'G', 'P', 'P'];
-    this.allPuzzlePieces[1] = [
-      {top:'G', left:'P', right:'O', id: 0},
-      {top:'G', left:'G', right:'P', id: 1},
-      {top:'G', left:'O', right:'G', id: 2},
-      {top:'G', left:'P', right:'P', id: 3},
-      {top:'G', left:'O', right:'O', id: 4},
-      {top:'P', left:'P', right:'O', id: 5},
-      {top:'P', left:'O', right:'P', id: 6},
-      {top:'P', left:'G', right:'P', id: 7},
-      {top:'P', left:'O', right:'G', id: 8},
-      {top:'P', left:'G', right:'G', id: 9}
-    ];
-    this.allPuzzlePieces[2] = [
-      {left:'G', right:'P', bottom:'O', id: 0},
-      {left:'O', right:'G', bottom:'P', id: 1},
-      {left:'P', right:'O', bottom:'P', id: 2},
-      {left:'O', right:'P', bottom:'G', id: 3},
-      {left:'G', right:'O', bottom:'O', id: 4},
-      {left:'P', right:'G', bottom:'G', id: 5},
-      {left:'P', right:'O', bottom:'G', id: 6},
-      {left:'O', right:'O', bottom:'P', id: 7},
-      {left:'P', right:'P', bottom:'G', id: 8},
-      {left:'G', right:'G', bottom:'O', id: 9}
-    ];
-    this.allPuzzlePieces[3] = [
-      {left:'P', right:'G', id: 0}, 
-      {left:'O', right:'G', id: 1}, 
-      {left:'G', right:'P', id: 2}, 
-      {left:'G', right:'O', id: 3},
-      {left:'O', right:'P', id: 4}
-    ];
+    //get pieces for default pattern (planets)
+    this.allPuzzlePieces = this.piecesCatalogService.getPiecesForSelectedPattern();
 
     //initialize currentPuzzlePiecesSequence to track loaded piece sequence (used to update in CircleComponent)
     this.makeDeepCopy();
@@ -62,23 +35,25 @@ export class SolutionsGrabberService {
     this.setupPieceIds();
 
     //TEMPORARY FIX ... MIGHT MOVE ELSEWHERE
-    this.startGeneratingSolutions();
+    this.startGeneratingSolutions('planets');
     this.setupPieceIdsEmpty();
     this.computeRemainingSolutions(this._currentSolutionById);
   }
 
-  startGeneratingSolutions(): number {
-    //only generates solutions if not already done
+  //ADD CURRENT LAYOUT && ALREADY EXISITNG CONDITIONAL
+  startGeneratingSolutions(newPattern?: string): number {
+    //only generates solutions if not already done (ie passed in non-matching pattern)
     //Later will need similar logic for different patterns (coins, scarabs)
-    if (!this.allGeneratedSolutionsById) {
+    if (newPattern && newPattern !== this.currentPattern) {
       this.allGeneratedSolutionsById = this.solutionsGeneratorService.generateSolutions(this.allPuzzlePieces.slice());
+      this.currentPattern = newPattern;
     }
     return this.allGeneratedSolutionsById.length;
   }
 
   makeDeepCopy() {
     this.currentPuzzlePiecesSequence = new Array(4);
-    this.currentPuzzlePiecesSequence[0] = [];
+    this.currentPuzzlePiecesSequence[0] = [...this.allPuzzlePieces[0]];
     this.currentPuzzlePiecesSequence[1] = [...this.allPuzzlePieces[1]];
     this.currentPuzzlePiecesSequence[2] = [...this.allPuzzlePieces[2]];
     this.currentPuzzlePiecesSequence[3] = [...this.allPuzzlePieces[3]];
@@ -104,6 +79,20 @@ export class SolutionsGrabberService {
     this._currentSolutionById[0] = new Array(10).fill('');
     this._currentSolutionById[1] = new Array(10).fill('');
     this._currentSolutionById[2] = new Array(10).fill('');
+  }
+
+  changeCurrentPattern(pattern: string) {
+    this.allPuzzlePieces = this.piecesCatalogService.getPiecesForSelectedPattern(pattern);
+
+    //initialize currentPuzzlePiecesSequence to track loaded piece sequence (used to update in CircleComponent)
+    this.makeDeepCopy();
+
+    //initialize _currentSolutionById to track only IDs
+    this.setupPieceIds();
+
+    this.startGeneratingSolutions(pattern);
+    this.setupPieceIdsEmpty();
+    this.computeRemainingSolutions(this._currentSolutionById);
   }
 
   moveAllPieces(moveType: string, solutionNumber?: number) {

@@ -11,11 +11,11 @@
         [pieceHeight]="pieceSizes.pieceZero.height"
         [currentFontSize]="fontSizeFactor"
         *ngFor="let piece of pieces[0]; let i = index"
-        [ngClass]="{ 'green': piece === 'G', 'orange': piece === 'O', 'purple': piece === 'P' }">
+        [ngClass]="applyCorrectColorClass(piece.top)">
 
         <span *ngIf="displayColorLetters; else noLetterZero">
           <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}"> 
-            {{ piece }}
+            {{ piece.top }}
           </div>
         </span>
 
@@ -53,18 +53,18 @@
           (cdkDragEnded)="dragEnded(1)"> 
 
           <div *ngIf="displayColorLetters; else noLetterOne">
-            <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }">
+            <span [ngClass]="applyCorrectColorClass(piece.top)">
               <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                 {{ piece.top }}
               </div>
             </span>
             <br>
-            <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">
+            <span [ngClass]="applyCorrectColorClass(piece.left)">
               <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                 {{ piece.left }}
               </div>
             </span>
-            <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">
+            <span [ngClass]="applyCorrectColorClass(piece.right)">
               <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                 {{ piece.right }}
               </div>
@@ -72,10 +72,10 @@
           </div>
             
           <ng-template #noLetterOne>           
-            <span [ngClass]="{ 'green': piece.top === 'G', 'orange': piece.top === 'O', 'purple': piece.top === 'P' }"></span>
+            <span [ngClass]="applyCorrectColorClass(piece.top)"></span>
             <br>
-            <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }"></span>
-            <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }"></span>
+            <span [ngClass]="applyCorrectColorClass(piece.left)"></span>
+            <span [ngClass]="applyCorrectColorClass(piece.right)"></span>
           </ng-template>
 
           
@@ -129,18 +129,18 @@
           (cdkDragEnded)="dragEnded(2)">
 
           <div *ngIf="displayColorLetters; else noLetterTwo">
-            <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">
+            <span [ngClass]="applyCorrectColorClass(piece.left)">
               <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                 {{ piece.left }}
               </div>
             </span>
-            <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">
+            <span [ngClass]="applyCorrectColorClass(piece.right)">
               <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                 {{ piece.right }}
               </div>
             </span>
             <br>
-            <span [ngClass]="{ 'green': piece.bottom === 'G', 'orange': piece.bottom === 'O', 'purple': piece.bottom === 'P' }">
+            <span [ngClass]="applyCorrectColorClass(piece.bottom)">
               <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                 {{ piece.bottom }}
               </div>
@@ -148,10 +148,10 @@
           </div>
 
           <ng-template #noLetterTwo>
-            <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }"></span>
-            <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }"></span>
+            <span [ngClass]="applyCorrectColorClass(piece.left)"></span>
+            <span [ngClass]="applyCorrectColorClass(piece.right)"></span>
             <br>
-            <span [ngClass]="{ 'green': piece.bottom === 'G', 'orange': piece.bottom === 'O', 'purple': piece.bottom === 'P' }"></span>
+            <span [ngClass]="applyCorrectColorClass(piece.bottom)"></span>
           </ng-template>          
 
 
@@ -192,12 +192,12 @@
           (cdkDragEnded)="dragEnded(3)"> 
 
           <div *ngIf="displayColorLetters; else noLetterThree" class="piece-three-container">
-            <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }">
+            <span [ngClass]="applyCorrectColorClass(piece.left)">
               <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                 {{ piece.left }}
               </div>
             </span>
-            <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }">
+            <span [ngClass]="applyCorrectColorClass(piece.right)">
               <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                 {{ piece.right }}
               </div>
@@ -206,8 +206,8 @@
 
           <ng-template #noLetterThree>
             <div class="piece-three-container">
-              <span [ngClass]="{ 'green': piece.left === 'G', 'orange': piece.left === 'O', 'purple': piece.left === 'P' }"></span>
-              <span [ngClass]="{ 'green': piece.right === 'G', 'orange': piece.right === 'O', 'purple': piece.right === 'P' }"></span>
+              <span [ngClass]="applyCorrectColorClass(piece.left)"></span>
+              <span [ngClass]="applyCorrectColorClass(piece.right)"></span>
             </div>
           </ng-template>
 

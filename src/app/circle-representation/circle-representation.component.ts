@@ -91,7 +91,13 @@ export class CircleRepresentationComponent implements OnInit, OnDestroy {
     });
 
     this.pieces = new Array(4);
-    this.pieces[0] = this.solutionsGrabberService.allPuzzlePieces[0].slice();
+    //initialize static Layer Zero
+    this.pieces[0] = [];
+    for (let i = 0; i < 10; i++) {
+      this.pieces[0][i] = {
+        top: this.solutionsGrabberService.currentPuzzlePiecesSequence[0][i]
+      };
+    }
 
     //call to set up empty arrays for each puzzle piece location ... NAME METHOD BETTER
     this.loadEmptyPieceSequence();   
@@ -182,10 +188,14 @@ export class CircleRepresentationComponent implements OnInit, OnDestroy {
 
   loadAllPieces() {
     //Array Nesting Order: array[layer][d&d/piece][actual piece]
-    //because each piece should be in its own array for drag-&-drop
-
+    //because each piece should be in its own array for drag-&-drop (except layer 0)
     //LAYER ZERO 
-    //no need to do because it never changes after initial setup
+    this.pieces[0] = [];
+    for (let i = 0; i < 10; i++) {
+      this.pieces[0][i] = {
+        top: this.solutionsGrabberService.currentPuzzlePiecesSequence[0][i]
+      };
+    }
 
     //LAYER ONE
     for (let i = 0; i < 10; i++) {
@@ -225,6 +235,34 @@ export class CircleRepresentationComponent implements OnInit, OnDestroy {
     for (let i = 0; i < 5; i++) {
       this.pieces[3][i] = [];
     }
+  }
+
+  //each piece has between 1-3 colors, aka dots
+  //apply corresponding class to dot's text/value
+  applyCorrectColorClass(pieceDotText: string) {
+    //[ngClass]="{ 'green': piece === 'G', 'orange': piece === 'O', 'purple': piece === 'P' }">
+    let className;
+    switch(pieceDotText) {
+      case 'G': className = 'green';
+                break;
+      case 'O': className = 'orange';
+                break;
+      case 'P': className = 'purple';
+                break;
+      case 'T': className = 'teal';
+                break;   
+      case 'R': className = 'red';
+                break;  
+      case 'AU': className = 'gold';
+                break;
+      case 'S': className = 'silver';
+                break;
+      case 'B': className = 'bronze';
+                break;
+      case 'C': className = 'copper';
+                break;                
+    }
+    return className;
   }
 
   ngOnDestroy() {

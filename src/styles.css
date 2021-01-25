@@ -113,27 +113,57 @@ body {
   margin-top: 1px;
 }
 
+/* Planets Pattern */
 .green {
   background-color: forestgreen;
   background-image: url("./assets/noise.png");
-  /*
-  */
   border: 1px solid rgb(23, 94, 23);
 }
 .orange {
   background-color: orange;
   background-image: url("./assets/noise.png");
-  /*
-  */
   border: 1px solid rgb(170, 111, 2);
 }
 .purple {
   background-color: rebeccapurple;
   background-image: url("./assets/noise.png");
-  /*
-  */
   border: 1px solid rgb(45, 23, 68);
 }
+/* Egypt Pattern */
+.teal {
+  background-color: teal;
+  background-image: url("./assets/noise.png");
+  border: 1px solid rgb(1, 58, 58);
+}
+.red {
+  background-color: crimson;
+  background-image: url("./assets/noise.png");
+  border: 1px solid rgb(107, 10, 29);
+}
+/* Atlantis Pattern */
+.gold {
+  background-color: gold;
+  background: url("./assets/bull-art.png"), url("./assets/noise.png");
+  background-size: contain;
+  border: 1px solid rgb(190, 162, 2);
+}
+.silver {
+  background-color: silver;
+  background-image: url("./assets/noise.png");
+  border: 1px solid rgb(128, 126, 126);
+}
+.bronze {
+  background-color: rgb(184,115,51);
+  background-image: url("./assets/noise.png");
+  border: 1px solid rgb(116, 72, 32);
+}
+.copper {
+  background-color: rgb(184,169,51);
+  background-image: url("./assets/noise.png");
+  border: 1px solid rgb(16, 73, 16);
+}
+
+
 body { 
   font-family: 'Times New Roman', Times, serif !important;
 }

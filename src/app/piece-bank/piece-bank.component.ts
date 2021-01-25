@@ -376,6 +376,34 @@ export class PieceBankComponent implements OnInit, OnDestroy {
     this.piecesBank3 = [];
   }
 
+  //each piece has between 1-3 colors, aka dots
+  //apply corresponding class to dot's text/value
+  applyCorrectColorClass(pieceDotText: string) {
+    //[ngClass]="{ 'green': piece === 'G', 'orange': piece === 'O', 'purple': piece === 'P' }">
+    let className;
+    switch(pieceDotText) {
+      case 'G': className = 'green';
+                break;
+      case 'O': className = 'orange';
+                break;
+      case 'P': className = 'purple';
+                break;
+      case 'T': className = 'teal';
+                break;   
+      case 'R': className = 'red';
+                break;
+      case 'AU': className = 'gold';
+                break;
+      case 'S': className = 'silver';
+                break;
+      case 'B': className = 'bronze';
+                break;
+      case 'C': className = 'copper';
+                break;                             
+    }
+    return className;
+  }
+
   ngOnDestroy() {
     if (this.moveAllPieces) this.moveAllPieces.unsubscribe();
     if (this.isDragging) this.isDragging.unsubscribe();
