@@ -142,9 +142,13 @@ body {
 }
 /* Atlantis Pattern */
 .gold {
-  background-color: gold;
-  background: url("./assets/bull-art.png"), url("./assets/noise.png");
+  /* background-color: rgb(255, 215, 0); */
+  background: linear-gradient(10deg, rgba(255, 215, 0, 0.75), rgba(255, 215, 0, 0.75)), 
+              url("./assets/bull-art-gold.png"), 
+              url("./assets/noise.png");
   background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
   border: 1px solid rgb(190, 162, 2);
 }
 .silver {
