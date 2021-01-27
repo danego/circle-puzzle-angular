@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostBinding, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
 
@@ -31,6 +31,8 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
   pieceSizesSub: Subscription;
 
   controlButtonsForm: FormGroup;
+
+  @Input('currentLayout') currentLayout: string;
 
   @HostBinding('style.margin') margin;
   @HostBinding('style.height') height;

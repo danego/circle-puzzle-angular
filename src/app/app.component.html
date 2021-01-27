@@ -14,14 +14,14 @@
         <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
       </svg>
     </div>
-    <control-panel-vertical *ngIf="currentLayout === 'layout-vertical'"></control-panel-vertical>
+    <control-panel-vertical *ngIf="currentLayout === 'layout-vertical'" [currentLayout]="currentLayout"></control-panel-vertical>
 
     
     <section calculateHeight [ngClass]="currentLayout">
       <piece-bank [ngClass]="currentLayout"></piece-bank>
       <circle-representation></circle-representation>
 
-      <control-panel-vertical *ngIf="currentLayout === 'layout-horizontal'"></control-panel-vertical>
+      <control-panel-vertical *ngIf="currentLayout === 'layout-horizontal'" [currentLayout]="currentLayout"></control-panel-vertical>
     </section>
 
   </article>

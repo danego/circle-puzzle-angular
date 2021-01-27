@@ -50,7 +50,9 @@ button:focus, input:focus {
 .pattern-name {
   width: 100px;
   font-family: sans-serif;
-  font-size: 14px;
+  font-size: 16px;
+  margin-top: 2px;
+  padding: 2px 0px;
 }
 
 
@@ -95,7 +97,9 @@ button:focus, input:focus {
 .soln-number {
   max-height: 500px;
   font-family: sans-serif;
-  font-size: 14px;
+  font-size: 16px;
+  margin-top: 2px;
+  padding: 2px 0px;
 }
 select:focus {
   outline: none;

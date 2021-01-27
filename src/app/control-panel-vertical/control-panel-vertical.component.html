@@ -1,4 +1,4 @@
-<section [formGroup]="controlButtonsForm" [ngStyle]="{'min-height': pieceSizes.containerSize + 'px'}">
+<section [formGroup]="controlButtonsForm" [ngStyle]="{'min-height': pieceSizes.containerSize + 'px', 'flex-direction': currentLayout === 'layout-vertical' ? 'column-reverse' : 'column'}">
   <input 
     type="button"
     class="solutions-toggle" 
@@ -39,7 +39,7 @@
 
   <div class="spacer"></div>
 
-  <div class="button-container">
+  <div class="button-container" [ngStyle]="{'flex-direction': currentLayout === 'layout-vertical' ? 'column-reverse' : 'column'}">
     <button (click)="moveAllToBank()">Move All to Bank</button>
     <button (click)="moveAllToCircle()">Move all to Circle</button>
 
