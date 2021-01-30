@@ -12,10 +12,10 @@ export class SolutionsGrabberService {
   allPuzzlePieces = new Array(4);
   currentPuzzlePiecesSequence = new Array(4);
   private _currentSolutionById: any[];  
-  allGeneratedSolutionsById: any[];
+  private allGeneratedSolutionsById: any[];
   remainingSolutions = new BehaviorSubject<number>(null);
   allPiecesUsed: boolean = false;
-  currentPattern: string = 'Planets';
+  private currentPattern: string = 'Planets';
 
   allPiecesUsedSubject = new Subject<boolean>();
   currentSolutionNumber = new Subject<number>();
@@ -51,7 +51,7 @@ export class SolutionsGrabberService {
     return this.allGeneratedSolutionsById.length;
   }
 
-  makeDeepCopy() {
+  private makeDeepCopy() {
     this.currentPuzzlePiecesSequence = new Array(4);
     this.currentPuzzlePiecesSequence[0] = [...this.allPuzzlePieces[0]];
     this.currentPuzzlePiecesSequence[1] = [...this.allPuzzlePieces[1]];
@@ -59,14 +59,14 @@ export class SolutionsGrabberService {
     this.currentPuzzlePiecesSequence[3] = [...this.allPuzzlePieces[3]];
   }
 
-  makeDeepCopyFromSolution(solutionNumber: number) {
+  private makeDeepCopyFromSolution(solutionNumber: number) {
     this._currentSolutionById = new Array(3);
     this._currentSolutionById[0] = [...this.allGeneratedSolutionsById[solutionNumber][0]];
     this._currentSolutionById[1] = [...this.allGeneratedSolutionsById[solutionNumber][1]];
     this._currentSolutionById[2] = [...this.allGeneratedSolutionsById[solutionNumber][2]];
   }
 
-  setupPieceIds() {
+  private setupPieceIds() {
     //initializes ID tracker to default puzzle piece order
     this._currentSolutionById = new Array(3);
     this._currentSolutionById[0] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -74,7 +74,7 @@ export class SolutionsGrabberService {
     this._currentSolutionById[2] = [0, 1, 2, 3, 4];
   }
 
-  setupPieceIdsEmpty() {
+  private setupPieceIdsEmpty() {
     this._currentSolutionById = new Array(3);
     this._currentSolutionById[0] = new Array(10).fill('');
     this._currentSolutionById[1] = new Array(10).fill('');
@@ -111,7 +111,7 @@ export class SolutionsGrabberService {
     this.computeRemainingSolutions();
   }
 
-  switchPieceOrderToNewSolution(solutionNumber: number) {
+  private switchPieceOrderToNewSolution(solutionNumber: number) {
     //update ID tracker 
     this.makeDeepCopyFromSolution(solutionNumber);
     
@@ -154,7 +154,7 @@ export class SolutionsGrabberService {
     }
   }
 
-  switchPieceOrderToDefault() {
+  private switchPieceOrderToDefault() {
     //update ID tracker 
     this.setupPieceIds();    
 
@@ -197,7 +197,7 @@ export class SolutionsGrabberService {
     }
   }
 
-  switchPuzzlePieces(switchSpotIndex, toSwitchInIndex, layerNumber) {
+  private switchPuzzlePieces(switchSpotIndex, toSwitchInIndex, layerNumber) {
     let holdFirstPiece = {...this.currentPuzzlePiecesSequence[layerNumber][switchSpotIndex]};
     this.currentPuzzlePiecesSequence[layerNumber][switchSpotIndex] = {...this.currentPuzzlePiecesSequence[layerNumber][toSwitchInIndex]};
     this.currentPuzzlePiecesSequence[layerNumber][toSwitchInIndex] = holdFirstPiece;
@@ -252,7 +252,7 @@ export class SolutionsGrabberService {
     this.remainingSolutions.next(remainingSolutions);
   }
 
-  determineCurrentSolutionNumber(currentIdSequence?: any[][]) {
+  private determineCurrentSolutionNumber(currentIdSequence?: any[][]) {
     //runs through current ID sequence checking all pieces are used (no empty strings)
     for (let i = 0; i < 3; i++) {
       let currentIdSequenceLayer = currentIdSequence[i];

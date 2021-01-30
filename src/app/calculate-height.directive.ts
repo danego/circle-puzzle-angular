@@ -27,7 +27,7 @@ export class CalculateHeightDirective implements AfterViewInit {
     this.calculateHeight();
   }
   
-  calculateHeight() {
+  private calculateHeight() {
     const currentHeight = this.elementRef.nativeElement.offsetHeight;
     const currentWidth = this.elementRef.nativeElement.offsetWidth;
 
@@ -38,7 +38,7 @@ export class CalculateHeightDirective implements AfterViewInit {
     );
   }
 
-  determineLayout(width, height) {
+  private determineLayout(width, height) {
     //either 'vertical', 'mixed', or 'vertical'
     let layout: string;
 

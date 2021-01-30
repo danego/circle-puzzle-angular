@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
 })
 
 export class SolutionsGeneratorService {
-  allPuzzlePieces: any[];
-  allSolvedPuzzlePieces: any[];
+  private allPuzzlePieces: any[];
+  private allSolvedPuzzlePieces: any[];
 
   constructor() {}
 
@@ -352,6 +352,4 @@ export class SolutionsGeneratorService {
     }
   } //end of cementSolvedArray()
 
-  
-  
 } //end of class
