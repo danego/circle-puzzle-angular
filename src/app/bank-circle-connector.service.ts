@@ -26,7 +26,7 @@ export class BankCircleConnectorService {
 
   }
   transferAllToCircle(solutionNumber?: number) {
-    if (solutionNumber) {
+    if (solutionNumber || solutionNumber === 0) {
       this.solutionsGrabberService.moveAllPieces('toCircle', solutionNumber);
     }
     else {

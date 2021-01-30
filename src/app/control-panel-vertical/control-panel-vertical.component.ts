@@ -37,7 +37,6 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
   @HostBinding('style.margin') margin;
   @HostBinding('style.height') height;
 
-
   constructor(
     private bankCircleConnectorService: BankCircleConnectorService,
     private solutionsGrabberService: SolutionsGrabberService,
@@ -69,8 +68,8 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
     this.controlButtonsForm = new FormGroup({
       'patternNameDropdown': new FormControl("Planets"),
       'toggleLetters': new FormControl("Toggle Letters Off"),
-      'showAllSolutions': new FormControl(true),
-      'solutionNumberDropdown': new FormControl("Solutions:"),
+      'showAllSolutions': new FormControl('true'),
+      'solutionNumberDropdown': new FormControl(),
       'toggleSolutionsPanel': new FormControl("Reveal Solutions Panel")  //"{{displaySolutionsPanel ? 'Hide' : 'Reveal'}} Solutions Panel"
     });
 
@@ -98,7 +97,10 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
     this.numberOfSolutions = numberOfSolutions;
     this.numberOfSolutionsArray = new Array(numberOfSolutions);
     for (let i = 0; i < numberOfSolutions; i++) {
-      this.numberOfSolutionsArray[i] = i;
+      this.numberOfSolutionsArray[i] = {
+        number: i,
+        value: 'Solution: ' + i
+      };
     }
   }
 
@@ -123,41 +125,42 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
 
     let j = 0;
     for (let i = startOption; i <= endOption; i++) {
-      this.numberOfSolutionsArray[j] = i;
+      this.numberOfSolutionsArray[j] = {
+        number: i,
+        value: 'Solution: ' + i
+      };
       j++;
     }
   }
 
   onSlideChange(event) {
     this.limitSolutionsShown = !event.checked;
-    const dropdownValue = this.controlButtonsForm.get('solutionNumberDropdown').value;
-    let dropdownValueNumber; 
-    if (dropdownValue !== "Solutions:") {
-      dropdownValueNumber = +dropdownValue;
-    }
-
+    const dropdownValue: number = this.controlButtonsForm.get('solutionNumberDropdown').value;
+  
     if (this.limitSolutionsShown) {
-      this.generateLimitedSolutions(dropdownValueNumber);
+      this.generateLimitedSolutions(dropdownValue);
     }
     else {
       this.generateSolutions();
     }
   }
   
-  onLoadNewSolution(event) {
-    const newSolutionNumber = event.target.value;
-    this.bankCircleConnectorService.transferAllToCircle(newSolutionNumber);
+  //event value is custom from ng-select so no event.target.value
+  onLoadNewSolution(optionData) {
+    const solutionNumber = optionData.number;
+    this.bankCircleConnectorService.transferAllToCircle(solutionNumber);
   }
 
-  onLoadNewPattern(event) {
-    const patternName = event.target.value;
+  //event value is custom from ng-select so no event.target.value
+  onLoadNewPattern(patternName) {
     this.solutionsGrabberService.changeCurrentPattern(patternName.toLowerCase());
     this.bankCircleConnectorService.transferAllToCircle();
     this.currentPattern = patternName;
     this.generateSolutions();
-    //reset soln picker to default
+    //reset soln picker to placeholder text; slideToggle to show all
     this.controlButtonsForm.patchValue({
-      solutionNumberDropdown: "Solutions:"
+      solutionNumberDropdown: null,
+      showAllSolutions: true
     });
   }
 

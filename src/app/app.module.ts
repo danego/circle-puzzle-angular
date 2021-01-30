@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { AppComponent } from './app.component';
 import { CircleRepresentationComponent } from './circle-representation/circle-representation.component';
@@ -42,7 +43,8 @@ import { IsScrollingDirective } from './is-scrolling.directive';
     BrowserAnimationsModule,
     DragDropModule,
     MatSlideToggleModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

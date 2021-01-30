@@ -18,17 +18,21 @@
         Show all solutions
       </mat-slide-toggle>
     
-      <div class="soln-dropdown">
-        <label for="soln-number">Select solution #: </label>
-        <select 
-          id="soln-number" 
-          class="soln-number" 
-          (change)="onLoadNewSolution($event)"
-          formControlName="solutionNumberDropdown">
-          <option disabled>Solutions:</option>
-          <option *ngFor="let solnNumber of numberOfSolutionsArray; let i = index">{{ solnNumber }}</option>
-        </select>
-      </div>
+      <ng-select 
+        class="custom-select" 
+        id="soln-number" 
+        formControlName="solutionNumberDropdown"
+        [items]="numberOfSolutionsArray" 
+        bindLabel="number" 
+        bindValue="number"
+        (change)="onLoadNewSolution($event)"
+        placeholder="Solution #"
+        [clearable]="false"
+        [searchable]="false">
+          <ng-template ng-label-tmp let-item="item">
+            {{item.value}}
+          </ng-template>
+      </ng-select>
     </div>
   
     <div class="solutions-remaining">
@@ -49,17 +53,18 @@
       formControlName="toggleLetters">
 
     <div class="pattern-dropdown">
-      <label for="pattern-select">Select Pattern: </label>
-      <select 
+      <ng-select 
+        class="custom-select" 
         id="pattern-select" 
-        class="pattern-name" 
+        formControlName="patternNameDropdown"
         (change)="onLoadNewPattern($event)"
-        formControlName="patternNameDropdown">
-        <option disabled>Patterns:</option>
-        <option>Planets</option>
-        <option>Egypt</option>
-        <option>Atlantis</option>
-      </select>
+        [clearable]="false"
+        [searchable]="false">
+          <ng-option disabled>Patterns:</ng-option>
+          <ng-option value="Planets">Planets</ng-option>
+          <ng-option value="Egypt">Egypt</ng-option>
+          <ng-option value="Atlantis">Atlantis</ng-option>
+      </ng-select>
     </div>
   </div>
 </section>

@@ -101,7 +101,7 @@ export class SolutionsGrabberService {
     }
     else if (moveType === 'toCircle') {
       //toCircle is either default order of pieces OR a new solution
-      if (solutionNumber) {
+      if (solutionNumber || solutionNumber === 0) {
         this.switchPieceOrderToNewSolution(solutionNumber);
       }
       else {

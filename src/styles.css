@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
 body {
   font-family: sans-serif;
   background-color: papayawhip;
@@ -170,4 +172,26 @@ body {
 
 body { 
   font-family: 'Times New Roman', Times, serif !important;
+}
+
+/* ng-select custom styling */
+.custom-select {
+  min-width: 130px;
+  height: 40px;
+}
+
+.custom-select .ng-select-container  {
+  height: 38px !important;
+  border: 1px solid #222222;
+  border-radius: 20px;
+  padding: 0px 5px;
+  background-color: rgb(239, 239, 239);
+  color: black;
+  cursor: pointer;
+}
+ng-select:focus, ng-select:active, .ng-select-focused{
+  outline: none !important;
+}
+.custom-select .ng-arrow {
+  border-color: black transparent transparent !important;
 }
