@@ -68,8 +68,13 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
     this.bankCircleConnectorService.transferAllToBank();
   }
 
-  moveAllToCircle() {
-    this.bankCircleConnectorService.transferAllToCircle();
+  moveAllToCircle(solutionNumber?: number) {
+    if (solutionNumber || solutionNumber === 0) {
+      this.bankCircleConnectorService.transferAllToCircle(solutionNumber);
+    }
+    else {
+      this.bankCircleConnectorService.transferAllToCircle();
+    }
   }
 
   onToggleColorLetters() {
@@ -129,13 +134,13 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
   
   onLoadNewSolutionMobile(solutionNumber: number) {
     this.controlButtonsForm.value;
-    this.bankCircleConnectorService.transferAllToCircle(solutionNumber);
+    this.moveAllToCircle(solutionNumber);
   }
 
   //event value is custom from ng-select so no event.target.value
   onLoadNewPattern(patternName) {
     this.solutionsGrabberService.changeCurrentPattern(patternName.toLowerCase());
-    this.bankCircleConnectorService.transferAllToCircle();
+    this.moveAllToCircle();
     this.currentPattern = patternName;
     this.generateSolutions();
     //reset soln picker to default

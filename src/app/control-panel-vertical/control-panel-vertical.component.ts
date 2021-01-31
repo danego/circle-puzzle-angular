@@ -83,8 +83,13 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
     this.bankCircleConnectorService.transferAllToBank();
   }
 
-  moveAllToCircle() {
-    this.bankCircleConnectorService.transferAllToCircle();
+  moveAllToCircle(solutionNumber?: number) {
+    if (solutionNumber || solutionNumber === 0) {
+      this.bankCircleConnectorService.transferAllToCircle(solutionNumber);
+    }
+    else {
+      this.bankCircleConnectorService.transferAllToCircle();
+    }
   }
 
   onToggleColorLetters() {
@@ -171,18 +176,18 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
   //event value is custom from ng-select so no event.target.value
   onLoadNewSolution(optionData) {
     const solutionNumber = optionData.number;
-    this.bankCircleConnectorService.transferAllToCircle(solutionNumber);
+    this.moveAllToCircle(solutionNumber);
   }
 
   onLoadNewSolutionMobile(solutionNumber: number) {
     this.controlButtonsForm.value;
-    this.bankCircleConnectorService.transferAllToCircle(solutionNumber);
+    this.moveAllToCircle(solutionNumber);
   }
 
   //event value is custom from ng-select so no event.target.value
   onLoadNewPattern(patternName) {
     this.solutionsGrabberService.changeCurrentPattern(patternName.toLowerCase());
-    this.bankCircleConnectorService.transferAllToCircle();
+    this.moveAllToCircle();
     this.currentPattern = patternName;
     this.generateSolutions();
 
