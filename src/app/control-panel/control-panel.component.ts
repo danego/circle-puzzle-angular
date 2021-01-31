@@ -57,7 +57,7 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
       'patternNameDropdown': new FormControl("Planets"),
       'toggleLetters': new FormControl("Toggle Letters Off"),
       'showAllSolutions': new FormControl(true),
-      'solutionNumberDropdown': new FormControl(),
+      'solutionNumberDropdown': new FormControl('Solutions:'),
       'toggleSolutionsPanel': new FormControl("Reveal Solutions Panel")  //"{{displaySolutionsPanel ? 'Hide' : 'Reveal'}} Solutions Panel"
     });
 
@@ -85,10 +85,7 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
     this.numberOfSolutions = numberOfSolutions;
     this.numberOfSolutionsArray = new Array(numberOfSolutions);
     for (let i = 0; i < numberOfSolutions; i++) {
-      this.numberOfSolutionsArray[i] = {
-        number: i,
-        value: 'Solution: ' + i
-      };
+      this.numberOfSolutionsArray[i] = i;
     }
   }
 
@@ -113,17 +110,14 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
 
     let j = 0;
     for (let i = startOption; i <= endOption; i++) {
-      this.numberOfSolutionsArray[j] = {
-        number: i,
-        value: 'Solution: ' + i
-      };
+      this.numberOfSolutionsArray[j] = i;
       j++;
     }
   }
 
   onSlideChange(event) {
     this.limitSolutionsShown = !event.checked;
-    const dropdownValue: number = this.controlButtonsForm.get('solutionNumberDropdown').value;
+    const dropdownValue: number = +this.controlButtonsForm.get('solutionNumberDropdown').value;
 
     if (this.limitSolutionsShown) {
       this.generateLimitedSolutions(dropdownValue);
@@ -133,9 +127,8 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
     }
   }
   
-  //event value is custom from ng-select so no event.target.value
-  onLoadNewSolution(optionData) {
-    const solutionNumber = optionData.number;
+  onLoadNewSolutionMobile(solutionNumber: number) {
+    this.controlButtonsForm.value;
     this.bankCircleConnectorService.transferAllToCircle(solutionNumber);
   }
 
@@ -147,7 +140,7 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
     this.generateSolutions();
     //reset soln picker to default
     this.controlButtonsForm.patchValue({
-      solutionNumberDropdown: null,
+      solutionNumberDropdown: 'Solutions:',
       showAllSolutions: true
     });
   }

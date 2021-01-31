@@ -62,6 +62,9 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
       //containerSize accessed from pieceSizes in HTML
     });
 
+    //set placeholder value depending on ng-select or default select used
+    let solutionDropdownPlaceholder = this.determinePlaceholderValue();
+
     //note: the values of the toggle controls are inverted
     //they display opposite message of what's currently shown.
     //will be needed when saving user preferences into local storage
@@ -69,7 +72,7 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
       'patternNameDropdown': new FormControl("Planets"),
       'toggleLetters': new FormControl("Toggle Letters Off"),
       'showAllSolutions': new FormControl('true'),
-      'solutionNumberDropdown': new FormControl(),
+      'solutionNumberDropdown': new FormControl(solutionDropdownPlaceholder),
       'toggleSolutionsPanel': new FormControl("Reveal Solutions Panel")  //"{{displaySolutionsPanel ? 'Hide' : 'Reveal'}} Solutions Panel"
     });
 
@@ -96,11 +99,21 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
     const numberOfSolutions = this.solutionsGrabberService.startGeneratingSolutions();
     this.numberOfSolutions = numberOfSolutions;
     this.numberOfSolutionsArray = new Array(numberOfSolutions);
-    for (let i = 0; i < numberOfSolutions; i++) {
-      this.numberOfSolutionsArray[i] = {
-        number: i,
-        value: 'Solution: ' + i
-      };
+
+    //default select takes primitives 
+    //ng-select takes object to display diff value when selected
+    if (this.currentLayout === 'layout-vertical') {
+      for (let i = 0; i < numberOfSolutions; i++) {
+        this.numberOfSolutionsArray[i] = i;
+      }
+    }
+    else {
+      for (let i = 0; i < numberOfSolutions; i++) {
+        this.numberOfSolutionsArray[i] = {
+          number: i,
+          value: 'Solution: ' + i
+        };
+      }
     }
   }
 
@@ -123,19 +136,29 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
       endOption = dropdownValue + 5;
     }
 
+    //default select takes primitives 
+    //ng-select takes object to display diff value when selected
     let j = 0;
-    for (let i = startOption; i <= endOption; i++) {
-      this.numberOfSolutionsArray[j] = {
-        number: i,
-        value: 'Solution: ' + i
-      };
-      j++;
+    if (this.currentLayout === 'layout-vertical') {
+      for (let i = startOption; i <= endOption; i++) {
+        this.numberOfSolutionsArray[j] = i;
+        j++;
+      }
+    }
+    else {
+      for (let i = startOption; i <= endOption; i++) {
+        this.numberOfSolutionsArray[j] = {
+          number: i,
+          value: 'Solution: ' + i
+        };
+        j++;
+      }
     }
   }
 
   onSlideChange(event) {
     this.limitSolutionsShown = !event.checked;
-    const dropdownValue: number = this.controlButtonsForm.get('solutionNumberDropdown').value;
+    const dropdownValue: number = +this.controlButtonsForm.get('solutionNumberDropdown').value;
   
     if (this.limitSolutionsShown) {
       this.generateLimitedSolutions(dropdownValue);
@@ -151,15 +174,22 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
     this.bankCircleConnectorService.transferAllToCircle(solutionNumber);
   }
 
+  onLoadNewSolutionMobile(solutionNumber: number) {
+    this.controlButtonsForm.value;
+    this.bankCircleConnectorService.transferAllToCircle(solutionNumber);
+  }
+
   //event value is custom from ng-select so no event.target.value
   onLoadNewPattern(patternName) {
     this.solutionsGrabberService.changeCurrentPattern(patternName.toLowerCase());
     this.bankCircleConnectorService.transferAllToCircle();
     this.currentPattern = patternName;
     this.generateSolutions();
+
     //reset soln picker to placeholder text; slideToggle to show all
+    let solutionDropdownPlaceholder = this.determinePlaceholderValue();
     this.controlButtonsForm.patchValue({
-      solutionNumberDropdown: null,
+      solutionNumberDropdown: solutionDropdownPlaceholder,
       showAllSolutions: true
     });
   }
@@ -169,6 +199,18 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
     this.controlButtonsForm.patchValue({
       toggleSolutionsPanel: this.displaySolutionsPanel ? "Hide Solutions Panel" : "Reveal Solutions Panel",
     });
+  }
+
+  //set placeholder value depending on ng-select or default select used
+  determinePlaceholderValue() {
+    let solutionDropdownPlaceholder;
+    if (this.currentLayout === 'layout-vertical') {
+      solutionDropdownPlaceholder = 'Solutions:';
+    }
+    else {
+      solutionDropdownPlaceholder = null;
+    }
+    return solutionDropdownPlaceholder;
   }
 
   ngOnDestroy() {

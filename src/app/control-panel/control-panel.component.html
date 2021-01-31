@@ -8,18 +8,17 @@
       formControlName="toggleLetters">
     
     <div class="pattern-dropdown">
-      <ng-select 
-        class="custom-select" 
-        id="pattern-select" 
-        formControlName="patternNameDropdown"
-        (change)="onLoadNewPattern($event)"
-        [clearable]="false"
-        [searchable]="false">
-          <ng-option disabled>Patterns:</ng-option>
-          <ng-option value="Planets">Planets</ng-option>
-          <ng-option value="Egypt">Egypt</ng-option>
-          <ng-option value="Atlantis">Atlantis</ng-option>
-      </ng-select>
+      <!-- Mobile Alternative -->
+      <select 
+        id="pattern-select-mobile" 
+        class="select-mobile" 
+        (change)="onLoadNewPattern($event.target.value)"
+        formControlName="patternNameDropdown">
+          <option disabled>Patterns:</option>
+          <option>Planets</option>
+          <option>Egypt</option>
+          <option>Atlantis</option>
+      </select>
     </div>
   </div>
 
@@ -36,21 +35,15 @@
       Show all solutions
     </mat-slide-toggle>
   
-    <ng-select 
-      class="custom-select" 
-      id="soln-number" 
-      formControlName="solutionNumberDropdown"
-      [items]="numberOfSolutionsArray" 
-      bindLabel="number" 
-      bindValue="number"
-      (change)="onLoadNewSolution($event)"
-      placeholder="Solution #"
-      [clearable]="false"
-      [searchable]="false">
-        <ng-template ng-label-tmp let-item="item">
-          {{item.value}}
-        </ng-template>
-    </ng-select>
+    <!-- Mobile Alternative -->
+    <select 
+      id="soln-number-mobile" 
+      class="select-mobile" 
+      (change)="onLoadNewSolutionMobile(+$event.target.value)"
+      formControlName="solutionNumberDropdown">
+        <option disabled selected>Solutions:</option>
+        <option *ngFor="let solnNumber of numberOfSolutionsArray; let i = index">{{ solnNumber }}</option>
+    </select>
   
     <div class="solutions-remaining">
       <p *ngIf="remainingSolutions !== 1 || !allPiecesUsed">{{ remainingSolutions }} remaining {{ remainingSolutions === 1 ? 'solution' : 'solutions' }}</p>

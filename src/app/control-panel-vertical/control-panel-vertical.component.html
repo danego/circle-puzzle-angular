@@ -19,6 +19,7 @@
       </mat-slide-toggle>
     
       <ng-select 
+        *ngIf="currentLayout === 'layout-horizontal'"
         class="custom-select" 
         id="soln-number" 
         formControlName="solutionNumberDropdown"
@@ -33,6 +34,17 @@
             {{item.value}}
           </ng-template>
       </ng-select>
+
+      <!-- Mobile Alternative -->
+      <select 
+        *ngIf="currentLayout === 'layout-vertical'"
+        id="soln-number-mobile" 
+        class="select-mobile" 
+        (change)="onLoadNewSolutionMobile(+$event.target.value)"
+        formControlName="solutionNumberDropdown">
+          <option disabled selected>Solutions:</option>
+          <option *ngFor="let solnNumber of numberOfSolutionsArray; let i = index">{{ solnNumber }}</option>
+      </select>
     </div>
   
     <div class="solutions-remaining">
@@ -54,6 +66,7 @@
 
     <div class="pattern-dropdown">
       <ng-select 
+        *ngIf="currentLayout === 'layout-horizontal'"
         class="custom-select" 
         id="pattern-select" 
         formControlName="patternNameDropdown"
@@ -65,6 +78,19 @@
           <ng-option value="Egypt">Egypt</ng-option>
           <ng-option value="Atlantis">Atlantis</ng-option>
       </ng-select>
+
+      <!-- Mobile Alternative -->
+      <select 
+        *ngIf="currentLayout === 'layout-vertical'"
+        id="pattern-select-mobile" 
+        class="select-mobile" 
+        (change)="onLoadNewPattern($event.target.value)"
+        formControlName="patternNameDropdown">
+          <option disabled>Patterns:</option>
+          <option>Planets</option>
+          <option>Egypt</option>
+          <option>Atlantis</option>
+      </select>
     </div>
   </div>
 </section>
