@@ -21,6 +21,7 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
   currentSolutionNumber: number;
   currentPattern: string = 'Planets';
   displayColorLetters: boolean = true;
+  autoOpenEnabled: boolean = true;
 
   remainingSolutionsSub: Subscription;
   allPiecesUsedSub: Subscription;
@@ -56,6 +57,7 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
     this.controlButtonsForm = new FormGroup({
       'patternNameDropdown': new FormControl("Planets"),
       'toggleLetters': new FormControl("Toggle Letters Off"),
+      'autoOpenEnabled': new FormControl("Disable Auto Open"),
       'showAllSolutions': new FormControl(true),
       'solutionNumberDropdown': new FormControl('Solutions:'),
       'toggleSolutionsPanel': new FormControl("Reveal Solutions Panel")  //"{{displaySolutionsPanel ? 'Hide' : 'Reveal'}} Solutions Panel"
@@ -82,6 +84,15 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
     this.bankCircleConnectorService.toggleColorLetters(this.displayColorLetters);
     this.controlButtonsForm.get('toggleLetters').patchValue(
       this.displayColorLetters ? "Toggle Letters Off" : "Toggle Letters On"
+    );
+  }
+
+  //mobile only because of touch events
+  onToggleAutoOpen() {
+    this.autoOpenEnabled = !this.autoOpenEnabled;
+    this.bankCircleConnectorService.toggleAutoOpen(this.autoOpenEnabled);
+    this.controlButtonsForm.get('autoOpenEnabled').patchValue(
+      this.autoOpenEnabled ? "Disable Auto Open" : "Enable Auto Open"
     );
   }
 

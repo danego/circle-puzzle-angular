@@ -19,6 +19,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
   piecesBank2: any[];
   piecesBank3: any[];
   displayColorLetters: boolean = true;
+  autoOpenEnabled: boolean = true;
   fontSizeFactor: number;
   fontSizeForPieces: number;
   currentLayout: string;
@@ -51,6 +52,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
   isDragging: Subscription;
   droppedPiece: Subscription;
   toggleColorLetters: Subscription;
+  enableAutoOpen: Subscription;
   currentLayoutSub: Subscription;
   pieceSizesSub: Subscription;
 
@@ -91,9 +93,13 @@ export class PieceBankComponent implements OnInit, OnDestroy {
         this.displayBankThreeTemporary = false;
       }
 
+      //update bank heights when dragging stopped (catches dropped in circle cases)
       if (!dragData.enabled) {
         this.calculatePieceContainerHeight();
       }
+
+      //run onHover automatically for mobile & tablet screens
+      this.checkForAutoOpen(dragData);
     });
 
     this.droppedPiece = this.bankCircleConnectorService.pieceDroppedInCircle.subscribe((layer) => {
@@ -104,6 +110,11 @@ export class PieceBankComponent implements OnInit, OnDestroy {
     //turn on/off letters on span elements for pieces
     this.toggleColorLetters = this.bankCircleConnectorService.displayColorLetters.subscribe((lettersEnabled) => {
       this.displayColorLetters = lettersEnabled;
+    });
+
+    //for mobile (otherwise false) - turn on/off auto open to simulate onHover on isDragging
+    this.enableAutoOpen = this.bankCircleConnectorService.enableAutoOpen.subscribe(enabled => {
+      this.autoOpenEnabled = enabled;
     });
 
     //get current layout to apply vertical class directly on cdkDragPreview
@@ -261,6 +272,17 @@ export class PieceBankComponent implements OnInit, OnDestroy {
     this.checkToDisplayDragging();
   }
 
+  checkForAutoOpen(dragData) {
+    if (this.autoOpenEnabled && this.currentLayout !== 'layout-horizontal') {
+      if (dragData.enabled) {
+        this.onHoverOverBank(true);
+      }
+      else {
+        this.onHoverOverBank(false);
+      }
+    }
+  }
+
   calculatePieceContainerHeight(layer?: number) {
     //call for all three layers
     if (!layer) {
@@ -409,6 +431,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
     if (this.isDragging) this.isDragging.unsubscribe();
     if (this.droppedPiece) this.droppedPiece.unsubscribe();
     if (this.toggleColorLetters) this.toggleColorLetters.unsubscribe();
+    if (this.enableAutoOpen) this.enableAutoOpen.unsubscribe();
     if (this.currentLayoutSub) this.currentLayoutSub.unsubscribe();
     if (this.pieceSizesSub) this.pieceSizesSub.unsubscribe();
   }

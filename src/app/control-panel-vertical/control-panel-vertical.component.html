@@ -63,6 +63,12 @@
       type="button"
       (click)="onToggleColorLetters()"
       formControlName="toggleLetters">
+    
+    <input 
+      *ngIf="currentLayout === 'layout-vertical'"
+      type="button"
+      (click)="onToggleAutoOpen()"
+      formControlName="autoOpenEnabled">
 
     <div class="pattern-dropdown">
       <ng-select 

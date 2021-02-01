@@ -6,6 +6,12 @@
       type="button"
       (click)="onToggleColorLetters()"
       formControlName="toggleLetters">
+
+    <input 
+      type="button"
+      class="button-auto-open"
+      (click)="onToggleAutoOpen()"
+      formControlName="autoOpenEnabled">
     
     <div class="pattern-dropdown">
       <!-- Mobile Alternative -->
@@ -20,41 +26,41 @@
           <option>Atlantis</option>
       </select>
     </div>
-  </div>
 
-  
-  <div id="solutions" class="solutions" [ngStyle]="{'display': displaySolutionsPanel ? 'flex' : 'none'}">
-    <mat-slide-toggle 
-      disableRipple="true" 
-      labelPosition="before" 
-      [checked]="!limitSolutionsShown" 
-      (change)="onSlideChange($event)"
-      formControlName="showAllSolutions"
-      [ngClass]="!limitSolutionsShown ? 'all-solutions' : 'limited-solutions'"
-      *ngIf="currentPattern === 'Planets'">
-      Show all solutions
-    </mat-slide-toggle>
-  
-    <!-- Mobile Alternative -->
-    <select 
-      id="soln-number-mobile" 
-      class="select-mobile" 
-      (change)="onLoadNewSolutionMobile(+$event.target.value)"
-      formControlName="solutionNumberDropdown">
-        <option disabled selected>Solutions:</option>
-        <option *ngFor="let solnNumber of numberOfSolutionsArray; let i = index">{{ solnNumber }}</option>
-    </select>
-  
-    <div class="solutions-remaining">
-      <p *ngIf="remainingSolutions !== 1 || !allPiecesUsed">{{ remainingSolutions }} remaining {{ remainingSolutions === 1 ? 'solution' : 'solutions' }}</p>
-      <p *ngIf="remainingSolutions === 1 && allPiecesUsed">You found solution # {{ currentSolutionNumber }}</p>
+    <input 
+      type="button"
+      class="solutions-toggle" 
+      (click)="onToggleSolutionsPanel()"
+      formControlName="toggleSolutionsPanel">
+    
+    <div id="solutions" class="solutions" [ngStyle]="{'display': displaySolutionsPanel ? 'flex' : 'none'}">
+      <mat-slide-toggle 
+        disableRipple="true" 
+        labelPosition="before" 
+        [checked]="!limitSolutionsShown" 
+        (change)="onSlideChange($event)"
+        formControlName="showAllSolutions"
+        [ngClass]="!limitSolutionsShown ? 'all-solutions' : 'limited-solutions'"
+        *ngIf="currentPattern === 'Planets'">
+        Show all solutions
+      </mat-slide-toggle>
+    
+      <!-- Mobile Alternative -->
+      <select 
+        id="soln-number-mobile" 
+        class="select-mobile" 
+        (change)="onLoadNewSolutionMobile(+$event.target.value)"
+        formControlName="solutionNumberDropdown">
+          <option disabled selected>Solutions:</option>
+          <option *ngFor="let solnNumber of numberOfSolutionsArray; let i = index">{{ solnNumber }}</option>
+      </select>
+    
+      <div class="solutions-remaining">
+        <p *ngIf="remainingSolutions !== 1 || !allPiecesUsed">{{ remainingSolutions }} remaining {{ remainingSolutions === 1 ? 'solution' : 'solutions' }}</p>
+        <p *ngIf="remainingSolutions === 1 && allPiecesUsed">You found solution # {{ currentSolutionNumber }}</p>
+      </div>
     </div>
-  </div>
 
-  <input 
-    type="button"
-    class="solutions-toggle" 
-    (click)="onToggleSolutionsPanel()"
-    formControlName="toggleSolutionsPanel">
+  </div>
 
 </section>

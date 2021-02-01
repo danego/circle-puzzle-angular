@@ -6,6 +6,8 @@ section {
   padding: 10px 0px;
   background-color: whitesmoke; /*ivory*/
   border: 1px solid #222222;
+  border-radius: 30px;
+  box-shadow: 1px 1px rebeccapurple;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
@@ -45,13 +47,17 @@ button:focus, input:focus {
 }
 .button-container {
   flex-grow: 1;
-  justify-content: space-around;
   display: flex;
   flex-direction: row;
+  justify-content: space-evenly;
   align-items: center;
+  flex-wrap: wrap;
 }
 .button-container>* {
-  min-width: 130px;
+  min-width: 128px;
+}
+.button-auto-open {
+  min-width: 140px !important;
 }
 .pattern-dropdown {
   margin: 3px;
@@ -75,18 +81,14 @@ button:focus, input:focus {
 
 /* Solution Picker */
 .solutions-toggle {
-  min-width: 170px;
+  min-width: 170px !important;
   margin-right: 10px;
 }
-.solutions-toggle {
-  min-width: 180px;
-}
-
 
 .solutions {
   flex-grow: 2;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
 }
 .solutions>* {

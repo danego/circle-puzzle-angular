@@ -23,6 +23,7 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
   currentSolutionNumber: number;
   currentPattern: string = 'Planets';
   displayColorLetters: boolean = true;
+  autoOpenEnabled: boolean = true;
   pieceSizes: SizingDataInterface;
 
   remainingSolutionsSub: Subscription;
@@ -70,6 +71,7 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
     //will be needed when saving user preferences into local storage
     this.controlButtonsForm = new FormGroup({
       'patternNameDropdown': new FormControl("Planets"),
+      'autoOpenEnabled': new FormControl("Disable Auto Open"),
       'toggleLetters': new FormControl("Toggle Letters Off"),
       'showAllSolutions': new FormControl('true'),
       'solutionNumberDropdown': new FormControl(solutionDropdownPlaceholder),
@@ -97,6 +99,15 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
     this.bankCircleConnectorService.toggleColorLetters(this.displayColorLetters);
     this.controlButtonsForm.get('toggleLetters').patchValue(
       this.displayColorLetters ? "Toggle Letters Off" : "Toggle Letters On"
+    );
+  }
+
+  //mobile only because of touch events
+  onToggleAutoOpen() {
+    this.autoOpenEnabled = !this.autoOpenEnabled;
+    this.bankCircleConnectorService.toggleAutoOpen(this.autoOpenEnabled);
+    this.controlButtonsForm.get('autoOpenEnabled').patchValue(
+      this.autoOpenEnabled ? "Disable Auto Open" : "Enable Auto Open"
     );
   }
 

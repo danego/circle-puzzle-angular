@@ -17,6 +17,7 @@ export class BankCircleConnectorService {
   droppedPieceData = new Subject<{ layer: number, position: number, pieceId: number }>();
   pieceDroppedInCircle = new Subject<number>();
   displayColorLetters = new Subject<boolean>();
+  enableAutoOpen = new Subject<boolean>();
 
   constructor(private solutionsGrabberService: SolutionsGrabberService) {}
 
@@ -78,5 +79,9 @@ export class BankCircleConnectorService {
 
   toggleColorLetters(enabled: boolean) {
     this.displayColorLetters.next(enabled);
+  }
+
+  toggleAutoOpen(enabled: boolean) {
+    this.enableAutoOpen.next(enabled);
   }
 }
