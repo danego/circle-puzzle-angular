@@ -70,6 +70,13 @@
       (click)="onToggleAutoOpen()"
       formControlName="autoOpenEnabled">
 
+    <input 
+      *ngIf="currentLayout === 'layout-horizontal'"
+      type="button"
+      title="While dragging a piece, allows you to scroll to correct piece bank."
+      (click)="enableScrollZones()"
+      formControlName="scrollZonesEnabled">
+
     <div class="pattern-dropdown">
       <ng-select 
         *ngIf="currentLayout === 'layout-horizontal'"

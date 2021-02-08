@@ -1,64 +1,68 @@
-<section 
-  (mouseover)="onHoverOverBank(true)" (mouseleave)="onHoverOverBank(false)" 
-  [ngStyle]="{'font-size': fontSizeFactor + 'px', 'height': pieceSizes.containerSize + 'px', 'min-width': pieceSizes.minBankWidth + 'px'}"> <!--isScrolling-->
-
-  <!-- BANK ONE -->
-  <div 
-    class="dropdown dropdown-one" 
-    [ngStyle]="{'height': piecesDropdownHeight1}"
-    (click)="checkToDisplayStatic(1)">
-
-    <div class="drop-toggle">
-      <div>Layer One Pieces</div>
-      <svg *ngIf="!displayBankOne" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
-      <svg *ngIf="displayBankOne" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
-    </div>
-
+<div class="scroll-bank-container">
+  <div #scrollTop class="scroll-top">
     <div 
-      id="piece-bank-one"
-      class="droplist"
-      [ngClass]="{'droplist-open': displayBankOne}"
-      [ngStyle]="{'cursor': checkIsDraggingForBank(1), 'height': piecesDroplistHeight1, 'width': pieceSizes.pieceOne.bankWidth + 'em'}"
-      stopPropo
-      cdkDropList
-      cdkDropListSortingDisabled
-      [cdkDropListConnectedTo]="['dl-one-0', 'dl-one-1', 'dl-one-2', 'dl-one-3', 'dl-one-4', 'dl-one-5', 'dl-one-6', 'dl-one-7', 'dl-one-8', 'dl-one-9']"
-      [cdkDropListData]="piecesBank1"
-      (cdkDropListDropped)="dropped($event)">
-      
-      <div [ngStyle]="{'display': displayBankOne || displayBankOneTemporary ? 'block': 'none'}">
-        <div class="bank-pieces bank-pieces-one" [ngStyle]="{'width': pieceSizes.pieceOne.bankWidth + 'em'}"> <!-- [ngClass]="{'bank-pieces-open-one': isDraggingIncoming1 && isHoveringOverBank}" -->
+      class="scroll-visual" 
+      *ngIf="checkToEnableForScrollZones('top')"
+      [ngStyle]="{'opacity': checkToFullyDisplayScrollZones(section, 'top')}"
+      (mouseenter)="onHoverToScroll(section)">
+      Scroll Up
+    </div>
+  </div>
+  <div #scrollBottom class="scroll-bottom">
+    <div 
+      class="scroll-visual" 
+      *ngIf="checkToEnableForScrollZones('bottom')"
+      [ngStyle]="{'opacity': checkToFullyDisplayScrollZones(section, 'bottom')}"
+      (mouseenter)="onHoverToScroll(section)">
+      Scroll Down
+    </div>
+  </div>
 
-          <!-- necessary instead of padding bc this bank is rows AND columns -->
-          <div *ngIf="isDraggingIncoming1 && isHoveringOverBank" [ngStyle]="{'width': pieceSizes.pieceOne.width + 'em', 'height': pieceSizes.pieceOne.height + 'em'}"></div>
+  <section 
+    #section
+    (mouseenter)="onHoverOverBank(true)" (mouseleave)="onHoverOverBank(false)" 
+    [ngStyle]="{'font-size': fontSizeFactor + 'px', 'height': pieceSizes.containerSize + 'px', 'min-width': pieceSizes.minBankWidth + 'px'}"> <!--isScrolling-->
 
-          <div 
-            class="piece piece-one piece-bank" 
-            *ngFor="let piece of piecesBank1; let i = index"
-            [ngStyle]="{'cursor': !isDragging2 && !isDragging3 ? 'grab' : 'not-allowed', 'width': pieceSizes.pieceOne.width + 'em', 'height': pieceSizes.pieceOne.height + 'em'}"
-            cdkDrag
-            (cdkDragStarted)="dragStarted(1)"
-            (cdkDragEnded)="dragEnded(1)"> 
 
-            <div *ngIf="displayColorLetters; else noLetterOne">
-              <span [ngClass]="applyCorrectColorClass(piece.top)">
-                <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
-                  {{ piece.top }}
-                </div>
-              </span>
-              <br>
-              <span [ngClass]="applyCorrectColorClass(piece.left)">
-                <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
-                  {{ piece.left }}
-                </div>
-              </span>
-              <span [ngClass]="applyCorrectColorClass(piece.right)">
-                <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
-                  {{ piece.right }}
-                </div>
-              </span>
-              
-              <div *cdkDragPreview class="piece piece-one piece-bank" [ngClass]="currentLayout" [ngStyle]="{'font-size': fontSizeFactor + 'px'}">
+    <!-- BANK ONE -->
+    <div 
+      class="dropdown dropdown-one" 
+      [ngStyle]="{'height': piecesDropdownHeight1}"
+      (click)="checkToDisplayStatic(1)">
+
+      <div class="drop-toggle">
+        <div>Layer One Pieces</div>
+        <svg *ngIf="!displayBankOne" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+        <svg *ngIf="displayBankOne" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
+      </div>
+
+      <div 
+        id="piece-bank-one"
+        class="droplist"
+        [ngClass]="{'droplist-open': displayBankOne}"
+        [ngStyle]="{'cursor': checkIsDraggingForBank(1), 'height': piecesDroplistHeight1, 'width': pieceSizes.pieceOne.bankWidth + 'em'}"
+        stopPropo
+        cdkDropList
+        cdkDropListSortingDisabled
+        [cdkDropListConnectedTo]="['dl-one-0', 'dl-one-1', 'dl-one-2', 'dl-one-3', 'dl-one-4', 'dl-one-5', 'dl-one-6', 'dl-one-7', 'dl-one-8', 'dl-one-9']"
+        [cdkDropListData]="piecesBank1"
+        (cdkDropListDropped)="dropped($event)">
+        
+        <div [ngStyle]="{'display': displayBankOne || displayBankOneTemporary ? 'block': 'none'}">
+          <div class="bank-pieces bank-pieces-one" [ngStyle]="{'width': pieceSizes.pieceOne.bankWidth + 'em'}"> <!-- [ngClass]="{'bank-pieces-open-one': isDraggingIncoming1 && isHoveringOverBank}" -->
+
+            <!-- necessary instead of padding bc this bank is rows AND columns -->
+            <div *ngIf="isDraggingIncoming1 && isHoveringOverBank" [ngStyle]="{'width': pieceSizes.pieceOne.width + 'em', 'height': pieceSizes.pieceOne.height + 'em'}"></div>
+
+            <div 
+              class="piece piece-one piece-bank" 
+              *ngFor="let piece of piecesBank1; let i = index"
+              [ngStyle]="{'cursor': !isDragging2 && !isDragging3 ? 'grab' : 'not-allowed', 'width': pieceSizes.pieceOne.width + 'em', 'height': pieceSizes.pieceOne.height + 'em'}"
+              cdkDrag
+              (cdkDragStarted)="dragStarted(1)"
+              (cdkDragEnded)="dragEnded(1)"> 
+
+              <div *ngIf="displayColorLetters; else noLetterOne">
                 <span [ngClass]="applyCorrectColorClass(piece.top)">
                   <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                     {{ piece.top }}
@@ -75,86 +79,86 @@
                     {{ piece.right }}
                   </div>
                 </span>
+                
+                <div *cdkDragPreview class="piece piece-one piece-bank" [ngClass]="currentLayout" [ngStyle]="{'font-size': fontSizeFactor + 'px'}">
+                  <span [ngClass]="applyCorrectColorClass(piece.top)">
+                    <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                      {{ piece.top }}
+                    </div>
+                  </span>
+                  <br>
+                  <span [ngClass]="applyCorrectColorClass(piece.left)">
+                    <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                      {{ piece.left }}
+                    </div>
+                  </span>
+                  <span [ngClass]="applyCorrectColorClass(piece.right)">
+                    <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                      {{ piece.right }}
+                    </div>
+                  </span>
+                </div>
               </div>
-            </div>
 
-            <ng-template #noLetterOne>
-              <span [ngClass]="applyCorrectColorClass(piece.top)"></span>
-              <br>
-              <span [ngClass]="applyCorrectColorClass(piece.left)"></span>
-              <span [ngClass]="applyCorrectColorClass(piece.right)"></span>
-
-              <div *cdkDragPreview class="piece piece-one piece-bank" [ngClass]="currentLayout" [ngStyle]="{'font-size': fontSizeFactor + 'px'}">
+              <ng-template #noLetterOne>
                 <span [ngClass]="applyCorrectColorClass(piece.top)"></span>
                 <br>
                 <span [ngClass]="applyCorrectColorClass(piece.left)"></span>
                 <span [ngClass]="applyCorrectColorClass(piece.right)"></span>
-              </div>
-            </ng-template>        
 
+                <div *cdkDragPreview class="piece piece-one piece-bank" [ngClass]="currentLayout" [ngStyle]="{'font-size': fontSizeFactor + 'px'}">
+                  <span [ngClass]="applyCorrectColorClass(piece.top)"></span>
+                  <br>
+                  <span [ngClass]="applyCorrectColorClass(piece.left)"></span>
+                  <span [ngClass]="applyCorrectColorClass(piece.right)"></span>
+                </div>
+              </ng-template>        
+
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
 
-  <!-- BANK TWO -->
-  <div 
-    class="dropdown dropdown-two" 
-    [ngStyle]="{'height': piecesDropdownHeight2}"
-    (click)="checkToDisplayStatic(2)">
-
-    <div class="drop-toggle">
-      <div>Layer Two Pieces</div>
-      <svg *ngIf="!displayBankTwo" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
-      <svg *ngIf="displayBankTwo" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
-    </div>
-
+    <!-- BANK TWO -->
     <div 
-      id="piece-bank-two"
-      class="droplist"
-      [ngClass]="{'droplist-open': displayBankTwo}" 
-      [ngStyle]="{'cursor': checkIsDraggingForBank(2), 'height': piecesDroplistHeight2, 'width': pieceSizes.pieceTwo.bankWidth + 'em'}"
-      stopPropo
-      cdkDropList
-      cdkDropListSortingDisabled
-      [cdkDropListConnectedTo]="['dl-two-0', 'dl-two-1', 'dl-two-2', 'dl-two-3', 'dl-two-4', 'dl-two-5', 'dl-two-6', 'dl-two-7', 'dl-two-8', 'dl-two-9']"
-      [cdkDropListData]="piecesBank2"
-      (cdkDropListDropped)="dropped($event)">
+      class="dropdown dropdown-two" 
+      [ngStyle]="{'height': piecesDropdownHeight2}"
+      (click)="checkToDisplayStatic(2)">
 
-      <div [ngStyle]="{'display': displayBankTwo || displayBankTwoTemporary ? 'block': 'none'}">
-        <div class="bank-pieces bank-pieces-two" [ngStyle]="{'width': pieceSizes.pieceTwo.bankWidth + 'em'}">
+      <div class="drop-toggle">
+        <div>Layer Two Pieces</div>
+        <svg *ngIf="!displayBankTwo" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+        <svg *ngIf="displayBankTwo" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
+      </div>
 
-          <div *ngIf="isDraggingIncoming2 && isHoveringOverBank" [ngStyle]="{'width': pieceSizes.pieceTwo.width + 'em', 'height': pieceSizes.pieceTwo.height + 'em'}"></div>
-          
-          <div 
-            class="piece piece-two piece-bank" 
-            *ngFor="let piece of piecesBank2; let i = index"
-            [ngStyle]="{'cursor': !isDragging1 && !isDragging3 ? 'grab' : 'not-allowed', 'width': pieceSizes.pieceTwo.width + 'em', 'height': pieceSizes.pieceTwo.height + 'em'}"
-            cdkDrag
-            (cdkDragStarted)="dragStarted(2)"
-            (cdkDragEnded)="dragEnded(2)"> 
+      <div 
+        id="piece-bank-two"
+        class="droplist"
+        [ngClass]="{'droplist-open': displayBankTwo}" 
+        [ngStyle]="{'cursor': checkIsDraggingForBank(2), 'height': piecesDroplistHeight2, 'width': pieceSizes.pieceTwo.bankWidth + 'em'}"
+        stopPropo
+        cdkDropList
+        cdkDropListSortingDisabled
+        [cdkDropListConnectedTo]="['dl-two-0', 'dl-two-1', 'dl-two-2', 'dl-two-3', 'dl-two-4', 'dl-two-5', 'dl-two-6', 'dl-two-7', 'dl-two-8', 'dl-two-9']"
+        [cdkDropListData]="piecesBank2"
+        (cdkDropListDropped)="dropped($event)">
 
-            <div *ngIf="displayColorLetters; else noLetterTwo">
-              <span [ngClass]="applyCorrectColorClass(piece.left)">
-                <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
-                  {{ piece.left }}
-                </div>
-              </span>
-              <span [ngClass]="applyCorrectColorClass(piece.right)">
-                <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
-                  {{ piece.right }}
-                </div>
-              </span>
-              <br>
-              <span [ngClass]="applyCorrectColorClass(piece.bottom)">
-                <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
-                  {{ piece.bottom }}
-                </div>
-              </span>
-              
-              <div *cdkDragPreview class="piece piece-two piece-bank" [ngStyle]="{'font-size': fontSizeFactor + 'px'}" [ngClass]="currentLayout">
+        <div [ngStyle]="{'display': displayBankTwo || displayBankTwoTemporary ? 'block': 'none'}">
+          <div class="bank-pieces bank-pieces-two" [ngStyle]="{'width': pieceSizes.pieceTwo.bankWidth + 'em'}">
+
+            <div *ngIf="isDraggingIncoming2 && isHoveringOverBank" [ngStyle]="{'width': pieceSizes.pieceTwo.width + 'em', 'height': pieceSizes.pieceTwo.height + 'em'}"></div>
+            
+            <div 
+              class="piece piece-two piece-bank" 
+              *ngFor="let piece of piecesBank2; let i = index"
+              [ngStyle]="{'cursor': !isDragging1 && !isDragging3 ? 'grab' : 'not-allowed', 'width': pieceSizes.pieceTwo.width + 'em', 'height': pieceSizes.pieceTwo.height + 'em'}"
+              cdkDrag
+              (cdkDragStarted)="dragStarted(2)"
+              (cdkDragEnded)="dragEnded(2)"> 
+
+              <div *ngIf="displayColorLetters; else noLetterTwo">
                 <span [ngClass]="applyCorrectColorClass(piece.left)">
                   <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
                     {{ piece.left }}
@@ -171,81 +175,85 @@
                     {{ piece.bottom }}
                   </div>
                 </span>
+                
+                <div *cdkDragPreview class="piece piece-two piece-bank" [ngStyle]="{'font-size': fontSizeFactor + 'px'}" [ngClass]="currentLayout">
+                  <span [ngClass]="applyCorrectColorClass(piece.left)">
+                    <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                      {{ piece.left }}
+                    </div>
+                  </span>
+                  <span [ngClass]="applyCorrectColorClass(piece.right)">
+                    <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                      {{ piece.right }}
+                    </div>
+                  </span>
+                  <br>
+                  <span [ngClass]="applyCorrectColorClass(piece.bottom)">
+                    <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                      {{ piece.bottom }}
+                    </div>
+                  </span>
+                </div>
               </div>
-            </div>
 
-            <ng-template #noLetterTwo>
-              <span [ngClass]="applyCorrectColorClass(piece.left)"></span>
-              <span [ngClass]="applyCorrectColorClass(piece.right)"></span>
-              <br>
-              <span [ngClass]="applyCorrectColorClass(piece.bottom)"></span>
-
-              <div *cdkDragPreview class="piece piece-two piece-bank" [ngStyle]="{'font-size': fontSizeFactor + 'px'}" [ngClass]="currentLayout">
+              <ng-template #noLetterTwo>
                 <span [ngClass]="applyCorrectColorClass(piece.left)"></span>
                 <span [ngClass]="applyCorrectColorClass(piece.right)"></span>
                 <br>
                 <span [ngClass]="applyCorrectColorClass(piece.bottom)"></span>
-              </div>
-            </ng-template>
 
+                <div *cdkDragPreview class="piece piece-two piece-bank" [ngStyle]="{'font-size': fontSizeFactor + 'px'}" [ngClass]="currentLayout">
+                  <span [ngClass]="applyCorrectColorClass(piece.left)"></span>
+                  <span [ngClass]="applyCorrectColorClass(piece.right)"></span>
+                  <br>
+                  <span [ngClass]="applyCorrectColorClass(piece.bottom)"></span>
+                </div>
+              </ng-template>
+
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- BANK THREE -->
-  <div 
-    class="dropdown dropdown-three"
-    [ngStyle]="{'height': piecesDropdownHeight3}"
-    (click)="checkToDisplayStatic(3)">
-
-    <div class="drop-toggle">
-      <div style="color: white">Layer Three Pieces</div>
-      <svg *ngIf="!displayBankThree" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" fill="white" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
-      <svg *ngIf="displayBankThree" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" fill="white" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
-    </div>
-
+    <!-- BANK THREE -->
     <div 
-      id="piece-bank-three"
-      class="droplist"
-      [ngClass]="{'droplist-open': displayBankThree}" 
-      [ngStyle]="{'cursor': checkIsDraggingForBank(3), 'height': piecesDroplistHeight3, 'width': pieceSizes.pieceThree.bankWidth + 'em'}"
-      cdkDropList
-      stopPropo
-      cdkDropListSortingDisabled
-      [cdkDropListConnectedTo]="['dl-three-0', 'dl-three-1', 'dl-three-2', 'dl-three-3', 'dl-three-4']"
-      [cdkDropListData]="piecesBank3"
-      (cdkDropListDropped)="dropped($event)">
+      class="dropdown dropdown-three"
+      [ngStyle]="{'height': piecesDropdownHeight3}"
+      (click)="checkToDisplayStatic(3)">
 
-      <div [ngStyle]="{'display': displayBankThree || displayBankThreeTemporary ? 'block': 'none'}">
-        <div class="bank-pieces bank-pieces-three" [ngStyle]="{'width': pieceSizes.pieceThree.bankWidth + 'em'}">
-          
-          <div *ngIf="isDraggingIncoming3 && isHoveringOverBank" [ngStyle]="{'width': pieceSizes.pieceThree.width + 'em', 'height': pieceSizes.pieceThree.height + 'em'}"></div>
+      <div class="drop-toggle">
+        <div style="color: white">Layer Three Pieces</div>
+        <svg *ngIf="!displayBankThree" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" fill="white" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+        <svg *ngIf="displayBankThree" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" fill="white" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
+      </div>
 
-          <div 
-            class="piece piece-three piece-bank" 
-            *ngFor="let piece of piecesBank3; let i = index"
-            [ngStyle]="{'cursor': !isDragging1 && !isDragging2 ? 'grab' : 'not-allowed', 'width': pieceSizes.pieceThree.width + 'em', 'height': pieceSizes.pieceThree.height + 'em'}"
-            cdkDrag
-            (cdkDragStarted)="dragStarted(3)"
-            (cdkDragEnded)="dragEnded(3)"> 
+      <div 
+        id="piece-bank-three"
+        class="droplist"
+        [ngClass]="{'droplist-open': displayBankThree}" 
+        [ngStyle]="{'cursor': checkIsDraggingForBank(3), 'height': piecesDroplistHeight3, 'width': pieceSizes.pieceThree.bankWidth + 'em'}"
+        cdkDropList
+        stopPropo
+        cdkDropListSortingDisabled
+        [cdkDropListConnectedTo]="['dl-three-0', 'dl-three-1', 'dl-three-2', 'dl-three-3', 'dl-three-4']"
+        [cdkDropListData]="piecesBank3"
+        (cdkDropListDropped)="dropped($event)">
 
-            <div *ngIf="displayColorLetters; else noLetterThree">
-              <div class="piece-three-container">
-                <span [ngClass]="applyCorrectColorClass(piece.left)">
-                  <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
-                    {{ piece.left }}
-                  </div>
-                </span>
-                <span [ngClass]="applyCorrectColorClass(piece.right)">
-                  <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
-                    {{ piece.right }}
-                  </div>
-                </span>
-              </div>
-              
-              <div *cdkDragPreview class="piece piece-three piece-bank" [ngClass]="currentLayout" [ngStyle]="{'font-size': fontSizeFactor + 'px'}">
+        <div [ngStyle]="{'display': displayBankThree || displayBankThreeTemporary ? 'block': 'none'}">
+          <div class="bank-pieces bank-pieces-three" [ngStyle]="{'width': pieceSizes.pieceThree.bankWidth + 'em'}">
+            
+            <div *ngIf="isDraggingIncoming3 && isHoveringOverBank" [ngStyle]="{'width': pieceSizes.pieceThree.width + 'em', 'height': pieceSizes.pieceThree.height + 'em'}"></div>
+
+            <div 
+              class="piece piece-three piece-bank" 
+              *ngFor="let piece of piecesBank3; let i = index"
+              [ngStyle]="{'cursor': !isDragging1 && !isDragging2 ? 'grab' : 'not-allowed', 'width': pieceSizes.pieceThree.width + 'em', 'height': pieceSizes.pieceThree.height + 'em'}"
+              cdkDrag
+              (cdkDragStarted)="dragStarted(3)"
+              (cdkDragEnded)="dragEnded(3)"> 
+
+              <div *ngIf="displayColorLetters; else noLetterThree">
                 <div class="piece-three-container">
                   <span [ngClass]="applyCorrectColorClass(piece.left)">
                     <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
@@ -258,27 +266,42 @@
                     </div>
                   </span>
                 </div>
+                
+                <div *cdkDragPreview class="piece piece-three piece-bank" [ngClass]="currentLayout" [ngStyle]="{'font-size': fontSizeFactor + 'px'}">
+                  <div class="piece-three-container">
+                    <span [ngClass]="applyCorrectColorClass(piece.left)">
+                      <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                        {{ piece.left }}
+                      </div>
+                    </span>
+                    <span [ngClass]="applyCorrectColorClass(piece.right)">
+                      <div [ngStyle]="{'font-size': fontSizeForPieces + 'px'}">
+                        {{ piece.right }}
+                      </div>
+                    </span>
+                  </div>
+                </div>
               </div>
-            </div>
 
-            <ng-template #noLetterThree>
-              <div class="piece-three-container">
-                <span [ngClass]="applyCorrectColorClass(piece.left)"></span>
-                <span [ngClass]="applyCorrectColorClass(piece.right)"></span>
-              </div>
-
-              <div *cdkDragPreview class="piece piece-three piece-bank" [ngClass]="currentLayout" [ngStyle]="{'font-size': fontSizeFactor + 'px'}">
-                <div class="piece-three-container">                  
+              <ng-template #noLetterThree>
+                <div class="piece-three-container">
                   <span [ngClass]="applyCorrectColorClass(piece.left)"></span>
                   <span [ngClass]="applyCorrectColorClass(piece.right)"></span>
                 </div>
-              </div>
-            </ng-template>
 
+                <div *cdkDragPreview class="piece piece-three piece-bank" [ngClass]="currentLayout" [ngStyle]="{'font-size': fontSizeFactor + 'px'}">
+                  <div class="piece-three-container">                  
+                    <span [ngClass]="applyCorrectColorClass(piece.left)"></span>
+                    <span [ngClass]="applyCorrectColorClass(piece.right)"></span>
+                  </div>
+                </div>
+              </ng-template>
+
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- END OF BANK -->
-</section>
+    <!-- END OF BANK -->
+  </section>
+</div>

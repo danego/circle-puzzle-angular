@@ -20,6 +20,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
   piecesBank3: any[];
   displayColorLetters: boolean = true;
   autoOpenEnabled: boolean = true;
+  scrollZonesEnabled: boolean = true;
   fontSizeFactor: number;
   fontSizeForPieces: number;
   currentLayout: string;
@@ -33,6 +34,8 @@ export class PieceBankComponent implements OnInit, OnDestroy {
   isDraggingIncoming2: boolean = false;
   isDraggingIncoming3: boolean = false;
   isHoveringOverBank: boolean = false;
+  //closured function for after drop
+  scrollBack;
 
   displayBankOne: boolean = false;
   displayBankTwo: boolean = false;
@@ -53,6 +56,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
   droppedPiece: Subscription;
   toggleColorLetters: Subscription;
   enableAutoOpen: Subscription;
+  scrollZonesEnabledSub: Subscription;
   currentLayoutSub: Subscription;
   pieceSizesSub: Subscription;
 
@@ -94,8 +98,14 @@ export class PieceBankComponent implements OnInit, OnDestroy {
       }
 
       //update bank heights when dragging stopped (catches dropped in circle cases)
+      //and scroll back & clear
       if (!dragData.enabled) {
         this.calculatePieceContainerHeight();
+        //check to scroll back
+        if (this.scrollBack) {
+          this.scrollBack();
+          this.scrollBack = null;
+        }
       }
 
       //run onHover automatically for mobile & tablet screens
@@ -115,6 +125,11 @@ export class PieceBankComponent implements OnInit, OnDestroy {
     //for mobile (otherwise false) - turn on/off auto open to simulate onHover on isDragging
     this.enableAutoOpen = this.bankCircleConnectorService.enableAutoOpen.subscribe(enabled => {
       this.autoOpenEnabled = enabled;
+    });
+
+    //for laptop and up only - turn on/off scroll zones to scroll while dragging a piece
+    this.scrollZonesEnabledSub = this.bankCircleConnectorService.scrollZonesEnabled.subscribe(enabled => {
+      this.scrollZonesEnabled = enabled;
     });
 
     //get current layout to apply vertical class directly on cdkDragPreview
@@ -153,6 +168,12 @@ export class PieceBankComponent implements OnInit, OnDestroy {
     );
 
     this.calculatePieceContainerHeight();
+
+    //check to scroll back
+    if (this.scrollBack) {
+      this.scrollBack();
+      this.scrollBack = null;
+    }
   }
 
   updatePiecesByIdTracker(event: CdkDragDrop<string[]>) {
@@ -426,12 +447,121 @@ export class PieceBankComponent implements OnInit, OnDestroy {
     return className;
   }
 
+  //ngIf condition for scroll zones
+  checkToEnableForScrollZones(scrollZoneName: string) {
+    if (this.currentLayout !== 'layout-horizontal' || !this.scrollZonesEnabled) return false;
+
+    //top zone not shown for layer 3 pieces
+    if (scrollZoneName === 'top') {
+      if (this.isDraggingIncoming3) return false;
+      else if (this.isDraggingIncoming1 || this.isDraggingIncoming2) return true;
+    }
+    //bottom zone not shown for layer 1 pieces
+    else {
+      if (this.isDraggingIncoming1) return false;
+      else if (this.isDraggingIncoming2 || this.isDraggingIncoming3) return true;
+    }
+    return false;
+  }
+
+  //checks to display and returns opacity value of either 0 or 1
+  checkToFullyDisplayScrollZones(element, scrollZoneName: string) {
+    if (
+      this.isHoveringOverBank
+      && (this.isDraggingIncoming1 || this.isDraggingIncoming2 || this.isDraggingIncoming3) 
+      && element.scrollHeight > this.pieceSizes.containerSize) {
+
+        const isPositionedData = this.checkIsAlreadyPositioned(element);
+        //do top/bottom specific checks
+        if (scrollZoneName === 'top' && isPositionedData.isAtTop) {
+          return '0';
+        }
+        if (scrollZoneName === 'bottom' && isPositionedData.isAtBottom) {
+          return '0';
+        } 
+        return '1';
+    }
+    return '0';
+  }
+
+  //called when entering scroll zone
+  onHoverToScroll(element) {
+    //scroll to correct spot
+    const scrollToPosition = this.calculateCorrectScrollDestination(element.scrollHeight);
+    element.scrollTo({
+      top: scrollToPosition,
+      left: 100,
+      behavior: 'smooth'
+    });
+
+    //set up closured function for dropped()
+    const startScrollPosition = element.scrollTop;
+    this.scrollBack = () => {
+      element.scrollTo({
+        top: startScrollPosition,
+        left: 100,
+        behavior: 'smooth'
+      });
+    };
+  }
+
+  calculateCorrectScrollDestination(scrollHeight: number): number {
+    //call to calculate correct dropdown height (bc of incoming piece)
+    this.onHoverOverBank(true);
+
+    const paddingValue = 85;
+    const heightDropdownOne = Math.floor(+this.piecesDroplistHeight1.replace(/px/, '')) + paddingValue;
+    const heightDropdownTwo = Math.floor(+this.piecesDroplistHeight2.replace(/px/, '')) + paddingValue;
+
+    let scrollToPosition;
+    if (this.isDraggingIncoming1) scrollToPosition = 0;
+    else if (this.isDraggingIncoming2) scrollToPosition = heightDropdownOne - (this.pieceSizes.containerSize - heightDropdownTwo);
+    else scrollToPosition = heightDropdownOne + heightDropdownTwo;
+
+    //check for max
+    const maxScrollPosition = scrollHeight - this.pieceSizes.containerSize -5;
+    if (scrollToPosition > maxScrollPosition) scrollToPosition = maxScrollPosition;
+    return scrollToPosition;
+  }
+
+  //used to display top/bottom scroll zones only if applicable
+  checkIsAlreadyPositioned(element) {
+    let positionData = {
+      isAtTop: true,
+      isAtBottom: true
+    };
+    const scrollToPosition = this.calculateCorrectScrollDestination(element.scrollHeight);
+
+    const currentCorrectScrollDelta = element.scrollTop - scrollToPosition;
+    //how many px off ideal/correct is acceptable
+    let acceptableNoScrollRange;
+    if (this.isDraggingIncoming1) acceptableNoScrollRange = 15;
+    else if (this.isDraggingIncoming2) acceptableNoScrollRange = 75;
+    else acceptableNoScrollRange = 50;
+
+    //display top only
+    if (currentCorrectScrollDelta >= 0) {
+      //already in place
+      if (currentCorrectScrollDelta <= acceptableNoScrollRange) positionData.isAtTop = true;
+      else positionData.isAtTop = false;
+    }
+    //display bottom only
+    else {
+      //already in place
+      if (currentCorrectScrollDelta >= -acceptableNoScrollRange) positionData.isAtBottom = true;
+      else positionData.isAtBottom = false;
+    }
+
+    return positionData;
+  }
+
   ngOnDestroy() {
     if (this.moveAllPieces) this.moveAllPieces.unsubscribe();
     if (this.isDragging) this.isDragging.unsubscribe();
     if (this.droppedPiece) this.droppedPiece.unsubscribe();
     if (this.toggleColorLetters) this.toggleColorLetters.unsubscribe();
     if (this.enableAutoOpen) this.enableAutoOpen.unsubscribe();
+    if (this.scrollZonesEnabledSub) this.scrollZonesEnabledSub.unsubscribe();
     if (this.currentLayoutSub) this.currentLayoutSub.unsubscribe();
     if (this.pieceSizesSub) this.pieceSizesSub.unsubscribe();
   }

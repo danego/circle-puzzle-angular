@@ -18,6 +18,7 @@ export class BankCircleConnectorService {
   pieceDroppedInCircle = new Subject<number>();
   displayColorLetters = new Subject<boolean>();
   enableAutoOpen = new Subject<boolean>();
+  scrollZonesEnabled = new Subject<boolean>();
 
   constructor(private solutionsGrabberService: SolutionsGrabberService) {}
 
@@ -83,5 +84,9 @@ export class BankCircleConnectorService {
 
   toggleAutoOpen(enabled: boolean) {
     this.enableAutoOpen.next(enabled);
+  }
+
+  toggleScrollZones(enabled: boolean) {
+    this.scrollZonesEnabled.next(enabled);
   }
 }

@@ -58,7 +58,7 @@ button:focus, input:focus {
 }
 @media (min-width: 901px) {
   button, input {
-    min-width: 130px;
+    min-width: 140px;
   }
 }
 .pattern-dropdown {

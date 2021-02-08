@@ -24,6 +24,7 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
   currentPattern: string = 'Planets';
   displayColorLetters: boolean = true;
   autoOpenEnabled: boolean = true;
+  scrollZonesEnabled: boolean = true;
   pieceSizes: SizingDataInterface;
 
   remainingSolutionsSub: Subscription;
@@ -72,6 +73,7 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
     this.controlButtonsForm = new FormGroup({
       'patternNameDropdown': new FormControl("Planets"),
       'autoOpenEnabled': new FormControl("Disable Auto Open"),
+      'scrollZonesEnabled': new FormControl("Hide Scroll Zones"),
       'toggleLetters': new FormControl("Toggle Letters Off"),
       'showAllSolutions': new FormControl('true'),
       'solutionNumberDropdown': new FormControl(solutionDropdownPlaceholder),
@@ -110,6 +112,15 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
       this.autoOpenEnabled ? "Disable Auto Open" : "Enable Auto Open"
     );
   }
+
+  enableScrollZones() {
+    this.scrollZonesEnabled = !this.scrollZonesEnabled;
+    this.bankCircleConnectorService.toggleScrollZones(this.scrollZonesEnabled);
+    this.controlButtonsForm.get('scrollZonesEnabled').patchValue(
+      this.scrollZonesEnabled ? "Hide Scroll Zones" : "Show Scroll Zones"
+    );
+  }
+  
 
   generateSolutions() {
     const numberOfSolutions = this.solutionsGrabberService.startGeneratingSolutions();
