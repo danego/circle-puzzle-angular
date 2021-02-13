@@ -19,6 +19,7 @@ export class SolutionsGrabberService {
 
   allPiecesUsedSubject = new Subject<boolean>();
   currentSolutionNumber = new Subject<number>();
+  currentPatternSubject = new Subject<string>();
 
 
   constructor(
@@ -93,6 +94,9 @@ export class SolutionsGrabberService {
     this.startGeneratingSolutions(pattern);
     this.setupPieceIdsEmpty();
     this.computeRemainingSolutions(this._currentSolutionById);
+
+    //emit for header style changes
+    this.currentPatternSubject.next(pattern);
   }
 
   moveAllPieces(moveType: string, solutionNumber?: number) {

@@ -1,20 +1,14 @@
 <main>
-  <h1><em>Concentra</em> Puzzle Solver</h1>
+  <div class="header" [ngClass]="currentPattern">
+    <h1><em>Concentra</em> Puzzle Solver</h1>
+    <div class="header-after"></div>
+  </div>
 
   <article [ngClass]="currentLayout" [ngStyle]="{'height': generateHeightBasedOnLayout()}">
 
-    <control-panel *ngIf="currentLayout === 'layout-mixed'"></control-panel>
-    
-
-    <div *ngIf="displayControls" (click)="displayControls = !displayControls"> <!--ngIf for mobile-->
-      <span>Main Menu</span>
-      <svg  
-        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rebeccapurple" 
-        width="25px" height="25px"><path d="M0 0h24v24H0z" fill="none"/>
-        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-      </svg>
-    </div>
+    <!-- Control Panel above circle + bank for mobile & tablet -->
     <control-panel-vertical *ngIf="currentLayout === 'layout-vertical'" [currentLayout]="currentLayout"></control-panel-vertical>
+    <control-panel *ngIf="currentLayout === 'layout-mixed'"></control-panel>
 
     
     <section calculateHeight [ngClass]="currentLayout">
@@ -28,8 +22,15 @@
 
   <footer>
     <div class="text">
-      <p>This is based off of the 1994 <em>Concentra</em> puzzle by the DaMert Company.</p>
-      <p>They claim there is but a single solution ...</p>
+      <p>
+        This app is based on the 1994 <em>Concentra</em> puzzle by the DaMert Company. 
+        <br *ngIf="currentLayout === 'layout-vertical'"> <br *ngIf="currentLayout === 'layout-vertical'"> 
+        Try to solve it yourself by dragging the pieces into place or reveal the solutions panel for hints and more.
+      </p>
+      <p>
+        <em>Note:</em> A piece is correctly placed when its colors match the colors of the layers above and below it. Pieces in the same layer do not need to match.
+      </p>
+      <p>They claim there is but a single solution...</p>
     </div>
     <p><em>Hero background image/art by <a href="http://www.heropatterns.com/" target="blank">Steve Schoger</a>, CC 4.0.</em></p>
   </footer>
