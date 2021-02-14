@@ -84,6 +84,11 @@ section {
   background-color: #222;
 }
 
+/* Adjusts carets only for Layer 1 & 2 */
+.dropdown-caret {
+  position: relative;
+  left: 3px;
+}
 
 .cdk-drag-preview {
   opacity: .8;
