@@ -1,9 +1,60 @@
-h1 {
-  color: rebeccapurple;
+main {
+  margin: 8px;
 }
 
+.header {
+  color: rebeccapurple;
+  width: 100vw;
+  position: relative;
+  top: -8px;
+  left: -8px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  background: linear-gradient(20deg, rgb(255, 255, 240, .7), rgba(153, 153, 153, .7), rgba(102, 102, 102, .75)); 
+  padding: 0px 10px;
+}
+/* Lighter gradient for screens smaller than tablet*/
+@media (max-width: 750px) {
+  .header {
+    background: linear-gradient(20deg, rgb(250, 250, 240, .7), rgba(153, 153, 153, .75)) !important; 
+    margin-bottom: 10px;
+  }
+}
+
+.header-after {
+  width: 100vw;
+  height: 5px;
+  box-sizing: border-box;
+  position: absolute;
+  bottom: -5px;
+  left: 0px;
+  z-index: -10;
+  opacity: .7;
+}
+.header h1 {
+  display: inline-block;
+  background-size: 100%;
+  background-repeat: repeat;
+  background-clip: text;
+  /* Use the text as a mask for the background. */
+  /* This will show the gradient as a text color rather than element bg. */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; 
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+}
+.planets > * {
+  background-image: linear-gradient(20deg, rgb(102, 51, 153), forestgreen, orange);
+}
+.egypt > * {
+  background-image: linear-gradient(20deg, rebeccapurple, teal, crimson); 
+}
+.atlantis > * {
+  background-image: linear-gradient(20deg, rgb(184,115,51),#a0adb7, rgb(225, 170, 7));
+}
+
+
 article {
-  /* height: calc(100vh - 15px); */
   display: flex;
   flex-direction: column;
 }
@@ -39,10 +90,15 @@ piece-bank.layout-horizontal {
 
 
 footer {
+  margin: 0px 10px;
   margin-top: 30px;
   text-align: right;
+  background-color: #fcfaf5;
+  border: 1px solid #222222;
+  border-radius: 30px;
+  box-shadow: 1px 1px rebeccapurple;
+  padding: 0px 10px;
 }
 .text {
-  margin-top: 40px;
   text-align: left;
 }

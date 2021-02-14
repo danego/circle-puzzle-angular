@@ -18,7 +18,6 @@ import { ControlPanelComponent } from './control-panel/control-panel.component';
 import { ControlPanelVerticalComponent } from './control-panel-vertical/control-panel-vertical.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CalculateHeightDirective } from './calculate-height.directive';
-
 import { IsScrollingDirective } from './is-scrolling.directive';
 
 

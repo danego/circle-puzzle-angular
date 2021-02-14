@@ -2,9 +2,9 @@ section {
   min-height: 75px;
   width: calc(100% - 20px);
   box-sizing: border-box;
-  margin: 5px 10px 10px 10px;
+  margin: 0px 10px 25px 10px;
   padding: 10px 0px;
-  background-color: whitesmoke; /*ivory*/
+  background-color: #fcfaf5;
   border: 1px solid #222222;
   border-radius: 30px;
   box-shadow: 1px 1px rebeccapurple;
@@ -18,6 +18,12 @@ section {
 @media (max-width: 900px) {
   section {
     font-size: 16px !important;
+  }
+}
+/* Smaller margin for landscape on mobile */
+@media (max-width: 750px) {
+  section {
+    margin-bottom: 17px;
   }
 }
 section>div {

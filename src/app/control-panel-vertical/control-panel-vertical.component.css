@@ -3,7 +3,7 @@ section {
   box-sizing: border-box;
   margin: 10px 10px 10px 10px;
   padding: 15px 0px;
-  background-color: ivory; /*ivory*/
+  background-color: #fcfaf5;
   border: 1px solid #222222;
   border-radius: 30px;
   box-shadow: 1px 1px rebeccapurple;
@@ -17,6 +17,7 @@ section {
 @media (max-width: 900px) {
   section {
     font-size: 16px !important;
+    margin-bottom: 17px;
   }
 }
 
