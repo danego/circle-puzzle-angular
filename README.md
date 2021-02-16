@@ -1,27 +1,23 @@
-# PuzzleCircleAngular
+# Concentra Solver (Angular Version) #
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.1.
+## Background ##
 
-## Development server
+* For the original version and an explanation of the solving process, see the [GitHub repo](https://github.com/danego/circle-puzzle).
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+* The new version is interactive while also providing info and hints about solutions. This means the user can not only see the different solutions, but can also attempt to solve the puzzle themselves.
 
-## Code scaffolding
+## Changes ##
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+* The main solving capability is enabled by the Angular Material Drag and Drop functionality with a lot of alterations to make it work for a circular layout and across multiple components.
 
-## Build
+* The solver now has all three puzzle patterns and their solutions. Because of their differences in piece composition, one pattern has 63 solutions and the other two have 7 solutions. The solving algorithm handles both easily.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+* The piece banks are a reserve area for unused puzzle pieces. There is a lot of extra code built into them to provide a smooth, seamless experience not provided out of the box.
 
-## Running unit tests
+* Positioning of the pieces around the circle layers is now done programatically. Changing the style and size of the pieces can now be done from a central location at the drop of a hat.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+* The page is mightily responsive, changing layouts, features, and actual puzzle size to best complement each screen range. 
 
-## Running end-to-end tests
+* One particularly exciting feature is the solution tracker which displays how many solutions are still viable based on the currently placed pieces. This feature enables solving in a wholly new manner.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+* There are more features sprinkled about the app and their documentation is forthcoming.
