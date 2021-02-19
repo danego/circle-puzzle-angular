@@ -8,8 +8,6 @@ import { SolutionsGrabberService } from './solutions-grabber.service';
 })
 
 export class BankCircleConnectorService {
-  private bankPiecesArray = [];
-  private circlePiecesArray = [];
 
   isDraggingFromBank = new Subject<{ layer: number, enabled: boolean }>();
   isDraggingFromCircle = new Subject<{ layer: number, enabled: boolean }>();
@@ -25,8 +23,8 @@ export class BankCircleConnectorService {
   transferAllToBank() {
     this.solutionsGrabberService.moveAllPieces('toBank');
     this.moveAllPieces.next('toBank');
-
   }
+  
   transferAllToCircle(solutionNumber?: number) {
     if (solutionNumber || solutionNumber === 0) {
       this.solutionsGrabberService.moveAllPieces('toCircle', solutionNumber);
