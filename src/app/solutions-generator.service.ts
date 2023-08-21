@@ -11,7 +11,7 @@ export class SolutionsGeneratorService {
   constructor() {}
 
   generateSolutions(allPuzzlePieces: any[]) {
-    //allPuzzlePieces = Array(4) 
+    //allPuzzlePieces = Array(4)
     this.allPuzzlePieces = allPuzzlePieces;
     this.allSolvedPuzzlePieces = new Array();
 
@@ -27,7 +27,7 @@ export class SolutionsGeneratorService {
   //checks fit of new puzzlePiece in given index/location (0 --> 9)
   //puzzlePiece param should be a cell of arrPuzzlePieces
   private fitsRowOne(indexToCheck, puzzlePiece) {
-    
+
     if (this.allPuzzlePieces[0][indexToCheck] === puzzlePiece.top) {
       return true;
     }
@@ -35,10 +35,10 @@ export class SolutionsGeneratorService {
       return false;
     }
   }
-  
+
   //checks fit of new puzzlePiece in given index/location (0 --> 9)
   private fitsRowTwo(indexToCheck, puzzlePiece) {
-    
+
     let rowOneLeftIndex,
     rowOneRightIndex;
     if (indexToCheck === 0) {
@@ -49,9 +49,9 @@ export class SolutionsGeneratorService {
       rowOneLeftIndex = indexToCheck - 1;
       rowOneRightIndex = indexToCheck;
     }
-    
+
     if (
-      this.allPuzzlePieces[1][rowOneLeftIndex].right === puzzlePiece.left 
+      this.allPuzzlePieces[1][rowOneLeftIndex].right === puzzlePiece.left
       && this.allPuzzlePieces[1][rowOneRightIndex].left === puzzlePiece.right
       ) {
         return true;
@@ -60,10 +60,10 @@ export class SolutionsGeneratorService {
         return false;
       }
   }
-    
+
   //checks fit of new puzzlePiece in given index/location (0 --> 4)
   private fitsRowThree(indexToCheck, puzzlePiece) {
-    
+
     let rowTwoLeftIndex,
     rowTwoRightIndex;
     if (indexToCheck === 0) {
@@ -86,9 +86,9 @@ export class SolutionsGeneratorService {
       rowTwoLeftIndex = 9;
       rowTwoRightIndex = 0;
     }
-    
+
     if (
-      this.allPuzzlePieces[2][rowTwoLeftIndex].bottom === puzzlePiece.left 
+      this.allPuzzlePieces[2][rowTwoLeftIndex].bottom === puzzlePiece.left
       && this.allPuzzlePieces[2][rowTwoRightIndex].bottom === puzzlePiece.right
       ) {
         return true;
@@ -97,27 +97,27 @@ export class SolutionsGeneratorService {
         return false;
       }
   }
-      
+
   //SWITCH Functions
   //switches 2 puzzle pieces for any given row
   private switchRow(switchSpotIdx, toSwitchInIdx, rowNum) {
-    
+
     let holdFirstPiece = this.allPuzzlePieces[rowNum][switchSpotIdx];
     this.allPuzzlePieces[rowNum][switchSpotIdx] = this.allPuzzlePieces[rowNum][toSwitchInIdx];
     this.allPuzzlePieces[rowNum][toSwitchInIdx] = holdFirstPiece;
   }
-      
-  
-  // Permutation Functions: 
-  
+
+
+  // Permutation Functions:
+
   //takes test spot, test piece, and record of current array setup (to reset the bankAvlbl)
   //generates whole soln subset - testing all first layer switchIns, even after a match
   private row1Perm(switchSpot, toSwitchIn, simpleNumArray) {
     //console.log('Row1: ' + switchSpot + " <-" + toSwitchIn);
-    
+
     //default set to true - sets false if 1.doesn't fit | 2.no more perms
     let hasAvlblBranches = true;
-    
+
     //reset bankAvlblPuzzlePieces[] to match simpleNumArray
     for (let i = 0; i < 10; i++) {
       //if bankAvlbl piece is already in position, skip to next index
@@ -130,15 +130,15 @@ export class SolutionsGeneratorService {
         }
       }
     }
-    
-    
-    
+
+
+
     //checks if piece actually fits
     if (this.fitsRowOne(switchSpot, this.allPuzzlePieces[1][toSwitchIn])) {
       //checks if switch needs to be made (or already in place)
       if (switchSpot !== toSwitchIn) {
         this.switchRow(switchSpot, toSwitchIn, 1);
-        let holdFirstPlace = simpleNumArray[switchSpot]; 
+        let holdFirstPlace = simpleNumArray[switchSpot];
         simpleNumArray[switchSpot] = simpleNumArray[toSwitchIn];
         simpleNumArray[toSwitchIn] = holdFirstPlace;
       }
@@ -157,7 +157,7 @@ export class SolutionsGeneratorService {
       //because current piece does not fit
       hasAvlblBranches = false;
     }
-    
+
     //explore all lower branches
     //begin permutation process on next available puzzle piece spot
     if (hasAvlblBranches) {
@@ -168,22 +168,22 @@ export class SolutionsGeneratorService {
     }
     //Call row1Perm to try ALL pieces in the current switchSpot
     //regardless of current match or not
-    if (switchSpot === 0 && toSwitchIn === 0) { 
+    if (switchSpot === 0 && toSwitchIn === 0) {
       for (let i = switchSpot + 1; i < 10; i++) {
         this.row1Perm(switchSpot, i, [...simpleNumArray]);
       }
     }
   }//end of row1Perm()
-  
-  
-  
+
+
+
   //takes test spot, test piece, and record of current array setup (to reset the bankAvlbl)
   private row2Perm(switchSpot, toSwitchIn, simpleNumArray) {
     //console.log('Row2: ' + switchSpot + " <-" + toSwitchIn);
-    
+
     //default set to true - sets false if 1.doesn't fit | 2.no more perms
     let hasAvlblBranches = true;
-    
+
     //reset bankAvlblPuzzlePieces[] to match simpleNumArray
     for (let i = 0; i < 10; i++) {
       //if bankAvlbl piece is already in position, skip to next index
@@ -196,7 +196,7 @@ export class SolutionsGeneratorService {
         }
       }
     }
-    
+
     //Call row2Perm to try ALL pieces in the current switchSpot
     //regardless of current match or not
     if (switchSpot === 0 && toSwitchIn === 0) {
@@ -205,13 +205,13 @@ export class SolutionsGeneratorService {
         this.row2Perm(switchSpot, i, [...simpleNumArray]);
       }
     }
-    
+
     //checks if piece actually fits
     if (this.fitsRowTwo(switchSpot, this.allPuzzlePieces[2][toSwitchIn])) {
       //checks if switch needs to be made (or already in place)
       if (switchSpot !== toSwitchIn) {
         this.switchRow(switchSpot, toSwitchIn, 2);
-        let holdFirstPlace = simpleNumArray[switchSpot]; 
+        let holdFirstPlace = simpleNumArray[switchSpot];
         simpleNumArray[switchSpot] = simpleNumArray[toSwitchIn];
         simpleNumArray[toSwitchIn] = holdFirstPlace;
       }
@@ -226,11 +226,11 @@ export class SolutionsGeneratorService {
       }
     }
     else {
-      //or breaks out of all future branches/perms 
+      //or breaks out of all future branches/perms
       //because current piece does not fit
       hasAvlblBranches = false;
     }
-    
+
     //explore all lower branches
     //begin permutation process on next available puzzle piece spot
     if (hasAvlblBranches) {
@@ -240,16 +240,16 @@ export class SolutionsGeneratorService {
       }
     }
   }//end of row2Perm()
-  
-  
-  
+
+
+
   //takes test spot, test piece, and record of current array setup (to reset the bankAvlbl)
   private row3Perm(switchSpot, toSwitchIn, simpleNumArray) {
     //console.log(switchSpot + " <--" + toSwitchIn);
-    
+
     //default set to true - sets false if 1.doesn't fit | 2.no more perms
     let hasAvlblBranches = true;
-    
+
     //reset bankAvlblPuzzlePieces[] to match simpleNumArray
     for (let i = 0; i < 5; i++) {
       //if bankAvlbl piece is already in position, skip to next index
@@ -262,7 +262,7 @@ export class SolutionsGeneratorService {
         }
       }
     }
-    
+
     //Call row3Perm to try ALL pieces in the current switchSpot
     //regardless of current match or not
     if (switchSpot === 0 && toSwitchIn === 0) {
@@ -271,13 +271,13 @@ export class SolutionsGeneratorService {
         this.row3Perm(switchSpot, i, [...simpleNumArray]);
       }
     }
-    
+
     //checks if piece actually fits
     if (this.fitsRowThree(switchSpot, this.allPuzzlePieces[3][toSwitchIn])) {
       //checks if switch needs to be made (or already in place)
       if (switchSpot !== toSwitchIn) {
         this.switchRow(switchSpot, toSwitchIn, 3);
-        let holdFirstPlace = simpleNumArray[switchSpot]; 
+        let holdFirstPlace = simpleNumArray[switchSpot];
         simpleNumArray[switchSpot] = simpleNumArray[toSwitchIn];
         simpleNumArray[toSwitchIn] = holdFirstPlace;
       }
@@ -296,7 +296,7 @@ export class SolutionsGeneratorService {
       //because current piece does not fit
       hasAvlblBranches = false;
     }
-    
+
     //explore all lower branches
     //begin permutation process on next available puzzle piece spot
     if (hasAvlblBranches) {
@@ -306,7 +306,7 @@ export class SolutionsGeneratorService {
       }
     }
   }//end of row3Perm()
-  
+
 
   private cementSolvedArray() {
     //create a new array to store solution from working copy in bankAvlblPuzzlePieces
