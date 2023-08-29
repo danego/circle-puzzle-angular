@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, HostBinding, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 
 import { BankCircleConnectorService } from '../bank-circle-connector.service';
 import { SolutionsGrabberService } from '../solutions-grabber.service';
@@ -32,7 +32,7 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
   currentSolutionNumberSub: Subscription;
   pieceSizesSub: Subscription;
 
-  controlButtonsForm: FormGroup;
+  controlButtonsForm: UntypedFormGroup;
 
   @Input('currentLayout') currentLayout: string;
 
@@ -70,14 +70,14 @@ export class ControlPanelVerticalComponent implements OnInit, OnDestroy {
     //note: the values of the toggle controls are inverted
     //they display opposite message of what's currently shown.
     //will be needed when saving user preferences into local storage
-    this.controlButtonsForm = new FormGroup({
-      'patternNameDropdown': new FormControl("Planets"),
-      'autoOpenEnabled': new FormControl("Disable Auto Open"),
-      'scrollZonesEnabled': new FormControl("Hide Scroll Zones"),
-      'toggleLetters': new FormControl("Toggle Letters Off"),
-      'showAllSolutions': new FormControl('true'),
-      'solutionNumberDropdown': new FormControl(solutionDropdownPlaceholder),
-      'toggleSolutionsPanel': new FormControl("Reveal Solutions Panel")  //"{{displaySolutionsPanel ? 'Hide' : 'Reveal'}} Solutions Panel"
+    this.controlButtonsForm = new UntypedFormGroup({
+      'patternNameDropdown': new UntypedFormControl("Planets"),
+      'autoOpenEnabled': new UntypedFormControl("Disable Auto Open"),
+      'scrollZonesEnabled': new UntypedFormControl("Hide Scroll Zones"),
+      'toggleLetters': new UntypedFormControl("Toggle Letters Off"),
+      'showAllSolutions': new UntypedFormControl('true'),
+      'solutionNumberDropdown': new UntypedFormControl(solutionDropdownPlaceholder),
+      'toggleSolutionsPanel': new UntypedFormControl("Reveal Solutions Panel")  //"{{displaySolutionsPanel ? 'Hide' : 'Reveal'}} Solutions Panel"
     });
 
     this.generateSolutions();

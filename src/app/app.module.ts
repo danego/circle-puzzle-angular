@@ -14,7 +14,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { PieceBankComponent } from './piece-bank/piece-bank.component';
 import { ControlPanelComponent } from './control-panel/control-panel.component';
 import { ControlPanelVerticalComponent } from './control-panel-vertical/control-panel-vertical.component';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatLegacySlideToggleModule as MatSlideToggleModule } from '@angular/material/legacy-slide-toggle';
 import { CalculateHeightDirective } from './calculate-height.directive';
 
 

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 
 import { BankCircleConnectorService } from '../bank-circle-connector.service';
 import { SolutionsGrabberService } from '../solutions-grabber.service';
@@ -27,7 +27,7 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
   allPiecesUsedSub: Subscription;
   currentSolutionNumberSub: Subscription;
 
-  controlButtonsForm: FormGroup;
+  controlButtonsForm: UntypedFormGroup;
 
   @HostBinding('style.margin') margin;
   @HostBinding('style.height') height;
@@ -54,13 +54,13 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
     //note: the values of the toggle controls are inverted
     //they display opposite message of what's currently shown.
     //will be needed when saving user preferences into local storage
-    this.controlButtonsForm = new FormGroup({
-      'patternNameDropdown': new FormControl("Planets"),
-      'toggleLetters': new FormControl("Toggle Letters Off"),
-      'autoOpenEnabled': new FormControl("Disable Auto Open"),
-      'showAllSolutions': new FormControl(true),
-      'solutionNumberDropdown': new FormControl('Solutions:'),
-      'toggleSolutionsPanel': new FormControl("Reveal Solutions Panel")  //"{{displaySolutionsPanel ? 'Hide' : 'Reveal'}} Solutions Panel"
+    this.controlButtonsForm = new UntypedFormGroup({
+      'patternNameDropdown': new UntypedFormControl("Planets"),
+      'toggleLetters': new UntypedFormControl("Toggle Letters Off"),
+      'autoOpenEnabled': new UntypedFormControl("Disable Auto Open"),
+      'showAllSolutions': new UntypedFormControl(true),
+      'solutionNumberDropdown': new UntypedFormControl('Solutions:'),
+      'toggleSolutionsPanel': new UntypedFormControl("Reveal Solutions Panel")  //"{{displaySolutionsPanel ? 'Hide' : 'Reveal'}} Solutions Panel"
     });
 
     this.generateSolutions();
