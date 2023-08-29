@@ -25,7 +25,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
   fontSizeForPieces: number;
   currentLayout: string;
   pieceSizes: SizingDataInterface;
-  
+
   isDragging1: boolean = false;
   isDragging2: boolean = false;
   isDragging3: boolean = false;
@@ -177,7 +177,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
   }
 
   updatePiecesByIdTracker(event: CdkDragDrop<string[]>) {
-    //store new position for ID  
+    //store new position for ID
     const stringToNum = {
       one: 1,
       two: 2,
@@ -190,7 +190,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
       const layer = stringToNum[containerIdArray[1]] - 1;
       const pieceId = (event.previousContainer.data[event.previousIndex] as any).id; //ADD MODEL/Interfaces for DIFF Pieces
       const oldPosition = +containerIdArray[2];
-      
+
       this.bankCircleConnectorService.droppedUpdatePiecesById(layer, oldPosition, pieceId);
     }
   }
@@ -321,7 +321,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
         case 3: this.calculatePieceContainerHeightThree();
                 break;
       }
-    }  
+    }
   }
 
   calculatePieceContainerHeightOne(containerHeight = 0, dropdown = 'auto', droplist = '76px') {
@@ -432,7 +432,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
       case 'P': className = 'purple';
                 break;
       case 'T': className = 'teal';
-                break;   
+                break;
       case 'R': className = 'red';
                 break;
       case 'AU': className = 'gold';
@@ -442,7 +442,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
       case 'B': className = 'bronze';
                 break;
       case 'C': className = 'copper';
-                break;                             
+                break;
     }
     return className;
   }
@@ -468,7 +468,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
   checkToFullyDisplayScrollZones(element, scrollZoneName: string) {
     if (
       this.isHoveringOverBank
-      && (this.isDraggingIncoming1 || this.isDraggingIncoming2 || this.isDraggingIncoming3) 
+      && (this.isDraggingIncoming1 || this.isDraggingIncoming2 || this.isDraggingIncoming3)
       && element.scrollHeight > this.pieceSizes.containerSize) {
 
         const isPositionedData = this.checkIsAlreadyPositioned(element);
@@ -478,7 +478,7 @@ export class PieceBankComponent implements OnInit, OnDestroy {
         }
         if (scrollZoneName === 'bottom' && isPositionedData.isAtBottom) {
           return '0';
-        } 
+        }
         return '1';
     }
     return '0';
