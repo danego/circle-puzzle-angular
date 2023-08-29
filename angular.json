@@ -123,8 +123,5 @@
       }
     }
   },
-  "defaultProject": "puzzle-circle-angular",
-  "cli": {
-    "analytics": false
-  }
+  "defaultProject": "puzzle-circle-angular"
 }
