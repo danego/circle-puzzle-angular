@@ -8,9 +8,7 @@ export class SolutionsGeneratorService {
   private allPuzzlePieces: any[];
   private allSolvedPuzzlePieces: any[];
 
-  constructor() {
-    debugger
-  }
+  constructor() {}
 
   generateSolutions(allPuzzlePieces: any[]) {
     //allPuzzlePieces = Array(4)
